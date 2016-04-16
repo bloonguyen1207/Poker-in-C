@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(COSC2451_A2_s1234567_2016A)
+project(COSC2451_A2_s3515305_s3558475)
 
 set(CMAKE_C_COMPILER clang-3.5)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -D_POSIX_C_SOURCE=199309L")
