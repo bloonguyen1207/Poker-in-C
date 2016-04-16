@@ -3,8 +3,11 @@
 //
 
 #include <stdio.h>
+<<<<<<< HEAD
 #include <stdlib.h>
 #include <time.h>
+=======
+>>>>>>> a little change
 
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES};
 typedef enum suit Suit;
@@ -36,7 +39,10 @@ void shuffleDeck(Card deck[], int size) {
 }
 
 int main() {
+<<<<<<< HEAD
     //create a deck
+=======
+>>>>>>> a little change
     int size = 52;
     int k = 0;
     Card c;
