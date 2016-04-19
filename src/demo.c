@@ -106,6 +106,9 @@ void dealPlayer(int no_player, Player* player, Deck* deck) {
 }
 
 void dealPot(Pot* pot, Deck* deck, int time){
+    //1st time: deal 3 cards: largest idx = 2
+    //2nd time: deal 1 card:  largest idx = 3
+    //3rd time: deal 1 card:  largest idx = 4 --> largest idx = time + 1
     for (; pot->card_idx <= time + 1; pot->card_idx++) {
         pot->card[pot->card_idx] = deck->cards[deck->card_index];
         deck->card_index++;
