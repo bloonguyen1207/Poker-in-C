@@ -25,15 +25,23 @@ char* getSuit(Suit s) {
     }
 }
 
-Card* newDeck() {
+struct deck {
+    Card* cards;
+    int card_index;
+};
+typedef struct deck Deck;
+
+Deck* newDeck() {
+    Deck* deck = malloc(sizeof(Deck));
     int k = 0;
+    deck->card_index = 0;
     Card c;
-    Card * deck = malloc(sizeof(c) * 52);
+    deck->cards = malloc(sizeof(Card) * 52);
     for (Suit i = HEARTS; i <= SPADES; i++) {
         for (int j = 0; j < 13; j++) {
             c.rank = j;
             c.suit = i;
-            deck[k] = c;
+            deck->cards[k] = c;
             k++;
             if (k == 52) {
                 return deck;
@@ -43,13 +51,13 @@ Card* newDeck() {
     return NULL;
 }
 
-void shuffleDeck(Card deck[], int size) {
+void shuffleDeck(Deck* deck, int size) {
     srand((unsigned int) time(NULL));
     for (int i = size - 1; i > 0; i--) {
         int randIdx = rand() % i;
-        Card temp = deck[i];
-        deck[i] = deck[randIdx];
-        deck[randIdx] = temp;
+        Card temp = deck->cards[i];
+        deck->cards[i] = deck->cards[randIdx];
+        deck->cards[randIdx] = temp;
     }
 }
 
@@ -67,31 +75,55 @@ Player* createPlayers(int no_player) {
             strcpy(player[i].name, "Player0");
             player[i].name[6] += i + 1;
             player[i].hand = malloc(sizeof(Card) * 2);
-            player[i].money = 0;
+            player[i].money = 5000;
         }
         return player;
     }
     return NULL;
 }
 
-void dealDeck(int no_player, Player* player, Card* deck) {
-    int k = 0;
+struct pot {
+    int money;
+    Card* card;
+    int card_idx;
+};
+typedef struct pot Pot;
+
+Pot* createPot() {
+    Pot* pot = malloc(sizeof(Pot));
+    pot->card = malloc(sizeof(Card) * 5);
+    pot->card_idx = 0;
+    return pot;
+}
+
+void dealPlayer(int no_player, Player* player, Deck* deck) {
     for (int j = 0; j < 2; j++) {
         for (int i = 0; i < no_player; i++) {
-            player[i].hand[j] = deck[k];
-            k++;
+            player[i].hand[j] = deck->cards[deck->card_index];
+            deck->card_index++;
         }
     }
 }
 
+void dealPot(Pot* pot, Deck* deck, int time){
+    for (; pot->card_idx <= time + 1; pot->card_idx++) {
+        pot->card[pot->card_idx] = deck->cards[deck->card_index];
+        deck->card_index++;
+    }
+};
+
 int main() {
-    Card * deck;
+    //create pot
+    Pot* pot = createPot();
+
+    //create deck
+    Deck * deck;
     deck = newDeck();
     int size = 52;
 
     // Test new deck
     for (int m = 0; m < size; m++) {
-        printf("%s %i; ", getSuit(deck[m].suit), deck[m].rank);
+        printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
     }
     printf("\n");
 
@@ -100,7 +132,7 @@ int main() {
 
     //test shuffle
     for (int m = 0; m < size; m++) {
-        printf("%s %i; ", getSuit(deck[m].suit), deck[m].rank);
+        printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
     }
     printf("\n");
 
@@ -108,18 +140,31 @@ int main() {
     int no_player = 2;
     Player* player = createPlayers(no_player);
 
-    // Deal the deck
-    dealDeck(no_player, player, deck);
+    // Deal deck to players
+    dealPlayer(no_player, player, deck);
 
-    // Test deal
+    //deal on the pot
+    dealPot(pot, deck, 1);
+    dealPot(pot, deck, 2);
+    dealPot(pot, deck, 3);
+
+    // Test player hand
     for (int i = 0; i < no_player; i++) {
         for (int j = 0; j < 2; j++) {
             printf("%s: %s %i \n", player[i].name,  getSuit(player[i].hand[j].suit), player[i].hand[j].rank);
         }
     }
 
+    //test cards on pot
+    printf("On pot: \n");
+    for (int i = 0; i < 5; i++) {
+        printf("%s %i \n", getSuit(pot->card[i].suit),pot->card[i].rank);
+    }
+
     //free player & deck
     free(player);
     free(deck);
+
+    return 0;
 }
 
