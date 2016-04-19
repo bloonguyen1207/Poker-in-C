@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES};
 typedef enum suit Suit;
@@ -43,7 +44,6 @@ Card* newDeck() {
 }
 
 void shuffleDeck(Card deck[], int size) {
-
     srand((unsigned int) time(NULL));
     for (int i = size - 1; i > 0; i--) {
         int randIdx = rand() % i;
@@ -53,8 +53,38 @@ void shuffleDeck(Card deck[], int size) {
     }
 }
 
-int main() {
+struct player {
+    char name[20];
+    Card* hand;
+    int money;
+};
+typedef struct player Player;
 
+Player* createPlayers(int no_player) {
+    if (no_player >= 2) {
+        Player* player = malloc(sizeof(Player) * no_player);
+        for (int i = 0; i < no_player; i++) {
+            strcpy(player[i].name, "Player0");
+            player[i].name[6] += i + 1;
+            player[i].hand = malloc(sizeof(Card) * 2);
+            player[i].money = 0;
+        }
+        return player;
+    }
+    return NULL;
+}
+
+void dealDeck(int no_player, Player* player, Card* deck) {
+    int k = 0;
+    for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < no_player; i++) {
+            player[i].hand[j] = deck[k];
+            k++;
+        }
+    }
+}
+
+int main() {
     Card * deck;
     deck = newDeck();
     int size = 52;
@@ -74,31 +104,22 @@ int main() {
     }
     printf("\n");
 
-    // Create players & places for cards
-    int no_player = 2; //number of players
-    int no_card = 2; //number of cards
-    Card *player[no_player]; //an array of player (each player is a pointer)
-    for (int i = 0; i < no_player; i++) { //set place for cards that each player holds (refers to)
-        player[i] = malloc(no_card * sizeof(Card));
-    }
+    //create players
+    int no_player = 2;
+    Player* player = createPlayers(no_player);
 
     // Deal the deck
-    int k = 0;
-    for (int j = 0; j < no_player; j++) {
-        for (int i = 0; i < no_card; i++) {
-            player[i][j] = deck[k];
-            k++;
-        }
-    }
+    dealDeck(no_player, player, deck);
+
     // Test deal
     for (int i = 0; i < no_player; i++) {
-        for (int j = 0; j < no_card; j++) {
-            printf("Player %d: %s %i \n", i + 1, getSuit(player[i][j].suit), player[i][j].rank);
+        for (int j = 0; j < 2; j++) {
+            printf("%s: %s %i \n", player[i].name,  getSuit(player[i].hand[j].suit), player[i].hand[j].rank);
         }
     }
-    for (int i = 0; i < no_player; i++) {
-        free(player[i]);
-    }
+
+    //free player & deck
+    free(player);
     free(deck);
 }
 
