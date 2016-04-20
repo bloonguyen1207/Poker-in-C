@@ -36,6 +36,10 @@ struct table {
 };
 typedef struct table Table;
 
+struct hand {
+    Card card[7];
+};
+typedef struct hand Hand;
 
 char* getSuit(Suit s) {
     switch(s){
@@ -104,6 +108,22 @@ void dealStartingHand(int no_player, Player* player, Deck* deck) {
     }
 }
 
+Hand* createHand(Player *players, Table *table, int num_player) {
+    Hand * hands = malloc(sizeof(Hand) * num_player);
+    for (int i = 0; i < num_player; i++) {
+        for (int j = 0; j < 2; j++) {
+            hands[i].card[j] = players[i].hand[j];
+        }
+    }
+
+    for (int i = 0; i < num_player; i++) {
+        for (int j = 0; j < 5; j++) {
+            hands[i].card[j + 2] = table[0].card[j];
+        }
+    }
+    return hands;
+}
+
 void dealSharedCards(Table *table, Deck* deck, int time){
     //1st time: deal 3 cards: largest idx = 2
     //2nd time: deal 1 card:  largest idx = 3
@@ -150,7 +170,7 @@ int main() {
     dealSharedCards(table, deck, 2);
     dealSharedCards(table, deck, 3);
 
-    // Test player hand
+    // Test player starting hand
     for (int i = 0; i < no_player; i++) {
         printf("%s: ", player[i].name);
         for (int j = 0; j < 2; j++) {
@@ -165,6 +185,16 @@ int main() {
         printf("%s %i; ", getSuit(table->card[i].suit), table->card[i].rank);
     }
     printf("\n");
+
+    // Test hands
+    Hand *hands = createHand(player, table, no_player);
+    for (int i = 0; i < no_player; i++) {
+        printf("%s: ", player[i].name);
+        for (int j = 0; j < 7; j++) {
+            printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
+        }
+        printf("\n");
+    }
 
     // Free everything
     free(player);
