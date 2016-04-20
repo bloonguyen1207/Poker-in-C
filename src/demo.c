@@ -57,7 +57,7 @@ Deck* newDeck() {
     deck->card_index = 0;
     Card c;
     for (Suit i = HEARTS; i <= SPADES; i++) {
-        for (int j = 0; j < 13; j++) {
+        for (int j = 1; j < 14; j++) {
             c.rank = j;
             c.suit = i;
             deck->cards[k] = c;
@@ -108,6 +108,16 @@ void dealStartingHand(int no_player, Player* player, Deck* deck) {
     }
 }
 
+void dealSharedCards(Table *table, Deck* deck, int time){
+    //1st time: deal 3 cards: largest idx = 2
+    //2nd time: deal 1 card:  largest idx = 3
+    //3rd time: deal 1 card:  largest idx = 4 --> largest idx = time + 1
+    for (; table->card_idx <= time + 1; table->card_idx++) {
+        table->card[table->card_idx] = deck->cards[deck->card_index];
+        deck->card_index++;
+    }
+};
+
 Hand* createHand(Player *players, Table *table, int num_player) {
     Hand * hands = malloc(sizeof(Hand) * num_player);
     for (int i = 0; i < num_player; i++) {
@@ -124,15 +134,25 @@ Hand* createHand(Player *players, Table *table, int num_player) {
     return hands;
 }
 
-void dealSharedCards(Table *table, Deck* deck, int time){
-    //1st time: deal 3 cards: largest idx = 2
-    //2nd time: deal 1 card:  largest idx = 3
-    //3rd time: deal 1 card:  largest idx = 4 --> largest idx = time + 1
-    for (; table->card_idx <= time + 1; table->card_idx++) {
-        table->card[table->card_idx] = deck->cards[deck->card_index];
-        deck->card_index++;
-    }
-};
+int isPair(Hand hand) {
+    return 0;
+}
+
+int isDoublePair(Hand hand) {
+    return 0;
+}
+
+int is3OfAKind(Hand hand) {
+    return 0;
+}
+
+int is4OfAKind(Hand hand) {
+    return 0;
+}
+
+int isFullHouse(Hand hand) {
+    return 0;
+}
 
 int main() {
     // Create table
@@ -200,6 +220,7 @@ int main() {
     free(player);
     free(deck);
     free(table);
+    free(hands);
     return 0;
 }
 
