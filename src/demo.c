@@ -10,7 +10,7 @@
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES};
 typedef enum suit Suit;
 
-enum rank {HighCard, OnePair, TwoPairs, Three, Straight, Flush, FullHouse, StraightFlush};
+enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush};
 typedef enum rank Rank;
 
 struct card {
@@ -164,15 +164,60 @@ int isHighCard(Hand hand) {
     return 0;
 }
 
-int isPair(Hand hand) {
+int seachHandRank(Hand hand, int target) {
+    for (int i = 0; i < 7; i++) {
+        if (hand.card[i].rank == target) {
+            return 1;
+        }
+    }
     return 0;
 }
 
-int isDoublePair(Hand hand) {
+int isPair(Hand hand){
+    for (int i = 0; i < 6; i++) {
+        for (int j = i + 1; j < 7; j++) {
+            if(hand.card[i].rank == hand.card[j].rank) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int is2Pair(Hand hand) {
+    int count = 0;
+    int exist = 0;
+    for (int i = 0; i < 6; i++) {
+        for (int j = i + 1; j < 7; j++) {
+            if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist) {
+                exist = hand.card[i].rank;
+                count++;
+            }
+            if (count >= 2) {
+                return 1;
+            }
+        }
+    }
+    exist = 0;
+    count = 0;
     return 0;
 }
 
 int is3OfAKind(Hand hand) {
+    int exist = 0;
+    for (int i = 0; i < 5; i++) {
+        for (int j = i + 1; j < 6; j++) {
+            for (int k = j + 1; k < 7; k++) {
+                if (hand.card[i].rank == hand.card[j].rank &&
+                    hand.card[i].rank == hand.card[k].rank &&
+                    hand.card[i].rank != exist) {
+                    exist = hand.card[i].rank;
+                    return 1;
+                }
+            }
+        }
+    }
+    exist = 0;
     return 0;
 }
 
@@ -201,6 +246,19 @@ int isFlush(Hand* hand, Player* player, int num_player) {
 }
 
 int is4OfAKind(Hand hand) {
+    for (int i = 0; i < 4; i++) {
+        for (int j = i + 1; j < 5; j++) {
+            for (int k = j + 1; k < 6; k++) {
+                for (int l = k + 1; l < 7; l++) {
+                    if (hand.card[i].rank == hand.card[j].rank &&
+                        hand.card[i].rank == hand.card[k].rank &&
+                        hand.card[i].rank == hand.card[l].rank) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
     return 0;
 }
 
@@ -271,6 +329,15 @@ int main() {
         printf("%s: ", player[i].name);
         for (int j = 0; j < 7; j++) {
             printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
+        }
+        if (is4OfAKind(hands[i])) {
+            printf("Player %i has four of a kind.", i + 1);
+        } else if (is3OfAKind(hands[i])) {
+            printf("Player %i has three of a kind.", i + 1);
+        } else if (is2Pair(hands[i])) {
+            printf("Player %i has double pair.", i + 1);
+        } else if (isPair(hands[i])) {
+            printf("Player %i has a pair.", i + 1);
         }
         printf("\n");
     }
