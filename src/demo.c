@@ -10,6 +10,9 @@
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES};
 typedef enum suit Suit;
 
+enum rank {HighCard, OnePair, TwoPairs, Three, Straight, Flush, FullHouse, StraightFlush};
+typedef enum rank Rank;
+
 struct card {
     Suit suit;
     int rank;
@@ -26,6 +29,8 @@ struct player {
     char name[20];
     Card hand[2];
     int money;
+    Card max_hand[5];
+    Rank rank;
 };
 typedef struct player Player;
 
@@ -134,6 +139,31 @@ Hand* createHand(Player *players, Table *table, int num_player) {
     return hands;
 }
 
+void swapCards(Hand* hand, int player, int fstIdx, int secIdx) {
+    Card temp = hand[player].card[fstIdx];
+    hand[player].card[fstIdx] = hand[player].card[secIdx];
+    hand[player].card[secIdx] = temp;
+}
+
+void sortHand(Hand* hand, int num_player) {
+    for (int i = 0; i < num_player; i++) {
+        int max_rank;
+        for (int j = 0; j < 7; j++) {
+            max_rank = hand[i].card[j].rank;
+            for (int k = j+1; k < 7; k++) {
+                if (hand[i].card[k].rank > max_rank) {
+                    max_rank = hand[i].card[k].rank;
+                    swapCards(hand, i, j, k);
+                }
+            }
+        }
+    }
+}
+
+int isHighCard(Hand hand) {
+    return 0;
+}
+
 int isPair(Hand hand) {
     return 0;
 }
@@ -146,11 +176,39 @@ int is3OfAKind(Hand hand) {
     return 0;
 }
 
+int isStraight(Hand hand) {
+    return 0;
+}
+
+//the hand must be sort before checking rank
+int isFlush(Hand* hand, Player* player, int num_player) {
+    for (int i = 0; i < num_player; i++) {
+        for (Suit suit = HEARTS; suit <= SPADES; suit++) {
+            int count = 0; //count number of cards that have the same suit
+            for (int j = 0; j < 7; j++) {
+                if (hand[i].card[j].suit == suit) {
+                    player[i].max_hand[count] = hand[i].card[j]; //add card to max_hand
+                    count++;
+                    if (count == 5) { //hand has been sorted --> the max_hand contains 5 cards that has the highest rank.
+                        player[i].rank = Flush;
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 int is4OfAKind(Hand hand) {
     return 0;
 }
 
 int isFullHouse(Hand hand) {
+    return 0;
+}
+
+int isStraightFlush(Hand hand) {
     return 0;
 }
 
@@ -208,6 +266,7 @@ int main() {
 
     // Test hands
     Hand *hands = createHand(player, table, no_player);
+    sortHand(hands, no_player);
     for (int i = 0; i < no_player; i++) {
         printf("%s: ", player[i].name);
         for (int j = 0; j < 7; j++) {
