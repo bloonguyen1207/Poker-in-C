@@ -311,10 +311,9 @@ int isFullHouse(Hand hand) {
         for (int i = 0; i < 6; i++) {
             for (int j = i + 1; j < 7; j++) {
                 if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist) {
-                    exist = hand.card[i].rank;
                     count++;
                 }
-                if (count >= 2) {
+                if (count >= 1) {
                     return 1;
                 }
             }
@@ -463,11 +462,50 @@ int main() {
         printf("True.");
     } else {printf("False");}
     free(test);
+    //    Player *test_player = createPlayers(2);
+//    Hand *testHand = createHand(test_player, table, 2);
+//    for (Suit j = HEARTS; j <= SPADES; j++){
+//        for(int i = 0; i < 3; i++) {
+//            testHand[0].card[i].suit = j;
+//            testHand[0].card[i].rank = 3;
+//            testHand[1].card[i].suit = j;
+//            testHand[1].card[i].rank = 6;
+//        }
+//        testHand[0].card[3].rank = 9;
+//        testHand[0].card[3].suit = DIAMONDS;
+//        for(int i = 4; i < ; i++) {
+//            testHand[0].card[i].suit = j;
+//            testHand[0].card[i].rank = 4;
+//            testHand[1].card[i].suit = j;
+//            testHand[1].card[i].rank = i + 1;
+//        }
+//    }
+//
+//    for (int i = 0; i < 2; i++) {
+//        printf("%s: ", player[i].name);
+//        for (int j = 0; j < 7; j++) {
+//            printf("%s %i; ", getSuit(testHand[i].card[j].suit), testHand[i].card[j].rank);
+//        }
+//        if (is4OfAKind(testHand[i])) {
+//            printf("Player %i has four of a kind.", i + 1);
+//        } else if (isFullHouse(testHand[i])) {
+//            printf("Player %i has a fullhouse.", i + 1);
+//        } else if (is3OfAKind(testHand[i])) {
+//            printf("Player %i has three of a kind.", i + 1);
+//        } else if (is2Pair(testHand[i])) {
+//            printf("Player %i has double pair.", i + 1);
+//        } else if (isPair(testHand[i])) {
+//            printf("Player %i has a pair.", i + 1);
+//        }
+//        printf("\n");
+//    }
     // Free everything
     free(player);
     free(deck);
     free(table);
     free(hands);
+//    free(test_player);
+//    free(testHand);
     return 0;
 }
 
