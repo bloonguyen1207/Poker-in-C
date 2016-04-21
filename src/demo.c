@@ -263,6 +263,32 @@ int is4OfAKind(Hand hand) {
 }
 
 int isFullHouse(Hand hand) {
+    int exist = 0;
+    int count = 0;
+    if (is3OfAKind(hand)){
+        for (int i = 0; i < 5; i++) {
+            for (int j = i + 1; j < 6; j++) {
+                for (int k = j + 1; k < 7; k++) {
+                    if (hand.card[i].rank == hand.card[j].rank &&
+                        hand.card[i].rank == hand.card[k].rank &&
+                        hand.card[i].rank != exist) {
+                        exist = hand.card[i].rank;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            for (int j = i + 1; j < 7; j++) {
+                if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist) {
+                    exist = hand.card[i].rank;
+                    count++;
+                }
+                if (count >= 2) {
+                    return 1;
+                }
+            }
+        }
+    }
     return 0;
 }
 
@@ -325,13 +351,15 @@ int main() {
     // Test hands
     Hand *hands = createHand(player, table, no_player);
     sortHand(hands, no_player);
-    for (int i = 0; i < no_player; i++) {
+    for (int i = 0; i < 2; i++) {
         printf("%s: ", player[i].name);
         for (int j = 0; j < 7; j++) {
             printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
         }
         if (is4OfAKind(hands[i])) {
             printf("Player %i has four of a kind.", i + 1);
+        } else if (isFullHouse(hands[i])) {
+            printf("Player %i has a fullhouse.", i + 1);
         } else if (is3OfAKind(hands[i])) {
             printf("Player %i has three of a kind.", i + 1);
         } else if (is2Pair(hands[i])) {
