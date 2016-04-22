@@ -163,9 +163,9 @@ void sortHand(Hand* hand, int num_player) {
     }
 }
 
-int searchHandRank(Hand hand, int target) {
+int searchHandRank(Hand hand, int rank) {
     for (int i = 0; i < 7; i++) {
-        if (hand.card[i].rank == target) {
+        if (hand.card[i].rank == rank) {
             return 1;
         }
     }
@@ -186,7 +186,7 @@ Card isHighCard(Hand hand, Player player) {
     Card maxCard;
     maxCard.rank = 1;
     for (int i = 0; i < 7; i++){
-        if (hand.card[i].rank == 0) {
+        if (hand.card[i].rank == 1) {
             maxCard = hand.card[i];
             return maxCard;
         } else if (hand.card[i].rank > maxCard.rank) {
