@@ -27,8 +27,9 @@ typedef struct deck Deck;
 
 struct player {
     char name[20];
-    Card hand[2];
     int money;
+    int bet;
+    Card hand[2];
     Card max_hand[5];
     Rank rank;
 };
@@ -160,7 +161,7 @@ void sortHand(Hand* hand, int num_player) {
     }
 }
 
-int seachHandRank(Hand hand, int target) {
+int searchHandRank(Hand hand, int target) {
     for (int i = 0; i < 7; i++) {
         if (hand.card[i].rank == target) {
             return 1;
@@ -169,10 +170,25 @@ int seachHandRank(Hand hand, int target) {
     return 0;
 }
 
-int isPair(Hand hand){
+Card isHighCard(Hand hand, Player player) {
+    Card maxCard;
+    maxCard.rank = 1;
+    for (int i = 0; i < 7; i++){
+        if (hand.card[i].rank == 0) {
+            maxCard = hand.card[i];
+            return maxCard;
+        } else if (hand.card[i].rank > maxCard.rank) {
+            maxCard = hand.card[i];
+        }
+    }
+    return maxCard;
+};
+
+int isPair(Hand hand, Player player){
     for (int i = 0; i < 6; i++) {
         for (int j = i + 1; j < 7; j++) {
             if(hand.card[i].rank == hand.card[j].rank) {
+                player.rank = OnePair;
                 return 1;
             }
         }
@@ -180,7 +196,7 @@ int isPair(Hand hand){
     return 0;
 }
 
-int is2Pair(Hand hand) {
+int is2Pair(Hand hand, Player player) {
     int count = 0;
     int exist = 0;
     for (int i = 0; i < 6; i++) {
@@ -194,12 +210,10 @@ int is2Pair(Hand hand) {
             }
         }
     }
-    exist = 0;
-    count = 0;
     return 0;
 }
 
-int is3OfAKind(Hand hand) {
+int is3OfAKind(Hand hand, Player player) {
     int exist = 0;
     for (int i = 0; i < 5; i++) {
         for (int j = i + 1; j < 6; j++) {
@@ -213,26 +227,71 @@ int is3OfAKind(Hand hand) {
             }
         }
     }
-    exist = 0;
+    return 0;
+}
+
+int is4OfAKind(Hand hand, Player player) {
+    for (int i = 0; i < 4; i++) {
+        for (int j = i + 1; j < 5; j++) {
+            for (int k = j + 1; k < 6; k++) {
+                for (int l = k + 1; l < 7; l++) {
+                    if (hand.card[i].rank == hand.card[j].rank &&
+                        hand.card[i].rank == hand.card[k].rank &&
+                        hand.card[i].rank == hand.card[l].rank) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+int isFullHouse(Hand hand, Player player) {
+    int exist = 0;
+    int count = 0;
+    if (is3OfAKind(hand, player)){
+        for (int i = 0; i < 5; i++) {
+            for (int j = i + 1; j < 6; j++) {
+                for (int k = j + 1; k < 7; k++) {
+                    if (hand.card[i].rank == hand.card[j].rank &&
+                        hand.card[i].rank == hand.card[k].rank &&
+                        hand.card[i].rank != exist) {
+                        exist = hand.card[i].rank;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            for (int j = i + 1; j < 7; j++) {
+                if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist) {
+                    count++;
+                }
+                if (count >= 1) {
+                    return 1;
+                }
+            }
+        }
+    }
     return 0;
 }
 
 //the hand must be sorted before checking
-int isStraight(Hand hand) {
+int isStraight(Hand hand, Player player) {
     for (int j = 0; j < 3; j++) {
         int check = 0;
         int temp = hand.card[j].rank;
         if (temp == 13) {
             for (int k = 10; k <= 12; k++) {
-                check += seachHandRank(hand, k);
+                check += searchHandRank(hand, k);
             }
-            check += seachHandRank(hand, 1);
+            check += searchHandRank(hand, 1);
             if (check == 4) {return 1;}
         }
 
         check = 0;
         for (int k = 1; k < 5; k++) {
-            check += seachHandRank(hand, temp - k);
+            check += searchHandRank(hand, temp - k);
         }
         if (check == 4) {
             return 1;
@@ -261,7 +320,7 @@ int xisFlush(Hand* hand, Player* player, int num_player) {
     return 0;
 }
 
-int isFlush(Hand hand) {
+int isFlush(Hand hand, Player player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         int count = 0; //count number of cards that have the same suit
         for (int j = 0; j < 7; j++) {
@@ -276,54 +335,8 @@ int isFlush(Hand hand) {
     return 0;
 }
 
-int is4OfAKind(Hand hand) {
-    for (int i = 0; i < 4; i++) {
-        for (int j = i + 1; j < 5; j++) {
-            for (int k = j + 1; k < 6; k++) {
-                for (int l = k + 1; l < 7; l++) {
-                    if (hand.card[i].rank == hand.card[j].rank &&
-                        hand.card[i].rank == hand.card[k].rank &&
-                        hand.card[i].rank == hand.card[l].rank) {
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
-    return 0;
-}
-
-int isFullHouse(Hand hand) {
-    int exist = 0;
-    int count = 0;
-    if (is3OfAKind(hand)){
-        for (int i = 0; i < 5; i++) {
-            for (int j = i + 1; j < 6; j++) {
-                for (int k = j + 1; k < 7; k++) {
-                    if (hand.card[i].rank == hand.card[j].rank &&
-                        hand.card[i].rank == hand.card[k].rank &&
-                        hand.card[i].rank != exist) {
-                        exist = hand.card[i].rank;
-                    }
-                }
-            }
-        }
-        for (int i = 0; i < 6; i++) {
-            for (int j = i + 1; j < 7; j++) {
-                if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist) {
-                    count++;
-                }
-                if (count >= 1) {
-                    return 1;
-                }
-            }
-        }
-    }
-    return 0;
-}
-
 //the hand must be sorted before checking
-int isStraightFlush(Hand hand) {
+int isStraightFlush(Hand hand, Player player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
@@ -334,7 +347,7 @@ int isStraightFlush(Hand hand) {
             }
         }
 
-        if (count >= 5 && isStraight(*temp)) {
+        if (count >= 5 && isStraight(*temp, player)) {
             free(temp);
             return 1;
         }
@@ -343,7 +356,7 @@ int isStraightFlush(Hand hand) {
     return 0;
 }
 
-int isRoyalStraightFlush(Hand hand) {
+int isRoyalStraightFlush(Hand hand, Player player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
@@ -356,9 +369,9 @@ int isRoyalStraightFlush(Hand hand) {
         }
         if (count >= 5) {
             for (int i = 10; i <= 13; i++) {
-                check += seachHandRank(*temp, i);
+                check += searchHandRank(*temp, i);
             }
-            check += seachHandRank(*temp, 1);
+            check += searchHandRank(*temp, 1);
             if (check == 5) {
                 free(temp);
                 return 1;
@@ -429,81 +442,48 @@ int main() {
         for (int j = 0; j < 7; j++) {
             printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
         }
-        if (isRoyalStraightFlush(hands[i])) {
+        if (isRoyalStraightFlush(hands[i], player[i])) {
             printf("Player %i has royal straight flush.", i + 1);
-        } else if (isStraightFlush(hands[i])) {
+        } else if (isStraightFlush(hands[i], player[i])) {
             printf("Player %i has straight flush.", i + 1);
-        } else if (is4OfAKind(hands[i])) {
+        } else if (is4OfAKind(hands[i], player[i])) {
             printf("Player %i has four of a kind.", i + 1);
-        } else if (isFullHouse(hands[i])) {
+        } else if (isFullHouse(hands[i], player[i])) {
             printf("Player %i has a fullhouse.", i + 1);
-        } else if (isFlush(hands[i])) {
+        } else if (isFlush(hands[i], player[i])) {
             printf("Player %i has a flush.", i + 1);
-        } else if (isStraight(hands[i])) {
+        } else if (isStraight(hands[i], player[i])) {
             printf("Player %i has a straight.", i + 1);
-        } else if (is3OfAKind(hands[i])) {
+        } else if (is3OfAKind(hands[i], player[i])) {
             printf("Player %i has three of a kind.", i + 1);
-        } else if (is2Pair(hands[i])) {
+        } else if (is2Pair(hands[i], player[i])) {
             printf("Player %i has double pair.", i + 1);
-        } else if (isPair(hands[i])) {
+        } else if (isPair(hands[i], player[i])) {
             printf("Player %i has a pair.", i + 1);
+        } else {
+            printf("Player %i highest card: %s %i", i + 1, getSuit(isHighCard(hands[i], player[i]).suit), isHighCard(hands[i], player[i]).rank);
         }
         printf("\n");
     }
-    Hand *test = malloc(sizeof(Hand));
-    test->card[0].rank = 13; test->card[0].suit = HEARTS;
-    test->card[1].rank = 12; test->card[1].suit = HEARTS;
-    test->card[2].rank = 11; test->card[2].suit = HEARTS;
-    test->card[3].rank = 10; test->card[3].suit = HEARTS;
-    test->card[4].rank = 8; test->card[4].suit = HEARTS;
-    test->card[5].rank = 7; test->card[5].suit = DIAMONDS;
-    test->card[6].rank = 1; test->card[6].suit = HEARTS;
-    if (isRoyalStraightFlush(*test)) {
-        printf("True.");
-    } else {printf("False");}
-    free(test);
-    //    Player *test_player = createPlayers(2);
-//    Hand *testHand = createHand(test_player, table, 2);
-//    for (Suit j = HEARTS; j <= SPADES; j++){
-//        for(int i = 0; i < 3; i++) {
-//            testHand[0].card[i].suit = j;
-//            testHand[0].card[i].rank = 3;
-//            testHand[1].card[i].suit = j;
-//            testHand[1].card[i].rank = 6;
-//        }
-//        testHand[0].card[3].rank = 9;
-//        testHand[0].card[3].suit = DIAMONDS;
-//        for(int i = 4; i < ; i++) {
-//            testHand[0].card[i].suit = j;
-//            testHand[0].card[i].rank = 4;
-//            testHand[1].card[i].suit = j;
-//            testHand[1].card[i].rank = i + 1;
-//        }
-//    }
-//
-//    for (int i = 0; i < 2; i++) {
-//        printf("%s: ", player[i].name);
-//        for (int j = 0; j < 7; j++) {
-//            printf("%s %i; ", getSuit(testHand[i].card[j].suit), testHand[i].card[j].rank);
-//        }
-//        if (is4OfAKind(testHand[i])) {
-//            printf("Player %i has four of a kind.", i + 1);
-//        } else if (isFullHouse(testHand[i])) {
-//            printf("Player %i has a fullhouse.", i + 1);
-//        } else if (is3OfAKind(testHand[i])) {
-//            printf("Player %i has three of a kind.", i + 1);
-//        } else if (is2Pair(testHand[i])) {
-//            printf("Player %i has double pair.", i + 1);
-//        } else if (isPair(testHand[i])) {
-//            printf("Player %i has a pair.", i + 1);
-//        }
-//        printf("\n");
-//    }
+//    Hand *test = malloc(sizeof(Hand));
+//    test->card[0].rank = 13; test->card[0].suit = HEARTS;
+//    test->card[1].rank = 12; test->card[1].suit = HEARTS;
+//    test->card[2].rank = 11; test->card[2].suit = HEARTS;
+//    test->card[3].rank = 10; test->card[3].suit = HEARTS;
+//    test->card[4].rank = 8; test->card[4].suit = HEARTS;
+//    test->card[5].rank = 7; test->card[5].suit = DIAMONDS;
+//    test->card[6].rank = 1; test->card[6].suit = HEARTS;
+//    if (isRoyalStraightFlush(*test)) {
+//        printf("True.");
+//    } else {printf("False");}
+
+
     // Free everything
     free(player);
     free(deck);
     free(table);
     free(hands);
+//    free(test);
 //    free(test_player);
 //    free(testHand);
     return 0;
