@@ -10,7 +10,7 @@
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES};
 typedef enum suit Suit;
 
-enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush};
+enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
 typedef enum rank Rank;
 
 struct card {
@@ -181,7 +181,7 @@ Card searchCard(Hand hand, int rank) {
     return temp;
 }
 
-Card isHighCard(Hand hand, Player player) {
+Card isHighestCard(Hand hand, Player player) {
     Card maxCard;
     maxCard.rank = 1;
     for (int i = 0; i < 7; i++){
@@ -194,6 +194,13 @@ Card isHighCard(Hand hand, Player player) {
     }
     return maxCard;
 };
+
+//the hand must be sorted before checking
+void isHighCard(Hand hand, Player* player) {
+    for (int i = 0; i < 5; i++) {
+        player->max_hand[i] = hand.card[i];
+    }
+}
 
 int isPair(Hand hand, Player player){
     for (int i = 0; i < 6; i++) {
@@ -292,39 +299,35 @@ int isStraight(Hand hand, Player* player) {
     for (int j = 0; j < 3; j++) {
         int check = 0;
         int temp = hand.card[j].rank;
-        int idx = 0; //idx of max_hand
-        player->max_hand[idx] = searchCard(hand, temp);
-        idx++;
+        player->max_hand[check] = searchCard(hand, temp);
+        check++;
         if (temp == 13) {
             for (int k = 12; k >= 10; k--) {
                 if (searchHandRank(hand, k)) {
+                    player->max_hand[check] = searchCard(hand, k);
                     check++;
-                    player->max_hand[idx] = searchCard(hand, k);
-                    idx++;
                 };
             }
             if (searchHandRank(hand, 1)) {
                 check++;
-                player->max_hand[idx] = searchCard(hand, 1);
+                player->max_hand[check] = searchCard(hand, 1);
             };
-            if (check == 4) {
+            if (check == 5) {
                 player->rank = Straight;
                 return 1;
             }
         }
 
-        check = 0;
-        if (idx > 1) {
-            idx = 1;
+        if (check > 1) {
+            check = 1;
         }
         for (int k = 1; k < 5; k++) {
-            if(searchHandRank(hand, temp - k)) {
+            if (temp - k > 0 && searchHandRank(hand, temp - k)) {
+                player->max_hand[check] = searchCard(hand, temp - k);
                 check++;
-                player->max_hand[idx] = searchCard(hand, temp - k);
-                idx++;
             };
         }
-        if (check == 4) {
+        if (check == 5) {
             player->rank = Straight;
             return 1;
         }
@@ -332,35 +335,16 @@ int isStraight(Hand hand, Player* player) {
     return 0;
 }
 
-//the hand must be sort before checking rank
-int xisFlush(Hand* hand, Player* player, int num_player) {
-    for (int i = 0; i < num_player; i++) {
-        for (Suit suit = HEARTS; suit <= SPADES; suit++) {
-            int count = 0; //count number of cards that have the same suit
-            for (int j = 0; j < 7; j++) {
-                if (hand[i].card[j].suit == suit) {
-                    player[i].max_hand[count] = hand[i].card[j]; //add card to max_hand
-                    count++;
-                    if (count == 5) { //hand has been sorted --> the max_hand contains 5 cards that has the highest rank.
-                        player[i].rank = Flush;
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
-    return 0;
-}
-
-int isFlush(Hand hand, Player player) {
+//the hand must be sorted before checking
+int isFlush(Hand hand, Player* player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         int count = 0; //count number of cards that have the same suit
         for (int j = 0; j < 7; j++) {
             if (hand.card[j].suit == suit) {
-                player.max_hand[count] = hand.card[j]; //add card to max_hand
+                player->max_hand[count] = hand.card[j]; //add card to max_hand
                 count++;
                 if (count == 5) {
-                    player.rank = Flush;
+                    player->rank = Flush;
                     return 1;
                 }
             }
@@ -370,7 +354,7 @@ int isFlush(Hand hand, Player player) {
 }
 
 //the hand must be sorted before checking
-/*int isStraightFlush(Hand hand, Player player) {
+int isStraightFlush(Hand hand, Player* player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
@@ -383,14 +367,15 @@ int isFlush(Hand hand, Player player) {
 
         if (count >= 5 && isStraight(*temp, player)) {
             free(temp);
+            player->rank = StraightFlush;
             return 1;
         }
         free(temp);
     }
     return 0;
-}*/
+}
 
-int isRoyalStraightFlush(Hand hand, Player player) {
+int isRoyalStraightFlush(Hand hand, Player* player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
@@ -402,12 +387,19 @@ int isRoyalStraightFlush(Hand hand, Player player) {
             }
         }
         if (count >= 5) {
-            for (int i = 10; i <= 13; i++) {
-                check += searchHandRank(*temp, i);
+            for (int i = 13; i >= 10; i--) {
+                if (searchHandRank(*temp, i)) {
+                    player->max_hand[check] = searchCard(*temp, i); //add card to max_hand
+                    check++;
+                };
             }
-            check += searchHandRank(*temp, 1);
+            if (searchHandRank(*temp, 1)) {
+                player->max_hand[check] = searchCard(*temp, 1); //add card to max_hand
+                check++;
+            };
             if (check == 5) {
                 free(temp);
+                player->rank = RoyalStraightFlush;
                 return 1;
             }
         }
@@ -476,21 +468,18 @@ int main() {
         for (int j = 0; j < 7; j++) {
             printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
         }
-        if (isRoyalStraightFlush(hands[i], player[i])) {
+        if (isRoyalStraightFlush(hands[i], &player[i])) {
             printf("Player %i has royal straight flush.", i + 1);
-/*        } else if (isStraightFlush(hands[i], player[i])) {
-            printf("Player %i has straight flush.", i + 1);*/
+        } else if (isStraightFlush(hands[i], &player[i])) {
+            printf("Player %i has straight flush.", i + 1);
         } else if (is4OfAKind(hands[i], player[i])) {
             printf("Player %i has four of a kind.", i + 1);
         } else if (isFullHouse(hands[i], player[i])) {
             printf("Player %i has a fullhouse.", i + 1);
-        } else if (isFlush(hands[i], player[i])) {
+        } else if (isFlush(hands[i], &player[i])) {
             printf("Player %i has a flush.", i + 1);
         } else if (isStraight(hands[i], &player[i])) {
             printf("Player %i has a straight.", i + 1);
-            for (int j = 0; j < 5; j++) {
-                printf("%s %i; ", getSuit(player[i].max_hand[j].suit), player[i].max_hand[j].rank);
-            }
         } else if (is3OfAKind(hands[i], player[i])) {
             printf("Player %i has three of a kind.", i + 1);
         } else if (is2Pair(hands[i], player[i])) {
@@ -498,25 +487,29 @@ int main() {
         } else if (isPair(hands[i], player[i])) {
             printf("Player %i has a pair.", i + 1);
         } else {
-            printf("Player %i highest card: %s %i", i + 1, getSuit(isHighCard(hands[i], player[i]).suit), isHighCard(hands[i], player[i]).rank);
+            isHighCard(hands[i], &player[i]);
+            printf("Player %i highest card: %s %i -- ", i + 1, getSuit(isHighestCard(hands[i], player[i]).suit), isHighestCard(hands[i], player[i]).rank);
+        }
+        for (int j = 0; j < 5; j++) {
+            printf("%s %i; ", getSuit(player[i].max_hand[j].suit), player[i].max_hand[j].rank);
         }
         printf("\n");
     }
     Player *test_player = malloc(sizeof(Player));
     test_player->max_hand = malloc(sizeof(Card) * 5);
     Hand *test = malloc(sizeof(Hand));
-    test->card[0].rank = 13; test->card[0].suit = HEARTS;
+    test->card[0].rank = 13; test->card[0].suit = SPADES;
     test->card[1].rank = 12; test->card[1].suit = HEARTS;
-    test->card[2].rank = 11; test->card[2].suit = HEARTS;
-    test->card[3].rank = 10; test->card[3].suit = HEARTS;
-    test->card[4].rank = 9; test->card[4].suit = HEARTS;
-    test->card[5].rank = 7; test->card[5].suit = DIAMONDS;
-    test->card[6].rank = 2; test->card[6].suit = HEARTS;
+    test->card[2].rank = 12; test->card[2].suit = SPADES;
+    test->card[3].rank = 11; test->card[3].suit = HEARTS;
+    test->card[4].rank = 11; test->card[4].suit = SPADES;
+    test->card[5].rank = 10; test->card[5].suit = SPADES;
+    test->card[6].rank = 9; test->card[6].suit = SPADES;
     for (int j = 0; j < 7; j++) {
         printf("%s %i; ", getSuit(test->card[j].suit), test->card[j].rank);
     }
-    if (isStraight(*test, test_player)) {
-        printf("isStraight.");
+    if (isStraightFlush(*test, test_player)) {
+        printf("True.");
     } else {printf("False");}
     printf("\n%d\n", test_player->rank);
     for (int j = 0; j < 5; j++) {
