@@ -478,6 +478,10 @@ void bet (int money, Player * player, Table * table) {
     }
 }
 
+void fold (Player * player) {
+    player->status = 0;
+}
+
 int main() {
     // Create table
     Table *table = createTable();
