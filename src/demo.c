@@ -29,6 +29,7 @@ struct player {
     char name[20];
     int money;
     int bet;
+    int status;
     Card hand[2];
     Card *max_hand;
     Rank rank;
@@ -91,6 +92,7 @@ Player* createPlayers(int no_player) {
         Player *player = malloc(sizeof(Player) * no_player);
         for (int i = 0; i < no_player; i++) {
             strcpy(player[i].name, "Player 0");
+            player[i].status = 1;
             player[i].name[7] += i + 1;
             player[i].money = 5000;
             player[i].max_hand = malloc(sizeof(Card) * 5);
