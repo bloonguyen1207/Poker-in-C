@@ -13,6 +13,9 @@ typedef enum suit Suit;
 enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
 typedef enum rank Rank;
 
+enum option {Call, Raise, Check, Bet, Allin};
+typedef enum option Option;
+
 struct card {
     Suit suit;
     int rank;
@@ -35,12 +38,14 @@ struct player {
     Rank rank;
     int isBigBlind;
     int isSmallBlind;
+    Option option;
 };
 typedef struct player Player;
 
 struct table {
     int pot_money;
     int ante;
+    int max_bet;
     Card card[5];
     int card_idx;
 };
@@ -186,7 +191,7 @@ Card searchCard(Hand hand, int rank) {
     return temp;
 }
 
-Card isHighestCard(Hand hand, Player player) {
+Card isHighestCard(Hand hand) {
     Card maxCard;
     maxCard.rank = 1;
     for (int i = 0; i < 7; i++){
@@ -202,7 +207,7 @@ Card isHighestCard(Hand hand, Player player) {
 
 //the hand must be sorted before checking
 void isHighCard(Hand hand, Player* player) {
-    player->max_hand[0] = isHighestCard(hand, *player);
+    player->max_hand[0] = isHighestCard(hand);
     for (int i = 1; i < 5; i++) {
         player->max_hand[i] = hand.card[i];
     }
@@ -470,11 +475,57 @@ int isRoyalStraightFlush(Hand hand, Player* player) {
     return 0;
 }
 
-void bet (int money, Player * player, Table * table) {
-    if (money >= table->ante * 2 && money <= player->money) {
-        player->money = player->money - money;
-        player->bet += money;
-        table->pot_money += money;
+void updateMoney (Player *player, Table * table, int money) {
+    player->money = player->money - money;
+    player->bet += money;
+    table->pot_money += money;
+}
+
+void allin (Player *player, Table * table, int money) {
+    if (player->money <= table->max_bet && money == table->max_bet - player->money) {
+        player->option = Allin;
+    }
+}
+
+int checkAllin (Player *player) {
+    if (player->option == Allin) {
+        return 1;
+    }
+    return 0;
+}
+
+void call (Player *player, Table * table) {
+    int money = table->max_bet - player->bet;
+    allin(player, table, money);
+    if (checkAllin(player)){
+    } else if (player->bet < table->max_bet && player->money >= table->max_bet) {
+        updateMoney(player, table, money);
+        player->option = Call;
+    }
+}
+
+void raise (Player *player, Table * table, int money) {
+    int call_money = table->max_bet - player->bet;
+    allin(player, table, money);
+    if (checkAllin(player)) {
+    } else if (player->bet < table->max_bet && player->money >= table->max_bet && money >= call_money * 2 ) {
+        updateMoney(player, table, money);
+        player->option = Raise;
+    }
+}
+
+void check (Player * player, Player * previousPlayer) {
+    if (player->bet == previousPlayer->bet) {
+        player->option = Check;
+    }
+}
+
+void bet (Player * player, Table * table, int money) {
+    allin(player, table, money);
+    if (checkAllin(player)) {
+    } else if (money >= table->ante * 2 && money <= player->money) {
+        updateMoney(player, table, money);
+        player->option = Bet;
     }
 }
 
@@ -487,7 +538,7 @@ int main() {
     Table *table = createTable();
 
     // Create deck
-    Deck * deck;
+    Deck *deck;
     deck = newDeck();
     int size = 52;
 
@@ -508,7 +559,7 @@ int main() {
 
     // Create players
     int no_player = 2;
-    Player* player = createPlayers(no_player);
+    Player *player = createPlayers(no_player);
 
     // Deal hole cards for players
     dealStartingHand(no_player, player, deck);
@@ -562,7 +613,7 @@ int main() {
             printf("Player %i has a pair.\n", i + 1);
         } else {
             isHighCard(hands[i], &player[i]);
-            printf("\nPlayer %i highest card: %s %i -- ", i + 1, getSuit(isHighestCard(hands[i], player[i]).suit), isHighestCard(hands[i], player[i]).rank);
+            printf("Player %i has high card.\n", i + 1);
         }
         printf("Player %i max hand: ", i + 1);
         for (int j = 0; j < 5; j++) {
