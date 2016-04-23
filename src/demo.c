@@ -45,7 +45,7 @@ typedef struct player Player;
 struct table {
     int pot_money;
     int ante;
-    int max_bet;
+    int max_bet; //the largest amount of total bet in one round
     Card card[5];
     int card_idx;
 };
@@ -95,19 +95,33 @@ void shuffleDeck(Deck* deck, int size) {
     }
 }
 
-Player* createPlayers(int no_player) {
-    if (no_player >= 2 && no_player <= 10) {
-        Player *player = malloc(sizeof(Player) * no_player);
-        for (int i = 0; i < no_player; i++) {
-            strcpy(player[i].name, "Player 0");
-            player[i].status = 1;
-            player[i].name[7] += i + 1;
-            player[i].money = 5000;
-            player[i].max_hand = malloc(sizeof(Card) * 5);
+Player* createPlayers(int num_player) {
+    if (num_player >= 2 && num_player <= 10) {
+        Player *players = malloc(sizeof(Player) * num_player);
+        for (int i = 0; i < num_player; i++) {
+            strcpy(players[i].name, "Player 0");
+            players[i].status = 1;
+            players[i].name[7] += i + 1;
+            players[i].money = 5000;
+            players[i].max_hand = malloc(sizeof(Card) * 5);
         }
-        return player;
+        return players;
     }
     return NULL;
+}
+
+void displayPlayerInfo(Player player) {
+    printf("%s -- ", player.name);
+    printf("Money: %i -- ", player.money);
+    if (player.status == 0) {
+        printf("Status: Fold -- ");
+    } else {printf("Status: Active -- ");}
+    printf("Bet: %i -- ", player.bet);
+    if (player.isBigBlind) {
+        printf("Big Blind");
+    } else if (player.isSmallBlind) {
+        printf("Small Blind");
+    }
 }
 
 Table * createTable() {
@@ -116,10 +130,27 @@ Table * createTable() {
     return table;
 }
 
-void dealStartingHand(int no_player, Player* player, Deck* deck) {
+void displayTableInfo(Table table) {
+    printf("Pot: %i\n", table.pot_money);
+    if (table.card[0].rank != 0) {
+        printf("Shared cards: ");
+    }
+    for (int i = 0; i <= table.card_idx; i++) {
+        if (table.card[i].rank == 0) {
+            break;
+        }
+        printf("%s %i; ", getSuit(table.card[i].suit), table.card[i].rank);
+        if (i == table.card_idx) {
+            printf("\n");
+        }
+    }
+    printf("\n");
+}
+
+void dealStartingHand(Player*players, Deck* deck, int num_player) {
     for (int j = 0; j < 2; j++) {
-        for (int i = 0; i < no_player; i++) {
-            player[i].hand[j] = deck->cards[deck->card_index];
+        for (int i = 0; i < num_player; i++) {
+            players[i].hand[j] = deck->cards[deck->card_index];
             deck->card_index++;
         }
     }
@@ -475,30 +506,93 @@ int isRoyalStraightFlush(Hand hand, Player* player) {
     return 0;
 }
 
-void updateMoney (Player *player, Table * table, int money) {
+int scanInput(int num_option) {
+    int n;
+    int input = 0;
+    char c;
+    int the_end = 0;
+
+    while (the_end != 1) {
+        printf("Enter input: ");
+        n = scanf("%d", &input);
+        if (n == 0) {
+            c = getchar();
+            while (c != '\n') {
+                c = getchar();
+            }
+            printf("Invalid input\n");
+        } else if (input >= 1 && input <= num_option){
+            the_end = 1;
+
+        } else {
+            printf("Invalid input\n");
+        }
+    }
+    printf("\n");
+    return input;
+}
+
+void updateMoney(Player *player, Table * table, int money) {
     player->money = player->money - money;
     player->bet += money;
     table->pot_money += money;
 }
 
+void displayRangeMoney(int min, int max) {
+    printf("The money should be between %i and %i\n", min, max);
+}
+
+int inputMoney(int min, int max) {
+    int n;
+    int input = 0;
+    char c;
+    int the_end = 0;
+
+    while (!the_end) {
+        printf("Enter money: ");
+        n = scanf("%d", &input);
+        if (n == 0) {
+            c = getchar();
+            while (c != '\n') {
+                c = getchar();
+            }
+            printf("Invalid input\n");
+        } else if (input >= min && input <= max){
+            the_end = 1;
+        } else {
+            printf("Invalid input\n");
+        }
+    }
+    printf("\n");
+    return input;
+}
+
 void allin (Player *player, Table * table, int money) {
-    if (player->money <= table->max_bet && money == table->max_bet - player->money) {
+    if (money == table->max_bet - player->money) {
         player->option = Allin;
     }
 }
 
-int checkAllin (Player *player) {
+int isAllin(Player *player) {
     if (player->option == Allin) {
         return 1;
     }
     return 0;
 }
 
-void call (Player *player, Table * table) {
+int isCallRaise(Player player, Table table) {
+    return player.bet < table.max_bet;
+}
+
+int isCheckBet(Player player, Player prevPlayer) {
+    return player.bet == prevPlayer.bet;
+}
+
+void call(Player *player, Table * table) {
     int money = table->max_bet - player->bet;
     allin(player, table, money);
-    if (checkAllin(player)){
-    } else if (player->bet < table->max_bet && player->money >= table->max_bet) {
+    if (isAllin(player)){
+    } else if (player->money >= table->max_bet) {
         updateMoney(player, table, money);
         player->option = Call;
     }
@@ -507,30 +601,139 @@ void call (Player *player, Table * table) {
 void raise (Player *player, Table * table, int money) {
     int call_money = table->max_bet - player->bet;
     allin(player, table, money);
-    if (checkAllin(player)) {
-    } else if (player->bet < table->max_bet && player->money >= table->max_bet && money >= call_money * 2 ) {
+    if (isAllin(player)) {
+    } else if (player->money >= table->max_bet && money >= call_money * 2 ) {
         updateMoney(player, table, money);
         player->option = Raise;
     }
 }
 
-void check (Player * player, Player * previousPlayer) {
-    if (player->bet == previousPlayer->bet) {
-        player->option = Check;
-    }
+void check(Player * player) {
+    player->option = Check;
 }
 
-void bet (Player * player, Table * table, int money) {
+void bet(Player * player, Table * table, int money) {
     allin(player, table, money);
-    if (checkAllin(player)) {
+    if (isAllin(player)) {
     } else if (money >= table->ante * 2 && money <= player->money) {
         updateMoney(player, table, money);
         player->option = Bet;
     }
 }
 
-void fold (Player * player) {
+void fold(Player * player) {
     player->status = 0;
+}
+
+int minMoney(Player player, Table table, Player prevPlayer) {
+    if (isCallRaise(player, table)) {
+        return (table.max_bet - player.bet) * 2;
+    } else if (isCheckBet(player, prevPlayer)) {
+        return table.ante * 2;
+    }
+    return 0;
+}
+
+void displayOption(Player player, Table table, Player prevPlayer) {
+    printf("Choose option:\n");
+    if (isCallRaise(player, table)) {
+        printf("1. Call\n");
+        printf("2. Raise\n");
+    } else if (isCheckBet(player, prevPlayer)) {
+        printf("1. Check\n");
+        printf("2. Bet\n");
+    }
+    printf("3. Fold\n");
+}
+
+void runOption(Player * player, Table * table, Player * prevPlayer, int option, int money) {
+    if (isCallRaise(*player, *table)) {
+        if (option == 1) {
+            call(player, table);
+        } else if (option == 2) {
+            raise(player, table, money);
+        }
+    } else if (isCheckBet(*player, *prevPlayer)) {
+        if (option == 1) {
+            check(player);
+        } else if (option == 2) {
+            bet(player, table, money);
+        }
+    }
+    if (option == 3) {
+        fold(player);
+    }
+}
+
+void turn (Player * players, Table * table, Deck * deck, int num_player, int turn_idx) {
+    int prevPlayer = 0; //idx of prevPlayer
+    int input;
+    int count_fold = 0;
+    if (turn_idx == 0) {
+        dealStartingHand(players, deck, num_player);
+    } else {
+        dealSharedCards(table, deck, turn_idx);
+    }
+    displayTableInfo(*table);
+
+    //TODO check when to continue or exit turn (have not do)
+
+    for (int i = 0; i < num_player; i++) {
+        //TODO check if there is only 1 active player (not work)
+        if (count_fold == num_player - 1) {
+            break;
+        }
+
+        //set prevPlayer
+        if (i == 0) {
+            prevPlayer = num_player - 1;
+        } else {
+            prevPlayer = i - 1;
+        }
+        while (players[prevPlayer].status == 0 && prevPlayer != i) {
+            if (prevPlayer == 0) {
+                prevPlayer = num_player - 1;
+            } else {
+                prevPlayer--;
+            }
+        }
+        //check if the user is able to choose option
+        if (players[i].option != Allin  && players[i].status == 1) {
+            //print all player info
+            for (int z = 0; z < num_player; z++) {
+                displayPlayerInfo(players[z]);
+                printf("\n");
+            }
+
+            //print cards in hand
+            printf("\n\n%s's turn\n", players[i].name);
+            for (int j = 0; j < 2; j++) {
+                printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
+            }
+            printf("\n\n");
+
+            //let user choose option
+            displayOption(players[i], *table, players[prevPlayer]);
+            input = scanInput(3);
+            //let user input money if they choose raise or bet
+            int money = 0;
+            if (input == 2) {
+                int min = minMoney(players[i], *table, players[prevPlayer]);
+                displayRangeMoney(min, players[i].money);
+                money = inputMoney(min, players[i].money);
+            } else if (input == 3) {//increase the count_fold var
+                count_fold++;
+            }
+            //execute the option
+            runOption(&players[i], table, &players[prevPlayer], input, money);
+
+            //Update max_bet
+            if (players[i].bet > table->max_bet) {
+                table->max_bet = players[i].bet;
+            }
+        }
+    }
+    printf("----------------------\n\n");
 }
 
 int main() {
@@ -558,11 +761,12 @@ int main() {
     printf("\n");
 
     // Create players
-    int no_player = 2;
-    Player *player = createPlayers(no_player);
+    int num_player = 3;
+    Player *players = createPlayers(num_player);
 
+/*---------------------------------------------------
     // Deal hole cards for players
-    dealStartingHand(no_player, player, deck);
+    dealStartingHand(players, deck, num_player);
 
     // Deal shared cards
     dealSharedCards(table, deck, 1);
@@ -570,10 +774,10 @@ int main() {
     dealSharedCards(table, deck, 3);
 
     // Test player starting hand
-    for (int i = 0; i < no_player; i++) {
-        printf("%s: ", player[i].name);
+    for (int i = 0; i < num_player; i++) {
+        printf("%s: ", players[i].name);
         for (int j = 0; j < 2; j++) {
-            printf("%s %i; ", getSuit(player[i].hand[j].suit), player[i].hand[j].rank);
+            printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
         }
         printf("\n");
     }
@@ -586,38 +790,38 @@ int main() {
     printf("\n");
 
     // Test hands
-    Hand *hands = createHand(player, table, no_player);
-    sortHand(hands, no_player);
-    for (int i = 0; i < no_player; i++) {
-        printf("%s: ", player[i].name);
+    Hand *hands = createHand(players, table, num_player);
+    sortHand(hands, num_player);
+    for (int i = 0; i < num_player; i++) {
+        printf("%s: ", players[i].name);
         for (int j = 0; j < 7; j++) {
             printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
         }
-        if (isRoyalStraightFlush(hands[i], &player[i])) {
+        if (isRoyalStraightFlush(hands[i], &players[i])) {
             printf("Player %i has royal straight flush.\n", i + 1);
-        } else if (isStraightFlush(hands[i], &player[i])) {
+        } else if (isStraightFlush(hands[i], &players[i])) {
             printf("Player %i has straight flush.\n", i + 1);
-        } else if (is4OfAKind(hands[i], &player[i])) {
+        } else if (is4OfAKind(hands[i], &players[i])) {
             printf("Player %i has four of a kind.\n", i + 1);
-        } else if (isFullHouse(hands[i], &player[i])) {
+        } else if (isFullHouse(hands[i], &players[i])) {
             printf("Player %i has a fullhouse.\n", i + 1);
-        } else if (isFlush(hands[i], &player[i])) {
+        } else if (isFlush(hands[i], &players[i])) {
             printf("Player %i has a flush.\n", i + 1);
-        } else if (isStraight(hands[i], &player[i])) {
+        } else if (isStraight(hands[i], &players[i])) {
             printf("Player %i has a straight.\n", i + 1);
-        } else if (is3OfAKind(hands[i], &player[i])) {
+        } else if (is3OfAKind(hands[i], &players[i])) {
             printf("Player %i has three of a kind.\n", i + 1);
-        } else if (is2Pair(hands[i], &player[i])) {
+        } else if (is2Pair(hands[i], &players[i])) {
             printf("Player %i has double pair.\n", i + 1);
-        } else if (isPair(hands[i], &player[i])) {
+        } else if (isPair(hands[i], &players[i])) {
             printf("Player %i has a pair.\n", i + 1);
         } else {
-            isHighCard(hands[i], &player[i]);
+            isHighCard(hands[i], &players[i]);
             printf("Player %i has high card.\n", i + 1);
         }
         printf("Player %i max hand: ", i + 1);
         for (int j = 0; j < 5; j++) {
-            printf("%s %i; ", getSuit(player[i].max_hand[j].suit), player[i].max_hand[j].rank);
+            printf("%s %i; ", getSuit(players[i].max_hand[j].suit), players[i].max_hand[j].rank);
         }
         printf("\n");
     }
@@ -641,12 +845,18 @@ int main() {
 //    for (int j = 0; j < 5; j++) {
 //        printf("%s %i; ", getSuit(test_player->max_hand[j].suit), test_player->max_hand[j].rank);
 //    }
+-------------------------------------------*/
+
+    table->ante = 250;
+    for (int i = 0; i < 4; i++){
+        turn(players, table, deck, num_player, i);
+    }
 
     // Free everything
-    free(player);
+    free(players);
     free(deck);
     free(table);
-    free(hands);
+//    free(hands);
 
 //    free(test);
 //    free(test_player->max_hand);
