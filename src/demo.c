@@ -13,7 +13,7 @@ typedef enum suit Suit;
 enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
 typedef enum rank Rank;
 
-enum option {Call, Raise, Check, Bet, Allin};
+enum option {Call, Raise, Check, Bet, Allin, Fold};
 typedef enum option Option;
 
 struct card {
@@ -104,6 +104,8 @@ Player* createPlayers(int num_player) {
             players[i].name[7] += i + 1;
             players[i].money = 5000;
             players[i].max_hand = malloc(sizeof(Card) * 5);
+            players[i].isBigBlind = 0;
+            players[i].isSmallBlind = 0;
         }
         return players;
     }
@@ -665,6 +667,32 @@ void runOption(Player * player, Table * table, Player * prevPlayer, int option, 
     }
 }
 
+void game (Player * players, Table * table, Deck * deck, int num_player) {
+    int nextPlayer = 0;
+    int prevPlayer = 0;
+    for (int gameIdx = 0; gameIdx < 10; gameIdx++) {
+        if (gameIdx == 0) {
+            players[0].isSmallBlind = 1;
+            players[0].bet = table->ante;
+            players[1].isBigBlind = 1;
+            players[1].bet = table->ante * 2;
+            table->pot_money = players[0].bet + players[1].bet;
+            nextPlayer++;
+        } else {
+            if (nextPlayer == num_player) {
+                nextPlayer = 0;
+            }
+            players[nextPlayer].isSmallBlind = 1;
+            players[nextPlayer].bet = table->ante;
+            players[nextPlayer + 1].isBigBlind = 1;
+            players[nextPlayer + 1].bet = table->ante * 2;
+            players[prevPlayer].isSmallBlind = 0;
+            players[nextPlayer].isBigBlind = 0;
+            table->pot_money = players[nextPlayer].bet + players[nextPlayer + 1].bet;
+            nextPlayer++;
+        }
+    }
+}
 void turn (Player * players, Table * table, Deck * deck, int num_player, int turn_idx) {
     int prevPlayer = 0; //idx of prevPlayer
     int input;
@@ -679,9 +707,15 @@ void turn (Player * players, Table * table, Deck * deck, int num_player, int tur
     //TODO check when to continue or exit turn (have not do)
 
     for (int i = 0; i < num_player; i++) {
+
         //TODO check if there is only 1 active player (not work)
         if (count_fold == num_player - 1) {
-            break;
+            for (int j = 0; j < num_player; j++) {
+                if (players[j].status == 1) {
+                    printf("%s won.", players[j].name);
+                    break;
+                }
+            }
         }
 
         //set prevPlayer
@@ -736,61 +770,7 @@ void turn (Player * players, Table * table, Deck * deck, int num_player, int tur
     printf("----------------------\n\n");
 }
 
-int main() {
-    // Create table
-    Table *table = createTable();
-
-    // Create deck
-    Deck *deck;
-    deck = newDeck();
-    int size = 52;
-
-    // Test new deck
-    for (int m = 0; m < size; m++) {
-        printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-    }
-    printf("\n");
-
-    // Shuffle the deck
-    shuffleDeck(deck, size);
-
-    // Test shuffle
-    for (int m = 0; m < size; m++) {
-        printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-    }
-    printf("\n");
-
-    // Create players
-    int num_player = 3;
-    Player *players = createPlayers(num_player);
-
-/*---------------------------------------------------
-    // Deal hole cards for players
-    dealStartingHand(players, deck, num_player);
-
-    // Deal shared cards
-    dealSharedCards(table, deck, 1);
-    dealSharedCards(table, deck, 2);
-    dealSharedCards(table, deck, 3);
-
-    // Test player starting hand
-    for (int i = 0; i < num_player; i++) {
-        printf("%s: ", players[i].name);
-        for (int j = 0; j < 2; j++) {
-            printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
-        }
-        printf("\n");
-    }
-
-    // Test shared cards
-    printf("Shared Cards: ");
-    for (int i = 0; i < 5; i++) {
-        printf("%s %i; ", getSuit(table->card[i].suit), table->card[i].rank);
-    }
-    printf("\n");
-
-    // Test hands
-    Hand *hands = createHand(players, table, num_player);
+void testHand(Hand *hands, Player * players, int num_player) {
     sortHand(hands, num_player);
     for (int i = 0; i < num_player; i++) {
         printf("%s: ", players[i].name);
@@ -825,6 +805,83 @@ int main() {
         }
         printf("\n");
     }
+}
+
+void mainMenu(){
+    printf("----------POKER----------\n1. Start game\n2. Options\n3. Exit\nYour option: ");
+}
+
+int main() {
+    int opt = 0;
+    int opt1 = 0;
+    int opt2 = 0;
+    for (int a = 0; ;a++) {
+        mainMenu();
+        scanf("%d", &opt);
+        if (opt == 1) {
+            printf("Start game\n");
+        } else if (opt == 2) {
+            printf("Options\n");
+        } else if (opt == 3) {
+            break;
+        }
+    }
+        // Create table
+        Table *table = createTable();
+
+        // Create deck
+        Deck *deck;
+        deck = newDeck();
+        int size = 52;
+
+        // Test new deck
+        for (int m = 0; m < size; m++) {
+            printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
+        }
+        printf("\n");
+
+        // Shuffle the deck
+        shuffleDeck(deck, size);
+
+        // Test shuffle
+        for (int m = 0; m < size; m++) {
+            printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
+        }
+        printf("\n");
+
+        // Create players
+        int num_player = 3;
+        Player *players = createPlayers(num_player);
+
+/*---------------------------------------------------
+    // Deal hole cards for players
+    dealStartingHand(players, deck, num_player);
+
+    // Deal shared cards
+    dealSharedCards(table, deck, 1);
+    dealSharedCards(table, deck, 2);
+    dealSharedCards(table, deck, 3);
+
+    // Test player starting hand
+    for (int i = 0; i < num_player; i++) {
+        printf("%s: ", players[i].name);
+        for (int j = 0; j < 2; j++) {
+            printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
+        }
+        printf("\n");
+    }
+
+    // Test shared cards
+    printf("Shared Cards: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%s %i; ", getSuit(table->card[i].suit), table->card[i].rank);
+    }
+    printf("\n");
+
+    // Test hands
+    Hand *hands = createHand(players, table, num_player);
+    testHand(hands, players, num_player)
+
 //    Player *test_player = malloc(sizeof(Player));
 //    test_player->max_hand = malloc(sizeof(Card) * 5);
 //    Hand *test = malloc(sizeof(Hand));
@@ -847,20 +904,21 @@ int main() {
 //    }
 -------------------------------------------*/
 
-    table->ante = 250;
-    for (int i = 0; i < 4; i++){
-        turn(players, table, deck, num_player, i);
-    }
+        table->ante = 250;
+        for (int i = 0; i < 4; i++) {
+            turn(players, table, deck, num_player, i);
+        }
 
-    // Free everything
-    free(players);
-    free(deck);
-    free(table);
+        // Free everything
+        free(players);
+        free(deck);
+        free(table);
 //    free(hands);
 
 //    free(test);
 //    free(test_player->max_hand);
 //    free(test_player);
+
     return 0;
 }
 
