@@ -104,6 +104,7 @@ Player* createPlayers(int num_player) {
             players[i].name[7] += i + 1;
             players[i].money = 5000;
             players[i].max_hand = malloc(sizeof(Card) * 5);
+            players[i].bet = 0;
         }
         return players;
     }
@@ -127,6 +128,7 @@ void displayPlayerInfo(Player player) {
 Table * createTable() {
     Table * table = malloc(sizeof(Table));
     table->card_idx = 0;
+    table->max_bet = -1;
     return table;
 }
 
@@ -512,7 +514,7 @@ int scanInput(int num_option) {
     char c;
     int the_end = 0;
 
-    while (the_end != 1) {
+    while (!the_end) {
         printf("Enter input: ");
         n = scanf("%d", &input);
         if (n == 0) {
@@ -592,20 +594,20 @@ void call(Player *player, Table * table) {
     int money = table->max_bet - player->bet;
     allin(player, table, money);
     if (isAllin(player)){
-    } else if (player->money >= table->max_bet) {
-        updateMoney(player, table, money);
+    } else if (player->money >= money) {
         player->option = Call;
     }
+    updateMoney(player, table, money);
 }
 
 void raise (Player *player, Table * table, int money) {
     int call_money = table->max_bet - player->bet;
     allin(player, table, money);
     if (isAllin(player)) {
-    } else if (player->money >= table->max_bet && money >= call_money * 2 ) {
-        updateMoney(player, table, money);
+    } else if (player->money >= money && money >= call_money * 2 ) {
         player->option = Raise;
     }
+    updateMoney(player, table, money);
 }
 
 void check(Player * player) {
@@ -615,10 +617,10 @@ void check(Player * player) {
 void bet(Player * player, Table * table, int money) {
     allin(player, table, money);
     if (isAllin(player)) {
-    } else if (money >= table->ante * 2 && money <= player->money) {
-        updateMoney(player, table, money);
+    } else if (money >= table->ante * 2 && player->money >= money) {
         player->option = Bet;
     }
+    updateMoney(player, table, money);
 }
 
 void fold(Player * player) {
@@ -665,75 +667,101 @@ void runOption(Player * player, Table * table, Player * prevPlayer, int option, 
     }
 }
 
-void turn (Player * players, Table * table, Deck * deck, int num_player, int turn_idx) {
-    int prevPlayer = 0; //idx of prevPlayer
+int turn(Player * curPlayer, Table *table, Player * prePlayer) {
     int input;
+    printf("\n\n%s's Turn\n", curPlayer->name);
+
+    //print cards in hand
+    for (int j = 0; j < 2; j++) {
+        printf("%s %i; ", getSuit(curPlayer->hand[j].suit), curPlayer->hand[j].rank);
+    }
+    printf("\n\n");
+
+    //let user choose option
+    displayOption(*curPlayer, *table, *prePlayer);
+    input = scanInput(3);
+    //let user input money if they choose raise or bet
+    int money = 0;
+    if (input == 2) {
+        int min = minMoney(*curPlayer, *table, *prePlayer);
+        displayRangeMoney(min, curPlayer->money);
+        money = inputMoney(min, curPlayer->money);
+    }
+
+    //execute the option
+    runOption(curPlayer, table, prePlayer, input, money);
+
+    //Update max_bet
+    if (curPlayer->bet > table->max_bet) {
+        table->max_bet = curPlayer->bet;
+    }
+    printf("\nMax bet: %i\n", table->max_bet);
+    printf("\n------End%sTurn-----\n", curPlayer->name);
+    return input;
+}
+
+void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int round_idx) {
+    int prevPlayer = 0; //idx of prevPlayer
     int count_fold = 0;
-    if (turn_idx == 0) {
+    int the_end = 0;
+    int isFirstTurn = 1;
+
+    if (round_idx == 0) {
         dealStartingHand(players, deck, num_player);
     } else {
-        dealSharedCards(table, deck, turn_idx);
+        dealSharedCards(table, deck, round_idx);
     }
-    displayTableInfo(*table);
 
-    //TODO check when to continue or exit turn (have not do)
-
-    for (int i = 0; i < num_player; i++) {
-        //TODO check if there is only 1 active player (not work)
-        if (count_fold == num_player - 1) {
-            break;
+    while (!the_end) {
+        //Except for first turn, if there is still any active or not allin player that bet < max_bet , continue round
+        int check = 0;
+        if (!isFirstTurn) {
+            for (int x = 0; x < num_player; x++) {
+                if ((players[x].status != 0 || !isAllin(&players[x])) && players[x].bet < table->max_bet) {
+                    check++;
+                }
+            }
+            if (check == 0) {
+                break;
+            }
         }
-
-        //set prevPlayer
-        if (i == 0) {
-            prevPlayer = num_player - 1;
-        } else {
-            prevPlayer = i - 1;
-        }
-        while (players[prevPlayer].status == 0 && prevPlayer != i) {
-            if (prevPlayer == 0) {
+        for (int i = 0; i < num_player; i++) {
+            //TODO check if there is only 1 active player (work), but game also need to check again to break game
+            if (count_fold == num_player - 1) {
+                the_end = 1;
+                break;
+            }
+            printf("\nCountFold: %i\n", count_fold);
+            //set prevPlayer
+            if (i == 0) {
                 prevPlayer = num_player - 1;
             } else {
-                prevPlayer--;
+                prevPlayer = i - 1;
+            }
+            while (players[prevPlayer].status == 0 && prevPlayer != i) {
+                if (prevPlayer == 0) {
+                    prevPlayer = num_player - 1;
+                } else {
+                    prevPlayer--;
+                }
+            }
+
+            //check if the user is able to choose option (get turn)
+            if (players[i].option != Allin  && players[i].status == 1) {
+                displayTableInfo(*table);
+                //print all player info
+                for (int z = 0; z < num_player; z++) {
+                    displayPlayerInfo(players[z]);
+                    printf("\n");
+                }
+                if (turn(&players[i], table, &players[prevPlayer]) == 3) {
+                    count_fold++;
+                }
             }
         }
-        //check if the user is able to choose option
-        if (players[i].option != Allin  && players[i].status == 1) {
-            //print all player info
-            for (int z = 0; z < num_player; z++) {
-                displayPlayerInfo(players[z]);
-                printf("\n");
-            }
-
-            //print cards in hand
-            printf("\n\n%s's turn\n", players[i].name);
-            for (int j = 0; j < 2; j++) {
-                printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
-            }
-            printf("\n\n");
-
-            //let user choose option
-            displayOption(players[i], *table, players[prevPlayer]);
-            input = scanInput(3);
-            //let user input money if they choose raise or bet
-            int money = 0;
-            if (input == 2) {
-                int min = minMoney(players[i], *table, players[prevPlayer]);
-                displayRangeMoney(min, players[i].money);
-                money = inputMoney(min, players[i].money);
-            } else if (input == 3) {//increase the count_fold var
-                count_fold++;
-            }
-            //execute the option
-            runOption(&players[i], table, &players[prevPlayer], input, money);
-
-            //Update max_bet
-            if (players[i].bet > table->max_bet) {
-                table->max_bet = players[i].bet;
-            }
-        }
+        isFirstTurn = 0;
     }
-    printf("----------------------\n\n");
+    printf("-------------------EndRound------------------------\n\n");
 }
 
 int main() {
@@ -849,7 +877,7 @@ int main() {
 
     table->ante = 250;
     for (int i = 0; i < 4; i++){
-        turn(players, table, deck, num_player, i);
+        roundPoker(players, table, deck, num_player, i);
     }
 
     // Free everything
