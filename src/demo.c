@@ -742,8 +742,10 @@ int turn(Player *player, Table * table) {
     return input;
 }
 
-void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx) {
+void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int bigBlind) {
     int prevPlayer = 0; //idx of prevPlayer
+    int lastHighest = 0;
+    int playerIdx = 0;
     int count_fold = 0;
     int end_game = 0;
     int is_1st_bet = 0;
@@ -753,15 +755,27 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
     } else if(roundIdx == 0) {
         is_1st_bet = 1;
     }
+
     while (!end_game) {
         for (int i = 0; i < num_player; i++) {
+            if (playerIdx >= num_player) {
+                playerIdx = 0;
+            }
             if (is_1st_bet) {
-                table->max_bet = table->ante * 2;
+                table->highest_bet = table->ante * 2;
                 if (players[i].isBigBlind == 1 || players[i].isSmallBlind == 1) {
+                    if (players[i].isBigBlind == 1){
+                        playerIdx = i + 1;
+                        lastHighest = i;
+                    } else if (players[i].isSmallBlind == 1){
+                        playerIdx = i + 2;
+                        lastHighest = i + 1;
+                    }
                     continue;
                 }
             }
-            if (turn(&players[i], table) == 3) {
+            displayTableInfo(*table);
+            if (turn(&players[playerIdx], table) == 3) {
                 count_fold++;
             }
             if (count_fold == num_player - 1) {
@@ -769,18 +783,30 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
                 break;
             }
             if(!is_1st_bet) {
-                int check = 0;
-                for (int x = 0; x < num_player; x++) {
-                    if ((players[x].status != 0 || !isAllin(&players[x])) && players[x].bet < table->max_bet) {
-                        check++;
+                if (playerIdx == lastHighest) {
+                    int check = 0;
+                    for (int x = 0; x < num_player; x++) {
+                        if ((players[x].status != 0 || !isAllin(players[x], *table)) &&
+                            players[x].bet < table->highest_bet) {
+                            check++;
+                        }
+                    }
+                    printf("%i", check);
+                    if (check == 0) {
+                        end_game = 1;
+                        break;
                     }
                 }
-                printf("%i", check);
-                if (check == 0) {
-                    end_game = 1;
-                    break;
+            }
+            //check if the user is able to choose option (get turn)
+            if (players[playerIdx].option != Allin  && players[playerIdx].status == 1) {
+                //print all player info
+                for (int z = 0; z < num_player; z++) {
+                    displayPlayerInfo(players[z]);
+                    printf("\n");
                 }
             }
+            playerIdx++;
         }
         is_1st_bet = 0;
     }
@@ -851,6 +877,7 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
 void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
     int nextPlayer = 0;
     int prevPlayer = 0;
+    int bigBlind = 0;
     table->ante = 250;
     if (gameIdx == 0) {
         players[0].isSmallBlind = 1;
@@ -860,6 +887,7 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
         table->pot_money = players[0].bet + players[1].bet;
         nextPlayer++;
         prevPlayer = 0;
+        bigBlind = 1;
     } else {
         players[nextPlayer].isSmallBlind = 1;
         players[nextPlayer].bet = table->ante;
@@ -869,6 +897,7 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
         players[nextPlayer].isBigBlind = 0;
         table->pot_money = players[nextPlayer].bet + players[nextPlayer + 1].bet;
         nextPlayer++;
+        bigBlind = nextPlayer + 1;
         prevPlayer = nextPlayer - 1;
         if (nextPlayer == num_player) {
             nextPlayer = 0;
@@ -879,8 +908,8 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
     }
     dealStartingHand(players, deck, num_player);
     for (int roundIdx = 0; roundIdx < 4; roundIdx++) {
-        roundPoker(players, table, deck, num_player, roundIdx);
-        printf("End round");
+        roundPoker(players, table, deck, num_player, roundIdx, bigBlind);
+        printf("-------End round--------");
         int count = 0;
         for (int i = 0; i < num_player; i++) {
             if (players[i].status == 0) {
