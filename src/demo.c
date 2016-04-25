@@ -588,10 +588,11 @@ int isCallRaise(Player player, Table table) {
     return player.bet < table.max_bet;
 }
 
-int isCheckBet(Player player, Player prevPlayer) {
-    return player.bet == prevPlayer.bet;
+int isCheckBet(Player player, Table table) {
+    return player.bet == table.max_bet;
 }
 
+//TODO check this
 void call(Player *player, Table * table) {
     int money = table->max_bet - player->bet;
     allin(player, table, money);
@@ -629,42 +630,48 @@ void fold(Player * player) {
     player->status = 0;
 }
 
-int minMoney(Player player, Table table, Player prevPlayer) {
+//TODO Check
+int minMoney(Player player, Table table) {
     if (isCallRaise(player, table)) {
         return (table.max_bet - player.bet) * 2;
-    } else if (isCheckBet(player, prevPlayer)) {
+    } else if (isCheckBet(player, table)) {
         return table.ante * 2;
     }
     return 0;
 }
 
-void displayOption(Player player, Table table, Player prevPlayer) {
+void displayOption(Player player, Table table) {
+    //TODO check this again
     printf("Choose option:\n");
     if (isCallRaise(player, table)) {
-        if (player.money < table.max_bet) {
+        if (player.money < table.max_bet - player.bet) {
             printf("1. Allin");
-        } else if(player.money >= table.max_bet && player.money <= table.ante * 2){
+        } else if(player.money >= table.max_bet - player.bet && player.money <= table.ante * 2){
             printf("1. Call\n");
             printf("2. Allin\n");
         } else {
             printf("1. Call\n");
             printf("2. Raise\n");
         }
-    } else if (isCheckBet(player, prevPlayer)) {
+    } else if (isCheckBet(player, table)) {
         printf("1. Check\n");
+        if (player.money <= table.ante * 2) {
+            printf("2. Allin\n");
+        }
         printf("2. Bet\n");
     }
     printf("3. Fold\n");
 }
 
-void runOption(Player * player, Table * table, Player * prevPlayer, int option, int money) {
+void runOption(Player * player, Table * table, int option, int money) {
+    //TODO fix this
     if (isCallRaise(*player, *table)) {
         if (option == 1) {
             call(player, table);
         } else if (option == 2) {
             raise(player, table, money);
         }
-    } else if (isCheckBet(*player, *prevPlayer)) {
+    } else if (isCheckBet(*player, *table)) {
         if (option == 1) {
             check(player);
         } else if (option == 2) {
@@ -676,7 +683,7 @@ void runOption(Player * player, Table * table, Player * prevPlayer, int option, 
     }
 }
 
-int turn(Player * curPlayer, Table *table, Player * prePlayer) {
+int turn(Player * curPlayer, Table *table) {
     int input;
     printf("\n\n%s's Turn\n", curPlayer->name);
 
@@ -687,18 +694,18 @@ int turn(Player * curPlayer, Table *table, Player * prePlayer) {
     printf("\n\n");
 
     //let user choose option
-    displayOption(*curPlayer, *table, *prePlayer);
+    displayOption(*curPlayer, *table);
     input = scanInput(3);
     //let user input money if they choose raise or bet
     int money = 0;
     if (input == 2) {
-        int min = minMoney(*curPlayer, *table, *prePlayer);
+        int min = minMoney(*curPlayer, *table);
         displayRangeMoney(min, curPlayer->money);
         money = inputMoney(min, curPlayer->money);
     }
 
     //execute the option
-    runOption(curPlayer, table, prePlayer, input, money);
+    runOption(curPlayer, table, input, money);
 
     //Update max_bet
     if (curPlayer->bet > table->max_bet) {
@@ -709,14 +716,13 @@ int turn(Player * curPlayer, Table *table, Player * prePlayer) {
     return input;
 }
 
-void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int round_idx) {
+/*void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int round_idx) {
     int prevPlayer = 0; //idx of prevPlayer
     int count_fold = 0;
     int the_end = 0;
     int isFirstTurn = 1;
 
-    if (round_idx == 0) {
-    } else {
+    if (round_idx > 0) {
         dealSharedCards(table, deck, round_idx);
     }
 
@@ -770,7 +776,7 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
         isFirstTurn = 0;
     }
     printf("-------------------EndRound------------------------\n\n");
-}
+}*/
 
 void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
     int nextPlayer = 0;
@@ -802,13 +808,13 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
         }
     }
     dealStartingHand(players, deck, num_player);
-    for (int roundIdx = 0; ; roundIdx++) {
-        roundPoker(players, table, deck, num_player, roundIdx);
-        roundIdx++;
+    for (int roundIdx = 0; roundIdx < 4; roundIdx++) {
+//        roundPoker(players, table, deck, num_player, roundIdx);
         int count = 0;
         for (int i = 0; i < num_player; i++) {
-            players[i].status = 0;
-            count++;
+            if (players[i].status == 0) {
+                count++;
+            }
         }
         if (count == num_player - 1) {
             printf("%i", roundIdx);
