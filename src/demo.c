@@ -694,36 +694,51 @@ void runOption(Player * player, Table * table, int option, int money) {
     }
 }
 
-int turn(Player * curPlayer, Table *table) {
+int turn(Player *player, Table * table) {
     int input;
-    printf("\n\n%s's Turn\n", curPlayer->name);
+    printf("\n\n%s's Turn\n", player->name);
 
     //print cards in hand
     for (int j = 0; j < 2; j++) {
-        printf("%s %i; ", getSuit(curPlayer->hand[j].suit), curPlayer->hand[j].rank);
+        printf("%s %i; ", getSuit(player->hand[j].suit), player->hand[j].rank);
     }
     printf("\n\n");
 
     //let user choose option
-    displayOption(*curPlayer, *table);
+    displayOption(*player, * table);
     input = scanInput(3);
     //let user input money if they choose raise or bet
     int money = 0;
-    if (input == 2) {
-        int min = minMoney(*curPlayer, *table);
-        displayRangeMoney(min, curPlayer->money);
-        money = inputMoney(min, curPlayer->money);
+    int isRaiseOrBet = 0;
+    if (isCallRaise(*player, *table)) {
+        int call_money = table->highest_bet - player->bet;
+        if (player->money >= call_money + table->last_bet){
+            if (input == 2) {
+                isRaiseOrBet = 1;
+            }
+        }
+    } else if (isCheckBet(*player, *table)) {
+        if (player->money >= table->ante * 2) {
+            if (input == 2) {
+                isRaiseOrBet = 1;
+            }
+        }
+    }
+    if (isRaiseOrBet == 1) {
+        int min = minMoney(*player, *table);
+        displayRangeMoney(min, player->money);
+        money = inputMoney(min, player->money);
     }
 
     //execute the option
-    runOption(curPlayer, table, input, money);
+    runOption(player, table, input, money);
 
     //Update highest_bet
-    if (curPlayer->bet > table->highest_bet) {
-        table->highest_bet = curPlayer->bet;
+    if (player->bet > table->highest_bet) {
+        table->highest_bet = player->bet;
     }
-    printf("\nMax bet: %i\n", table->highest_bet);
-    printf("\n------End%sTurn-----\n", curPlayer->name);
+    printf("\nHigh bet: %i\n", table->highest_bet);
+    printf("\n------End%sTurn-----\n", player->name);
     return input;
 }
 
