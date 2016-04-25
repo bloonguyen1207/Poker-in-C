@@ -39,6 +39,7 @@ struct player {
     int isBigBlind;
     int isSmallBlind;
     Option option;
+    int isTurn;
 };
 typedef struct player Player;
 
@@ -443,7 +444,7 @@ int isFlush(Hand hand, Player* player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         int count = 0; //count number of cards that have the same suit
         for (int j = 0; j < 7; j++) {
-            if (hand.card[j].suit == suit) {
+            if (hand.card[j].suit == suit && hand.card[j].rank > 0) {
                 player->max_hand[count] = hand.card[j]; //add card to max_hand
                 count++;
                 if (count == 5) {
@@ -462,7 +463,7 @@ int isStraightFlush(Hand hand, Player* player) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
         for (int j = 0; j < 7; j++) {
-            if (hand.card[j].suit == suit) {
+            if (hand.card[j].suit == suit && hand.card[j].rank > 0) {
                 temp->card[count] = hand.card[j];
                 count++;
             }
@@ -484,7 +485,7 @@ int isRoyalStraightFlush(Hand hand, Player* player) {
         int count = 0; //count number of cards that have the same suit
         int check = 0;
         for (int j = 0; j < 7; j++) {
-            if (hand.card[j].suit == suit) {
+            if (hand.card[j].suit == suit && hand.card[j].rank > 0) {
                 temp->card[count] = hand.card[j];
                 count++;
             }
@@ -957,6 +958,142 @@ void testHand(Hand *hands, Player * players, int num_player) {
             printf("%s %i; ", getSuit(players[i].max_hand[j].suit), players[i].max_hand[j].rank);
         }
         printf("\n");
+    }
+}
+
+void checkHandRanking(Hand hand, Player player) {
+    if (isRoyalStraightFlush(hand, &player)) {
+    } else if (isStraightFlush(hand, &player)) {
+    } else if (is4OfAKind(hand, &player)) {
+    } else if (isFullHouse(hand, &player)) {
+    } else if (isFlush(hand, &player)) {
+    } else if (isStraight(hand, &player)) {
+    } else if (is3OfAKind(hand, &player)) {
+    } else if (is2Pair(hand, &player)) {
+    } else if (isPair(hand, &player)) {
+    } else {
+        isHighCard(hand, &player);
+    }
+}
+
+void firstAIround0(Player * ai, Table * table) {
+    if (ai->hand[0].rank == ai->hand[1].rank ||
+        (ai->hand[0].rank >= 10 && ai->hand[1].rank >= 10) ||
+        ai->hand[0].rank == 1 ||
+        ai->hand[1].rank == 1) {
+        if (isCallRaise(*ai, *table)) {
+            int money = minMoney(*ai, *table);
+            if (ai->money >= money * 3) {
+                raise(ai, table, (int) (money * 1.5));
+                ai->isTurn = 0;
+                return;
+            }
+        } else if (isCheckBet(*ai, *table)) {
+            int money = minMoney(*ai, *table);
+            if (ai->money >= money * 3) {
+                bet(ai, table, (int) (money * 1.5));
+                ai->isTurn = 0;
+                return;
+            }
+        }
+    }
+    if (abs(ai->hand[0].rank - ai->hand[1].rank) > 5 && ai->hand[0].suit != ai->hand[1].suit) {
+        if (ai->hand[0].rank < 11 && ai->hand[1].rank < 11) {
+            fold(ai);
+            ai->isTurn = 0;
+            return;
+        }
+    }
+    if (isCallRaise(*ai, *table)) {
+        if (ai->money >= minMoney(*ai, *table)) {
+            call(ai, table);
+            ai->isTurn = 0;
+            return;
+        }
+    } else if (isCheckBet(*ai, *table)) {
+        check(ai);
+        ai->isTurn = 0;
+        return;
+    }
+    fold(ai);
+    ai->isTurn = 0;
+    return;
+
+}
+
+void firstAIrounds(Player * ai, Table * table) {
+    Hand * temp = malloc(sizeof(Hand));
+    temp->card[0] = ai->hand[0];
+    temp->card[1] = ai->hand[1];
+    for (int i = 0; i <= table->card_idx; i++) {
+        temp->card[i+2] = table->card[i];
+    }
+    sortHand(temp, 1);
+    checkHandRanking(*temp, *ai);
+
+    int money = minMoney(*ai, *table);
+    if (ai->rank > 0) {
+        if (ai->rank >= 2) {
+            if (isCallRaise(*ai, *table)) {
+                raise(ai, table, ai->money);
+                ai->isTurn = 0;
+                return;
+            } else if (isCheckBet(*ai, *table)) {
+                bet(ai, table, ai->money);
+                ai->isTurn = 0;
+                return;
+            }
+        }
+        if (ai->money >= money * 3) {
+            if (isCallRaise(*ai, *table)) {
+                raise(ai, table, (int)(money * 1.5));
+                ai->isTurn = 0;
+                return;
+            } else if (isCheckBet(*ai, *table)) {
+                bet(ai, table, (int)(money * 1.5));
+                ai->isTurn = 0;
+                return;
+            }
+        }
+        if (isCallRaise(*ai, *table)) {
+            call(ai, table);
+            ai->isTurn = 0;
+            return;
+        } else if (isCheckBet(*ai, *table)) {
+            check(ai);
+            ai->isTurn = 0;
+            return;
+        }
+    }
+
+    if (ai->money >= money * 2) {
+        if (isCallRaise(*ai, *table)) {
+            call(ai, table);
+            ai->isTurn = 0;
+            return;
+        } else if (isCheckBet(*ai, *table)) {
+            check(ai);
+            ai->isTurn = 0;
+            return;
+        }
+
+    }
+    fold(ai);
+    ai->isTurn = 0;
+
+    free(temp);
+    return;
+}
+
+void firstAI(Player * ai, Table * table, int roundIdx) {
+    while (ai->isTurn && ai->status == 1) {
+        if (roundIdx == 0) {
+            firstAIround0(ai, table);
+        } else {
+            firstAIrounds(ai, table);
+        }
+        ai->isTurn = 0;
+        break;
     }
 }
 
