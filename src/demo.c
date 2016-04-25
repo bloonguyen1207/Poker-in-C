@@ -45,9 +45,10 @@ typedef struct player Player;
 struct table {
     int pot_money;
     int ante;
-    int max_bet; //the largest amount of total bet in one round
+    int highest_bet; //the largest amount of total bet in one round
     Card card[5];
     int card_idx;
+    int last_bet;
 };
 typedef struct table Table;
 
@@ -130,7 +131,7 @@ void displayPlayerInfo(Player player) {
 Table * createTable() {
     Table * table = malloc(sizeof(Table));
     table->card_idx = 0;
-    table->max_bet = 0;
+    table->highest_bet = 0;
     return table;
 }
 
@@ -571,46 +572,40 @@ int inputMoney(int min, int max) {
     return input;
 }
 
-void allin (Player *player, Table * table, int money) {
-    if (money == table->max_bet - player->money) {
-        player->option = Allin;
-    }
-}
-
-int isAllin(Player *player) {
-    if (player->option == Allin) {
-        return 1;
-    }
-    return 0;
+int isAllin(Player player, Table table) {
+    return player.money < table.highest_bet - player.bet;
 }
 
 int isCallRaise(Player player, Table table) {
-    return player.bet < table.max_bet;
+    return player.bet < table.highest_bet;
 }
 
 int isCheckBet(Player player, Table table) {
-    return player.bet == table.max_bet;
+    return player.bet == table.highest_bet;
 }
 
-//TODO check this
-void call(Player *player, Table * table) {
-    int money = table->max_bet - player->bet;
-    allin(player, table, money);
-    if (isAllin(player)){
-    } else if (player->money >= money) {
-        player->option = Call;
+void allin(Player *player, Table * table) {
+    if (isAllin(*player, *table)) {
+        player->option = Allin;
+        updateMoney(player, table, player->money);
     }
-    updateMoney(player, table, money);
+}
+
+void call(Player *player, Table * table) {
+    if (player->money >= table->highest_bet - player->bet) {
+        player->option = Call;
+        updateMoney(player, table, table->highest_bet - player->bet);
+    }
 }
 
 void raise (Player *player, Table * table, int money) {
-    int call_money = table->max_bet - player->bet;
-    allin(player, table, money);
-    if (isAllin(player)) {
-    } else if (player->money >= money && money >= call_money * 2 ) {
+    int call_money = table->highest_bet - player->bet;
+    if (isAllin(*player, *table)) {
+        allin(player, table);
+    } else if (player->money >= money && money >= call_money + table->last_bet ) {
         player->option = Raise;
+        updateMoney(player, table, money);
     }
-    updateMoney(player, table, money);
 }
 
 void check(Player * player) {
@@ -618,22 +613,21 @@ void check(Player * player) {
 }
 
 void bet(Player * player, Table * table, int money) {
-    allin(player, table, money);
-    if (isAllin(player)) {
+    if (isAllin(*player, *table)) {
+        allin(player, table);
     } else if (money >= table->ante * 2 && player->money >= money) {
         player->option = Bet;
+        updateMoney(player, table, money);
     }
-    updateMoney(player, table, money);
 }
 
 void fold(Player * player) {
     player->status = 0;
 }
 
-//TODO Check
 int minMoney(Player player, Table table) {
     if (isCallRaise(player, table)) {
-        return (table.max_bet - player.bet) * 2;
+        return table.highest_bet - player.bet + table.last_bet;
     } else if (isCheckBet(player, table)) {
         return table.ante * 2;
     }
@@ -641,12 +635,11 @@ int minMoney(Player player, Table table) {
 }
 
 void displayOption(Player player, Table table) {
-    //TODO check this again
     printf("Choose option:\n");
     if (isCallRaise(player, table)) {
-        if (player.money < table.max_bet - player.bet) {
+        if (isAllin(player, table)) {
             printf("1. Allin");
-        } else if(player.money >= table.max_bet - player.bet && player.money <= table.ante * 2){
+        } else if(player.money < table.highest_bet - player.bet + table.last_bet){
             printf("1. Call\n");
             printf("2. Allin\n");
         } else {
@@ -655,27 +648,45 @@ void displayOption(Player player, Table table) {
         }
     } else if (isCheckBet(player, table)) {
         printf("1. Check\n");
-        if (player.money <= table.ante * 2) {
+        if (player.money >= table.ante * 2) {
+            printf("2. Bet\n");
+        } else {
             printf("2. Allin\n");
         }
-        printf("2. Bet\n");
     }
     printf("3. Fold\n");
 }
 
 void runOption(Player * player, Table * table, int option, int money) {
-    //TODO fix this
     if (isCallRaise(*player, *table)) {
-        if (option == 1) {
-            call(player, table);
-        } else if (option == 2) {
-            raise(player, table, money);
+        if (isAllin(*player, *table)) {
+            if (option == 1) {
+                allin(player, table);
+            }
+        } else if (player->money < table->highest_bet - player->bet + table->last_bet) {
+            if (option == 1) {
+                call(player, table);
+            } else if (option == 2) {
+                allin(player, table);
+            }
+        } else {
+            if (option == 1) {
+                call(player, table);
+            } else if (option == 2) {
+                raise(player, table, money);
+            }
         }
     } else if (isCheckBet(*player, *table)) {
         if (option == 1) {
             check(player);
-        } else if (option == 2) {
-            bet(player, table, money);
+        } else {
+            if (player->money >= table->ante *2) {
+                if (option == 2) {
+                    bet(player, table, money);
+                }
+            } else {
+                allin(player, table);
+            }
         }
     }
     if (option == 3) {
@@ -707,11 +718,11 @@ int turn(Player * curPlayer, Table *table) {
     //execute the option
     runOption(curPlayer, table, input, money);
 
-    //Update max_bet
-    if (curPlayer->bet > table->max_bet) {
-        table->max_bet = curPlayer->bet;
+    //Update highest_bet
+    if (curPlayer->bet > table->highest_bet) {
+        table->highest_bet = curPlayer->bet;
     }
-    printf("\nMax bet: %i\n", table->max_bet);
+    printf("\nMax bet: %i\n", table->highest_bet);
     printf("\n------End%sTurn-----\n", curPlayer->name);
     return input;
 }
@@ -727,11 +738,11 @@ int turn(Player * curPlayer, Table *table) {
     }
 
     while (!the_end) {
-        //Except for first turn, if there is still any active or not allin player that bet < max_bet , continue round
+        //Except for first turn, if there is still any active or not allin player that bet < highest_bet , continue round
         int check = 0;
         if (!isFirstTurn) {
             for (int x = 0; x < num_player; x++) {
-                if ((players[x].status != 0 || !isAllin(&players[x])) && players[x].bet < table->max_bet) {
+                if ((players[x].status != 0 || !isAllin(&players[x])) && players[x].bet < table->highest_bet) {
                     check++;
                 }
             }
