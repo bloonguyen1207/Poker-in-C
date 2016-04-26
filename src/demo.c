@@ -766,7 +766,9 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
 //    int isFirstTurn = 1;
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
-    } else if (roundIdx == 0) {
+    }
+
+    if (roundIdx == 0) {
         for (int b = 0; b < num_player; b++) {
             if(players[b].state != BB && players[b].state != SB) {
                 count++;
@@ -777,39 +779,33 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
         } else {
             is_1st_bet = 1;
         }
-    }
-    printf("%i;", is_1st_bet);
-
-    while (!end_game) {
         printf("%i;", is_1st_bet);
         if (is_1st_bet) {
-        if (roundIdx == 0) {
-            for (int b = 0; b < num_player; b++) {
-                if(players[b].state != BB && players[b].state != SB) {
-                    count++;
+            for (int i = 0; i < num_player; i++) {
+                if (players[i].state == BB || players[playerIdx].state == SB) {
+                    if (players[i].state == BB) {
+                        printf("Player Index: %i\n", playerIdx);
+                        playerIdx = i + 1;
+                        printf("Player Index: %i\n", playerIdx);
+                        if(playerIdx >= num_player) {
+                            playerIdx = 0;
+                        }
+                        lastHighest = i;
+                    }
+                    continue;
                 }
             }
-            if (count == 0){
-                is_1st_bet = 0;
-            } else {
-                is_1st_bet = 1;
-            }
-        }
-        for (int i = 0; i < num_player; i++) {
-            if (players[i].state == BB || players[playerIdx].state == SB) {
-                if (players[i].state == BB) {
-                    playerIdx = i + 1;
-                    lastHighest = i;
-                } else if (players[i].state == SB) {
-                    playerIdx = i + 2;
-                    lastHighest = i + 1;
-                }
-                continue;
-            }
-        }
             table->highest_bet = table->ante * 2;
         }
-        if (turn(&players[playerIdx], table) == 3) {
+    }
+    while (!end_game) {
+        displayTableInfo(*table);
+        printf("Player Idx: %i\n", playerIdx);
+        if(playerIdx >= num_player) {
+            playerIdx = 0;
+        }
+        int option = turn(&players[playerIdx], table);
+        if (option == 3) {
             count_fold++;
         }
 
@@ -818,10 +814,6 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
             break;
         }
         playerIdx++;
-        printf("Player Idx: %i", playerIdx);
-        if(playerIdx >= num_player + 1) {
-            playerIdx = 0;
-        }
     }
 }
 
