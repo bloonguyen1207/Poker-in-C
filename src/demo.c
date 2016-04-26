@@ -40,6 +40,7 @@ struct player {
     int isSmallBlind;
     Option option;
     int isTurn;
+    int isWinner;
 };
 typedef struct player Player;
 
@@ -194,15 +195,27 @@ void swapCards(Hand* hand, int player, int fstIdx, int secIdx) {
     hand[player].card[secIdx] = temp;
 }
 
-void sortHand(Hand* hand, int num_player) {
+void sortHand(Hand * hands, int num_player) {
     for (int i = 0; i < num_player; i++) {
-        int max_rank;
+        int idx = 0; //if there is an Ace, the ace card will swap with the card that has this idx
         for (int j = 0; j < 7; j++) {
-            max_rank = hand[i].card[j].rank;
+            if (hands[i].card[j].rank == 1) {
+                swapCards(hands, i, idx, j);
+                idx++;
+            }
+        }
+    }
+    for (int i = 0; i < num_player; i++) {
+        Card max_rank_card;
+        for (int j = 0; j < 7; j++) {
+            max_rank_card.rank = hands[i].card[j].rank;
+            if (max_rank_card.rank == 1) { //have checked Ace already, do not touch Ace again
+                continue;
+            };
             for (int k = j+1; k < 7; k++) {
-                if (hand[i].card[k].rank > max_rank) {
-                    max_rank = hand[i].card[k].rank;
-                    swapCards(hand, i, j, k);
+                if (hands[i].card[k].rank > max_rank_card.rank) {
+                    max_rank_card.rank = hands[i].card[k].rank;
+                    swapCards(hands, i, j, k);
                 }
             }
         }
@@ -244,11 +257,114 @@ Card isHighestCard(Hand hand) {
 
 //the hand must be sorted before checking
 void isHighCard(Hand hand, Player* player) {
-    player->max_hand[0] = isHighestCard(hand);
-    for (int i = 1; i < 5; i++) {
+    for (int i = 0; i < 5; i++) {
         player->max_hand[i] = hand.card[i];
     }
     player->rank = HighCard;
+}
+
+void checkWinner(Player * players, int num_player) {
+    int winner_idx[num_player]; //create an int array which stores idx of winner
+    int idx; //idx of winner_idx array
+
+    for (int j = 0; j < 5; j++) {
+        //initialize value of winner_idx array
+        for (int i = 0; i < num_player; i++) {
+            winner_idx[i] = 0;
+        }
+        idx = 0;
+
+        //create an array to store the j card of each players
+        int temp_array[num_player];
+        //add rank of j card to the array, if the player is a loser, leave 0
+        for (int z = 0; z < num_player; z++) {
+            if (players[z].isWinner != 1) {
+                temp_array[z] = 0;
+            }
+            temp_array[z] = players[z].max_hand[j].rank;
+        }
+
+        //check if j card is Ace
+        int countAce = 0;
+        for (int z = 0; z < num_player; z++) {
+            if (temp_array[z] == 1) {
+                countAce++;
+                winner_idx[idx] = z; //add the player_idx to winner_idx
+                idx++;
+            }
+        }
+
+        //if only 1 player has Ace, the rest will be losers
+        if (countAce == 1) {
+            for (int z = 0; z < num_player; z++) {
+                if (z != winner_idx[0]) {
+                    players[z].isWinner = 0;
+                }
+            }
+            return; //stop the checking
+        }
+
+        //if more than 2 players have Ace, the one who does not have Ace will be a loser
+        else if (countAce > 1) {
+            for (int z = 0; z < num_player; z++) {
+                for (int k = 0; k < idx; k++) {
+                    if (z == k) {
+                        players[z].isWinner = 1;
+                        break; //move to another player
+                    } else {
+                        players[z].isWinner = 0;
+                    }
+                }
+            }
+            continue; //move to another j card
+        }
+
+        //if countAce = 0
+        int max_rank = temp_array[0];
+        int countMax = 0;
+        for (int i = 0; i < num_player; i++) {
+            if (temp_array[i] > max_rank) {
+                idx = 0;
+                max_rank = temp_array[i];
+                winner_idx[idx] = i;
+                idx++;
+                countMax = 1;
+            } else if (temp_array[i] == max_rank) {
+                winner_idx[idx] = i;
+                idx++;
+                countMax++;
+            }
+        }
+
+        //if only 1 player has the highest j card, the rest will be losers
+        if (countMax == 1) {
+            for (int z = 0; z < num_player; z++) {
+                if (z != winner_idx[0]) {
+                    players[z].isWinner = 0;
+                }
+            }
+            return; //stop the checking
+        }
+
+        //if more than 2 players have the highest j card rank, the one who does not have Ace will be a loser
+        else if (countMax > 1) {
+            for (int z = 0; z < num_player; z++) {
+                for (int k = 0; k < idx; k++) {
+                    if (z == k) {
+                        players[z].isWinner = 1;
+                        break; //move to another player
+                    } else {
+                        players[z].isWinner = 0;
+                    }
+                }
+            }
+            continue; //move to another j card
+        }
+        //countMax should never be 0 at the end
+        //because before max_rank changes, the statement: temp_array[0] == max_rank is always true
+
+        //at the end, there can be more than 1 players are winners
+    }
 }
 
 int isPair(Hand hand, Player* player){
@@ -402,32 +518,38 @@ int isFullHouse(Hand hand, Player*player) {
 int isStraight(Hand hand, Player*player) {
     for (int j = 0; j < 3; j++) {
         int check = 0;
-        int temp = hand.card[j].rank;
-        player->max_hand[check] = searchCard(hand, temp);
+        Card temp = hand.card[j];
+        player->max_hand[check] = searchCard(hand, temp.rank);
         check++;
-        if (temp == 13) {
-            for (int k = 12; k >= 10; k--) {
+        if (temp.rank == 1) {
+            for (int k = 13; k >= 10; k--) {
                 if (searchHandRank(hand, k)) {
                     player->max_hand[check] = searchCard(hand, k);
                     check++;
-                };
+                }
             }
-            if (searchHandRank(hand, 1)) {
-                player->max_hand[check] = searchCard(hand, 1);
-                check++;
-            };
             if (check == 5) {
+                player->rank = Straight;
+                return 1;
+            }
+            check = 0; //if the straight is 5 4 3 2 1, Ace will be placed at the end of max_hand
+            for (int k = 5; k >= 2; k--) {
+                if (searchHandRank(hand, k)) {
+                    player->max_hand[check] = searchCard(hand, k);
+                    check++;
+                }
+            }
+            if (check == 4) {
+                player->max_hand[5] = temp;
                 player->rank = Straight;
                 return 1;
             }
         }
 
-        if (check > 1) {
-            check = 1;
-        }
+        check = 1;
         for (int k = 1; k < 5; k++) {
-            if (temp - k > 0 && searchHandRank(hand, temp - k)) {
-                player->max_hand[check] = searchCard(hand, temp - k);
+            if (temp.rank - k > 0 && searchHandRank(hand, temp.rank - k)) {
+                player->max_hand[check] = searchCard(hand, temp.rank - k);
                 check++;
             };
         }
@@ -491,16 +613,16 @@ int isRoyalStraightFlush(Hand hand, Player* player) {
             }
         }
         if (count >= 5) {
+            if (searchHandRank(*temp, 1)) {
+                player->max_hand[check] = searchCard(*temp, 1); //add card to max_hand
+                check++;
+            }
             for (int i = 13; i >= 10; i--) {
                 if (searchHandRank(*temp, i)) {
                     player->max_hand[check] = searchCard(*temp, i); //add card to max_hand
                     check++;
-                };
+                }
             }
-            if (searchHandRank(*temp, 1)) {
-                player->max_hand[check] = searchCard(*temp, 1); //add card to max_hand
-                check++;
-            };
             if (check == 5) {
                 free(temp);
                 player->rank = RoyalStraightFlush;
@@ -875,6 +997,7 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
     printf("-------------------EndRound------------------------\n\n");
 }*/
 
+//TODO after testHand, need a function to check how much the player get
 void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
     int nextPlayer = 0;
     int prevPlayer = 0;
@@ -924,7 +1047,7 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
     }
 }
 
-void testHand(Hand *hands, Player * players, int num_player) {
+void testHand(Hand *hands, Player * players, int num_player, Table * table) {
     sortHand(hands, num_player);
     for (int i = 0; i < num_player; i++) {
         printf("%s: ", players[i].name);
@@ -959,20 +1082,64 @@ void testHand(Hand *hands, Player * players, int num_player) {
         }
         printf("\n");
     }
+
+    int winner_idx[num_player];
+    int idx;
+    for (Rank rank = RoyalStraightFlush; rank >= HighCard; rank--) {
+        //initialize the value of winner_idx array
+        for (int i = 0; i < num_player; i++) {
+            winner_idx[i] = 0;
+        }
+        idx = 0;
+
+        //if the player's rank == the checking rank, add his idx to winner_idx array
+        for (int i = 0; i < num_player; i++) {
+            if (players[i].rank == rank) {
+                players[i].isWinner = 1;
+                winner_idx[idx] = i;
+                idx++;
+            }
+        }
+
+        //if there is only 1 winner, stop the checking
+        if (idx == 1) {
+            printf("%s is the winner!!!", players[winner_idx[idx]].name);
+            break; //stop the checking
+        }
+
+        //if there is more than 2 winners, check them
+        else if (idx >= 2) {
+            //create a temporary pointer
+            Player * temp = malloc(sizeof(temp) * idx);
+            //copy the value of temporary winners to the addresses where temp pointer points to
+            for (int i = 0; i < idx; i++) {
+                temp[i] = players[winner_idx[i]];
+            }
+            //check who is the winner
+            checkWinner(temp, idx);
+            //copy back the value of the pointer to the appropriate player
+            for (int i = 0; i < idx; i++) {
+                players[winner_idx[i]] = temp[i];
+            }
+            free(temp);
+            break; //stop the checking
+        }
+    }
 }
 
-void checkHandRanking(Hand hand, Player player) {
-    if (isRoyalStraightFlush(hand, &player)) {
-    } else if (isStraightFlush(hand, &player)) {
-    } else if (is4OfAKind(hand, &player)) {
-    } else if (isFullHouse(hand, &player)) {
-    } else if (isFlush(hand, &player)) {
-    } else if (isStraight(hand, &player)) {
-    } else if (is3OfAKind(hand, &player)) {
-    } else if (is2Pair(hand, &player)) {
-    } else if (isPair(hand, &player)) {
+void checkHandRanking(Hand * hand, Player * player) {
+    sortHand(hand, 1);
+    if (isRoyalStraightFlush(*hand, player)) {
+    } else if (isStraightFlush(*hand, player)) {
+    } else if (is4OfAKind(*hand, player)) {
+    } else if (isFullHouse(*hand, player)) {
+    } else if (isFlush(*hand, player)) {
+    } else if (isStraight(*hand, player)) {
+    } else if (is3OfAKind(*hand, player)) {
+    } else if (is2Pair(*hand, player)) {
+    } else if (isPair(*hand, player)) {
     } else {
-        isHighCard(hand, &player);
+        isHighCard(*hand, player);
     }
 }
 
@@ -1028,8 +1195,8 @@ void firstAIrounds(Player * ai, Table * table) {
     for (int i = 0; i <= table->card_idx; i++) {
         temp->card[i+2] = table->card[i];
     }
-    sortHand(temp, 1);
-    checkHandRanking(*temp, *ai);
+
+    checkHandRanking(temp, ai);
 
     int money = minMoney(*ai, *table);
     if (ai->rank > 0) {
