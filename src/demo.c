@@ -269,110 +269,6 @@ void isHighCard(Hand hand, Player* player) {
     player->rank = HighCard;
 }
 
-void checkWinner(Player * players, int num_player) {
-    int winner_idx[num_player]; //create an int array which stores idx of winner
-    int idx; //idx of winner_idx array
-
-    for (int j = 0; j < 5; j++) {
-        //initialize value of winner_idx array
-        for (int i = 0; i < num_player; i++) {
-            winner_idx[i] = 0;
-        }
-        idx = 0;
-
-        //create an array to store the j card of each players
-        int temp_array[num_player];
-        //add rank of j card to the array, if the player is a loser, leave 0
-        for (int z = 0; z < num_player; z++) {
-            if (players[z].isWinner != 1) {
-                temp_array[z] = 0;
-            }
-            temp_array[z] = players[z].max_hand[j].rank;
-        }
-
-        //check if j card is Ace
-        int countAce = 0;
-        for (int z = 0; z < num_player; z++) {
-            if (temp_array[z] == 1) {
-                countAce++;
-                winner_idx[idx] = z; //add the player_idx to winner_idx
-                idx++;
-            }
-        }
-
-        //if only 1 player has Ace, the rest will be losers
-        if (countAce == 1) {
-            for (int z = 0; z < num_player; z++) {
-                if (z != winner_idx[0]) {
-                    players[z].isWinner = 0;
-                }
-            }
-            return; //stop the checking
-        }
-
-        //if more than 2 players have Ace, the one who does not have Ace will be a loser
-        else if (countAce > 1) {
-            for (int z = 0; z < num_player; z++) {
-                for (int k = 0; k < idx; k++) {
-                    if (z == k) {
-                        players[z].isWinner = 1;
-                        break; //move to another player
-                    } else {
-                        players[z].isWinner = 0;
-                    }
-                }
-            }
-            continue; //move to another j card
-        }
-
-        //if countAce = 0
-        int max_rank = temp_array[0];
-        int countMax = 0;
-        for (int i = 0; i < num_player; i++) {
-            if (temp_array[i] > max_rank) {
-                idx = 0;
-                max_rank = temp_array[i];
-                winner_idx[idx] = i;
-                idx++;
-                countMax = 1;
-            } else if (temp_array[i] == max_rank) {
-                winner_idx[idx] = i;
-                idx++;
-                countMax++;
-            }
-        }
-
-        //if only 1 player has the highest j card, the rest will be losers
-        if (countMax == 1) {
-            for (int z = 0; z < num_player; z++) {
-                if (z != winner_idx[0]) {
-                    players[z].isWinner = 0;
-                }
-            }
-            return; //stop the checking
-        }
-
-        //if more than 2 players have the highest j card rank, the one who does not have Ace will be a loser
-        else if (countMax > 1) {
-            for (int z = 0; z < num_player; z++) {
-                for (int k = 0; k < idx; k++) {
-                    if (z == k) {
-                        players[z].isWinner = 1;
-                        break; //move to another player
-                    } else {
-                        players[z].isWinner = 0;
-                    }
-                }
-            }
-            continue; //move to another j card
-        }
-        //countMax should never be 0 at the end
-        //because before max_rank changes, the statement: temp_array[0] == max_rank is always true
-
-        //at the end, there can be more than 1 players are winners
-    }
-}
-
 int isPair(Hand hand, Player* player){
     int exist= 0;
     int idx = 2;
@@ -876,27 +772,29 @@ int turn(Player *player, Table * table) {
     printf("\n------End%sTurn-----\n", player->name);
     return input;
 }
-
-void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx) {
+ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx) {
     int prevPlayer = 0; //idx of prevPlayer
     int lastHighest = 0;
-    int playerIdx = 0;
-    int count_fold = 0;
-    int end_game = 0;
+    int playerIdx  = 0;
+    int countFold = 0;
+    int countCall = 0;
+    int countCheck = 0;
+    int end_round = 0;
     int is_1st_bet = 0;
     int count = 0;
 //    int isFirstTurn = 1;
+
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
     }
 
     if (roundIdx == 0) {
         for (int b = 0; b < num_player; b++) {
-            if(players[b].state != BB && players[b].state != SB) {
+            if (players[b].state != BB && players[b].state != SB) {
                 count++;
             }
         }
-        if (count == 0){
+        if (count == 0 && players[playerIdx].state == BB) {
             is_1st_bet = 0;
         } else {
             is_1st_bet = 1;
@@ -909,7 +807,7 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
                         printf("Player Index: %i\n", playerIdx);
                         playerIdx = i + 1;
                         printf("Player Index: %i\n", playerIdx);
-                        if(playerIdx >= num_player) {
+                        if (playerIdx >= num_player) {
                             playerIdx = 0;
                         }
                         lastHighest = i;
@@ -920,22 +818,103 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
             table->highest_bet = table->ante * 2;
         }
     }
-    while (!end_game) {
-        displayTableInfo(*table);
+//    } else {
+//        for (int d = 0; d < num_player; d++) {
+//            if (players[d].isBigBlind && players[d].status == 1) {
+//                playerIdx = d;
+//                break;
+//            }
+//        }
+//    }
+    while (!end_round) {
         printf("Player Idx: %i\n", playerIdx);
         if(playerIdx >= num_player) {
             playerIdx = 0;
         }
-        int option = turn(&players[playerIdx], table);
-        if (option == 3) {
-            count_fold++;
+//        if (players[playerIdx].state == BB) {
+//        }
+        printf("%i", is_1st_bet);
+        for (int c = 0; c < num_player; c++) {
+            displayPlayerInfo(players[c]);
+            printf("\n");
         }
-
-        if (count_fold == num_player - 1) {
-            end_game = 1;
-            break;
+        displayTableInfo(*table);
+        printf("\n");
+        turn(&players[playerIdx], table);
+        if (is_1st_bet) {
+            if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
+                is_1st_bet = 0;
+                end_round = 1;
+//            break;
+            }
+        } else {
+            if (players[playerIdx].state == Checked) {
+                countCheck++;
+            }
+            if (players[playerIdx].state == Called) {
+                countCall++;
+            }
+            if (players[playerIdx].state == Folded) {
+                countFold++;
+            }
+            if (countFold == num_player - 1 || countCheck == num_player) {
+                end_round = 1;
+//            break;
+            }
         }
         playerIdx++;
+    }
+}
+
+//TODO after testHand, need a function to check how much the player get
+void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
+    int nextBlind = 0;
+    int nextPlayer = 0;
+    int prevPlayer = 0;
+    table->ante = 250;
+    if (gameIdx == 0) {
+        players[0].isSmallBlind = 1;
+        players[0].state = SB;
+        players[0].bet = table->ante;
+        players[1].isBigBlind = 1;
+        players[1].state = BB;
+        players[1].bet = table->ante * 2;
+        table->pot_money = players[0].bet + players[1].bet;
+        nextBlind++;
+        prevPlayer = 0;
+    } else {
+        players[nextBlind].isSmallBlind = 1;
+        players[nextBlind].state = SB;
+        players[nextBlind].bet = table->ante;
+        players[nextBlind + 1].isBigBlind = 1;
+        players[nextBlind + 1].state = BB;
+        players[nextBlind + 1].bet = table->ante * 2;
+        players[prevPlayer].isSmallBlind = 0;
+        players[nextBlind].isBigBlind = 0;
+        table->pot_money = players[nextBlind].bet + players[nextBlind + 1].bet;
+        nextBlind++;
+        prevPlayer = nextBlind - 1;
+        if (nextBlind == num_player) {
+            nextBlind = 0;
+        }
+        if (prevPlayer == 0) {
+            prevPlayer = num_player - 1;
+        }
+    }
+    dealStartingHand(players, deck, num_player);
+    for (int roundIdx = 0; roundIdx < 4; roundIdx++) {
+        roundPoker(players, table, deck, num_player, roundIdx);
+        printf("-------End round--------\n");
+        int count = 0;
+        for (int i = 0; i < num_player; i++) {
+            if (players[i].status == 0) {
+                count++;
+            }
+        }
+        if (count == num_player - 1) {
+            printf("%i", roundIdx);
+            break;
+        }
     }
 }
 
@@ -1001,54 +980,107 @@ void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int r
     printf("-------------------EndRound------------------------\n\n");
 }*/
 
-//TODO after testHand, need a function to check how much the player get
-void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
-    int nextPlayer = 0;
-    int prevPlayer = 0;
-    table->ante = 250;
-    if (gameIdx == 0) {
-        players[0].isSmallBlind = 1;
-        players[0].state = SB;
-        players[0].bet = table->ante;
-        players[1].isBigBlind = 1;
-        players[1].state = BB;
-        players[1].bet = table->ante * 2;
-        table->pot_money = players[0].bet + players[1].bet;
-        nextPlayer++;
-        prevPlayer = 0;
-    } else {
-        players[nextPlayer].isSmallBlind = 1;
-        players[nextPlayer].state = SB;
-        players[nextPlayer].bet = table->ante;
-        players[nextPlayer + 1].isBigBlind = 1;
-        players[nextPlayer + 1].state = BB;
-        players[nextPlayer + 1].bet = table->ante * 2;
-        players[prevPlayer].isSmallBlind = 0;
-        players[nextPlayer].isBigBlind = 0;
-        table->pot_money = players[nextPlayer].bet + players[nextPlayer + 1].bet;
-        nextPlayer++;
-        prevPlayer = nextPlayer - 1;
-        if (nextPlayer == num_player) {
-            nextPlayer = 0;
-        }
-        if (prevPlayer == 0) {
-            prevPlayer = num_player - 1;
-        }
-    }
-    dealStartingHand(players, deck, num_player);
-    for (int roundIdx = 0; roundIdx < 4; roundIdx++) {
-        roundPoker(players, table, deck, num_player, roundIdx);
-        printf("-------End round--------\n");
-        int count = 0;
+void checkWinner(Player * players, int num_player) {
+    int winner_idx[num_player]; //create an int array which stores idx of winner
+    int idx; //idx of winner_idx array
+
+    for (int j = 0; j < 5; j++) {
+        //initialize value of winner_idx array
         for (int i = 0; i < num_player; i++) {
-            if (players[i].status == 0) {
-                count++;
+            winner_idx[i] = -1;
+        }
+        idx = 0;
+
+        //create an array to store the j card of each players
+        int temp_array[num_player];
+        //add rank of j card to the array, if the player is a loser, leave 0
+        for (int z = 0; z < num_player; z++) {
+            if (players[z].isWinner != 1) {
+                temp_array[z] = 0;
+            }
+            temp_array[z] = players[z].max_hand[j].rank;
+        }
+
+        //check if j card is Ace
+        int countAce = 0;
+        for (int z = 0; z < num_player; z++) {
+            if (temp_array[z] == 1) {
+                countAce++;
+                winner_idx[idx] = z; //add the player_idx to winner_idx
+                idx++;
             }
         }
-        if (count == num_player - 1) {
-            printf("%i", roundIdx);
-            break;
+
+        //if only 1 player has Ace, the rest will be losers
+        if (countAce == 1) {
+            for (int z = 0; z < num_player; z++) {
+                if (z != winner_idx[0]) {
+                    players[z].isWinner = 0;
+                }
+            }
+            return; //stop the checking
         }
+
+            //if more than 2 players have Ace, the one who does not have Ace will be a loser
+        else if (countAce > 1) {
+            for (int z = 0; z < num_player; z++) {
+                for (int k = 0; k < idx; k++) {
+                    if (z == k) {
+                        players[z].isWinner = 1;
+                        break; //move to another player
+                    } else {
+                        players[z].isWinner = 0;
+                    }
+                }
+            }
+            continue; //move to another j card
+        }
+
+        //if countAce = 0
+        int max_rank = temp_array[0];
+        int countMax = 0;
+        for (int i = 0; i < num_player; i++) {
+            if (temp_array[i] > max_rank) {
+                idx = 0;
+                max_rank = temp_array[i];
+                winner_idx[idx] = i;
+                idx++;
+                countMax = 1;
+            } else if (temp_array[i] == max_rank) {
+                winner_idx[idx] = i;
+                idx++;
+                countMax++;
+            }
+        }
+
+        //if only 1 player has the highest j card, the rest will be losers
+        if (countMax == 1) {
+            for (int z = 0; z < num_player; z++) {
+                if (z != winner_idx[0]) {
+                    players[z].isWinner = 0;
+                }
+            }
+            return; //stop the checking
+        }
+
+            //if more than 2 players have the highest j card rank, the one who does not have Ace will be a loser
+        else if (countMax > 1) {
+            for (int z = 0; z < num_player; z++) {
+                for (int k = 0; k < idx; k++) {
+                    if (z == k) {
+                        players[z].isWinner = 1;
+                        break; //move to another player
+                    } else {
+                        players[z].isWinner = 0;
+                    }
+                }
+            }
+            continue; //move to another j card
+        }
+        //countMax should never be 0 at the end
+        //because before max_rank changes, the statement: temp_array[0] == max_rank is always true
+
+        //at the end, there can be more than 1 players are winners
     }
 }
 
@@ -1093,7 +1125,7 @@ void testHand(Hand *hands, Player * players, int num_player, Table * table) {
     for (Rank rank = RoyalStraightFlush; rank >= HighCard; rank--) {
         //initialize the value of winner_idx array
         for (int i = 0; i < num_player; i++) {
-            winner_idx[i] = 0;
+            winner_idx[i] = -1;
         }
         idx = 0;
 
