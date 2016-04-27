@@ -839,6 +839,9 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                     is_1st_bet = 0;
                     end_round = 1;
                 }
+                if (countActivePlayer == 1) {
+                    end_round = 1;
+                }
             } else {
                 if (players[playerIdx].state == Checked) {
                     countCheck++;
@@ -849,7 +852,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 if (players[playerIdx].state == Folded) {
                     countActivePlayer--;
                 }
-                if (players[playerIdx].state == Raised || players[playerIdx].state == Checked) {
+                if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
                     lastHighest = playerIdx;
                 }
                 if (countActivePlayer == 1 || countCheck == countActivePlayer || countCall == countActivePlayer - 1) {

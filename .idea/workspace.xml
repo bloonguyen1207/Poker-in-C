@@ -37,8 +37,8 @@
       <file leaf-file-name="demo.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/demo.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.5528455">
-              <caret line="832" column="29" selection-start-line="832" selection-start-column="29" selection-end-line="832" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.73141485">
+              <caret line="863" column="1" selection-start-line="863" selection-start-column="1" selection-end-line="863" selection-end-column="1" />
               <folding>
                 <element signature="e#0#2#0" expanded="false" />
                 <element signature="e#119#162#1" expanded="false" />
@@ -1013,8 +1013,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/demo.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.5528455">
-          <caret line="832" column="29" selection-start-line="832" selection-start-column="29" selection-end-line="832" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.73141485">
+          <caret line="863" column="1" selection-start-line="863" selection-start-column="1" selection-end-line="863" selection-end-column="1" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
