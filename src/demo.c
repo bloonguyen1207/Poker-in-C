@@ -866,7 +866,6 @@ int turn(Player *player, Table * table) {
     }
 }
 
-//TODO after testHand, need a function to check how much the player get
 void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
     int nextBlind = 0;
     int nextPlayer = 0;
@@ -1120,48 +1119,75 @@ void testHand(Hand *hands, Player * players, int num_player, Table * table) {
         printf("\n");
     }
 
-    int winner_idx[num_player];
-    int idx;
+
+    int countWinners;
     for (Rank rank = RoyalStraightFlush; rank >= HighCard; rank--) {
-        //initialize the value of winner_idx array
-        for (int i = 0; i < num_player; i++) {
-            winner_idx[i] = -1;
-        }
-        idx = 0;
+        countWinners = 0;
 
         //if the player's rank == the checking rank, add his idx to winner_idx array
         for (int i = 0; i < num_player; i++) {
             if (players[i].rank == rank) {
                 players[i].isWinner = 1;
-                winner_idx[idx] = i;
-                idx++;
+                countWinners++;
             }
         }
 
         //if there is only 1 winner, stop the checking
-        if (idx == 1) {
-            printf("%s is the winner!!!", players[winner_idx[idx]].name);
+        if (countWinners == 1) {
+            for (int i = 0; i < num_player; i++) {
+                if (players[i].isWinner) {
+                    printf("%s is the winner!!!", players[i].name);
+                    break; //stop this loop
+                }
+            }
             break; //stop the checking
         }
 
         //if there is more than 2 winners, check them
-        else if (idx >= 2) {
+        else if (countWinners >= 2) {
             //create a temporary pointer
-            Player * temp = malloc(sizeof(temp) * idx);
+            Player * temp = malloc(sizeof(temp) * countWinners);
             //copy the value of temporary winners to the addresses where temp pointer points to
-            for (int i = 0; i < idx; i++) {
-                temp[i] = players[winner_idx[i]];
+            int idx = 0;
+            for (int i = 0; i < num_player; i++) {
+                if (players[i].isWinner) {
+                    temp[idx] = players[i];
+                    idx++;
+                }
             }
+
             //check who is the winner
-            checkWinner(temp, idx);
+            checkWinner(temp, countWinners);
             //copy back the value of the pointer to the appropriate player
-            for (int i = 0; i < idx; i++) {
-                players[winner_idx[i]] = temp[i];
+            for (int i = 0; i < num_player; i++) {
+                for (int x = 0; x < idx; x++) {
+                    if (strcmp(players[i].name, temp[x].name) == 0) {
+                        players[i] = temp[x];
+                    }
+                }
             }
+
             free(temp);
             break; //stop the checking
         }
     }
+}
+
+void award(Player * players, Table * table, int num_player) {
+    int winnersMoney = 0;
+
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].isWinner) {
+            winnersMoney += players[i].bet;
+        }
+    }
+    //split pot by ratio
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].isWinner) {
+            players[i].money += players[i].bet / winnersMoney * table->pot_money;
+        }
+    }
+    table->pot_money = 0;
 }
 
 void checkHandRanking(Hand * hand, Player * player) {
