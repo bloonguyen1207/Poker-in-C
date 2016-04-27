@@ -819,7 +819,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     }
 
     while (!end_round) {
-        if (players[playerIdx].state != Folded || players[playerIdx].state != Allins) {
+        if (players[playerIdx].state != Folded && players[playerIdx].state != Allins) {
             printf("Player Idx: %i\n", playerIdx);
             if (playerIdx >= num_player) {
                 playerIdx = 0;
@@ -852,8 +852,8 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                     end_round = 1;
                 }
             }
-            playerIdx++;
         }
+        playerIdx++;
     }
     printf("Active Player: %i\n", countActivePlayer);
     return countActivePlayer;
