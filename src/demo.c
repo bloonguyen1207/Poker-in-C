@@ -779,6 +779,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int playerIdx  = 0;
     int countFold = 0;
     int countCheck = 0;
+    int countCall = 0;
     int end_round = 0;
     int is_1st_bet = 0;
     int count = 0;
@@ -842,13 +843,16 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 if (players[playerIdx].state == Checked) {
                     countCheck++;
                 }
+                if (players[playerIdx].state == Called) {
+                    countCall++;
+                }
                 if (players[playerIdx].state == Folded) {
                     countActivePlayer--;
                 }
                 if (players[playerIdx].state == Raised || players[playerIdx].state == Checked) {
                     lastHighest = playerIdx;
                 }
-                if (countActivePlayer == 1 || countCheck == countActivePlayer) {
+                if (countActivePlayer == 1 || countCheck == countActivePlayer || countCall == countActivePlayer - 1) {
                     end_round = 1;
                 }
             }
@@ -869,9 +873,11 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
         players[0].isSmallBlind = 1;
         players[0].state = SB;
         players[0].bet = table->ante;
+        players[0].money = players[0].money - players[0].bet;
         players[1].isBigBlind = 1;
         players[1].state = BB;
         players[1].bet = table->ante * 2;
+        players[1].money = players[1].money - players[1].bet;
         table->pot_money = players[0].bet + players[1].bet;
         nextBlind++;
         prevPlayer = 0;
@@ -879,9 +885,11 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
         players[nextBlind].isSmallBlind = 1;
         players[nextBlind].state = SB;
         players[nextBlind].bet = table->ante;
+        players[nextBlind].money = players[nextBlind].money - players[nextBlind].bet;
         players[nextBlind + 1].isBigBlind = 1;
         players[nextBlind + 1].state = BB;
         players[nextBlind + 1].bet = table->ante * 2;
+        players[nextBlind + 1].money = players[nextBlind + 1].money - players[nextBlind + 1].bet;
         players[prevPlayer].isSmallBlind = 0;
         players[nextBlind].isBigBlind = 0;
         table->pot_money = players[nextBlind].bet + players[nextBlind + 1].bet;
