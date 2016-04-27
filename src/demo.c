@@ -790,11 +790,11 @@ int turn(Player *player, Table * table) {
 
     if (roundIdx == 0) {
         for (int b = 0; b < num_player; b++) {
-            if(players[b].state != BB && players[b].state != SB) {
+            if (players[b].state != BB && players[b].state != SB) {
                 count++;
             }
         }
-        if (count == 0 && players[playerIdx].state == BB){
+        if (count == 0 && players[playerIdx].state == BB) {
             is_1st_bet = 0;
         } else {
             is_1st_bet = 1;
@@ -807,7 +807,7 @@ int turn(Player *player, Table * table) {
                         printf("Player Index: %i\n", playerIdx);
                         playerIdx = i + 1;
                         printf("Player Index: %i\n", playerIdx);
-                        if(playerIdx >= num_player) {
+                        if (playerIdx >= num_player) {
                             playerIdx = 0;
                         }
                         lastHighest = i;
@@ -817,22 +817,22 @@ int turn(Player *player, Table * table) {
             }
             table->highest_bet = table->ante * 2;
         }
-    } else {
-        for (int d = 0; d < num_player; d++) {
-            if (players[d].isBigBlind) {
-                playerIdx = d;
-                break;
-            }
-        }
     }
+//    } else {
+//        for (int d = 0; d < num_player; d++) {
+//            if (players[d].isBigBlind && players[d].status == 1) {
+//                playerIdx = d;
+//                break;
+//            }
+//        }
+//    }
     while (!end_round) {
         printf("Player Idx: %i\n", playerIdx);
         if(playerIdx >= num_player) {
             playerIdx = 0;
         }
-        if (players[playerIdx].state == BB) {
-            is_1st_bet = 0;
-        }
+//        if (players[playerIdx].state == BB) {
+//        }
         printf("%i", is_1st_bet);
         for (int c = 0; c < num_player; c++) {
             displayPlayerInfo(players[c]);
@@ -843,21 +843,21 @@ int turn(Player *player, Table * table) {
         turn(&players[playerIdx], table);
         if (is_1st_bet) {
             if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
+                is_1st_bet = 0;
                 end_round = 1;
 //            break;
             }
-        }
-        if (players[playerIdx].state == Checked) {
-            countCheck++;
-        }
-        if (players[playerIdx].state == Called) {
-            countCall++;
-        }
-        if (players[playerIdx].state == Folded) {
-            countFold++;
-        }
-        if (!is_1st_bet) {
-            if (countFold == num_player - 1 || countCheck == num_player || countCall == num_player - 1) {
+        } else {
+            if (players[playerIdx].state == Checked) {
+                countCheck++;
+            }
+            if (players[playerIdx].state == Called) {
+                countCall++;
+            }
+            if (players[playerIdx].state == Folded) {
+                countFold++;
+            }
+            if (countFold == num_player - 1 || countCheck == num_player) {
                 end_round = 1;
 //            break;
             }
