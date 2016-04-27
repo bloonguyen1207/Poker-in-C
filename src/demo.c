@@ -784,6 +784,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int is_1st_bet = 0;
     int count = 0;
 //    int isFirstTurn = 1;
+    table->last_bet = 0;
 
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
@@ -793,6 +794,8 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         for (int b = 0; b < num_player; b++) {
             if (players[b].state != BB && players[b].state != SB) {
                 count++;
+            } else if (players[b].state == BB) {
+                table->last_bet = players[b].bet;
             }
         }
         if (count == 0 && players[playerIdx].state == BB) {
