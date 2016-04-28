@@ -785,6 +785,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int is_1st_bet = 0;
     int count = 0;
 //    int isFirstTurn = 1;
+    table->last_bet = 0;
 
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
@@ -794,6 +795,8 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         for (int b = 0; b < num_player; b++) {
             if (players[b].state != BB && players[b].state != SB) {
                 count++;
+            } else if (players[b].state == BB) {
+                table->last_bet = players[b].bet;
             }
         }
         if (count == 0 && players[playerIdx].state == BB) {
@@ -840,6 +843,9 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                     is_1st_bet = 0;
                     end_round = 1;
                 }
+                if (countActivePlayer == 1) {
+                    end_round = 1;
+                }
             } else {
                 if (players[playerIdx].state == Checked) {
                     countCheck++;
@@ -850,7 +856,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 if (players[playerIdx].state == Folded) {
                     countActivePlayer--;
                 }
-                if (players[playerIdx].state == Raised || players[playerIdx].state == Checked) {
+                if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
                     lastHighest = playerIdx;
                 }
                 if (countActivePlayer == 1 || countCheck == countActivePlayer || countCall == countActivePlayer - 1) {
