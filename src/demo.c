@@ -759,6 +759,7 @@ int turn(Player *player, Table * table) {
         int min = minMoney(*player, *table);
         displayRangeMoney(min, player->money);
         money = inputMoney(min, player->money);
+        table->last_bet = money;
     }
 
     //execute the option
