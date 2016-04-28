@@ -785,10 +785,10 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int is_1st_bet = 0;
     int count = 0;
 //    int isFirstTurn = 1;
-    table->last_bet = 0;
 
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
+        table->last_bet = 0;
     }
 
     if (roundIdx == 0) {
