@@ -785,7 +785,6 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int end_round = 0;
     int is_1st_bet = 0;
     int count = 0;
-//    int isFirstTurn = 1;
 
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
@@ -796,8 +795,6 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         for (int b = 0; b < num_player; b++) {
             if (players[b].state != BB && players[b].state != SB) {
                 count++;
-            } else if (players[b].state == BB) {
-                table->last_bet = players[b].bet;
             }
         }
         if (count == 0 && players[playerIdx].state == BB) {
@@ -809,18 +806,24 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             for (int i = 0; i < num_player; i++) {
                 if (players[i].state == BB || players[playerIdx].state == SB) {
                     if (players[i].state == BB) {
-                        printf("Player Index: %i\n", playerIdx);
                         playerIdx = i + 1;
-                        printf("Player Index: %i\n", playerIdx);
                         if (playerIdx >= num_player) {
                             playerIdx = 0;
                         }
-                        lastHighest = i;
+                        table->last_bet = players[i].bet;
                     }
                     continue;
                 }
             }
             table->highest_bet = table->ante * 2;
+        }
+    } else {
+        for (int e = 0; e < num_player; e++) {
+            if (players[e].isBigBlind && players[e].status == 1) {
+                playerIdx = e;
+            } else if (players[e].isSmallBlind && players[e].status == 1) {
+                playerIdx = e;
+            }
         }
     }
 
@@ -834,35 +837,32 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 displayPlayerInfo(players[c]);
                 printf("\n");
             }
+            if (players[playerIdx].state == BB) {
+                is_1st_bet = 0;
+            }
             displayTableInfo(*table);
             turn(&players[playerIdx], table);
             if (is_1st_bet) {
-                if (players[playerIdx].state == Folded) {
-                    countActivePlayer--;
-                }
                 if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
-                    is_1st_bet = 0;
-                    end_round = 1;
-                }
-                if (countActivePlayer == 1) {
                     end_round = 1;
                 }
             } else {
                 if (players[playerIdx].state == Checked) {
                     countCheck++;
                 }
-                if (players[playerIdx].state == Called) {
-                    countCall++;
-                }
-                if (players[playerIdx].state == Folded) {
-                    countActivePlayer--;
-                }
-                if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
-                    lastHighest = playerIdx;
-                }
-                if (countActivePlayer == 1 || countCheck == countActivePlayer || countCall == countActivePlayer - 1) {
-                    end_round = 1;
-                }
+            }
+            if (players[playerIdx].state == Called) {
+                countCall++;
+            }
+            if (players[playerIdx].state == Folded) {
+                countActivePlayer--;
+            }
+            if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
+                table->last_bet = players[playerIdx].bet;
+                countCall = 0;
+            }
+            if (countActivePlayer == 1 || countCheck == countActivePlayer || countCall == countActivePlayer - 1) {
+                end_round = 1;
             }
         }
         playerIdx++;
