@@ -705,6 +705,7 @@ void runOption(Player * player, Table * table, int option, int money) {
                 call(player, table);
             } else if (option == 2) {
                 raise(player, table, money);
+                table->last_bet = money;
             }
         }
     } else if (isCheckBet(*player, *table)) {
@@ -714,6 +715,7 @@ void runOption(Player * player, Table * table, int option, int money) {
             if (player->money >= table->ante *2) {
                 if (option == 2) {
                     bet(player, table, money);
+                    table->last_bet = money;
                 }
             } else {
                 allin(player, table);
@@ -759,7 +761,6 @@ int turn(Player *player, Table * table) {
         int min = minMoney(*player, *table);
         displayRangeMoney(min, player->money);
         money = inputMoney(min, player->money);
-        table->last_bet = money;
     }
 
     //execute the option
