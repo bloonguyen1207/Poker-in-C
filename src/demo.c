@@ -861,7 +861,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 table->last_bet = players[playerIdx].bet;
                 countCall = 0;
             }
-            if (countActivePlayer == 1 || countCheck == countActivePlayer || countCall == countActivePlayer - 1) {
+            if (countActivePlayer == 1 || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet)) {
                 end_round = 1;
             }
         }
