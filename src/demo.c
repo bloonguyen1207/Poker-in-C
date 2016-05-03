@@ -1431,6 +1431,9 @@ int main() {
                 }
             }
             // Free everything
+            for (int i = 0; i < num_player; i++) {
+                free(players[i].max_hand);
+            }
             free(players);
             free(deck);
             free(table);
