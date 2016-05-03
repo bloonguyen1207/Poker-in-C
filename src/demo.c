@@ -858,7 +858,6 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 countActivePlayer--;
             }
             if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
-                table->last_bet = players[playerIdx].bet;
                 countCall = 0;
             }
             if (countActivePlayer == 1 || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet)) {
