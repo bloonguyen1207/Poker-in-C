@@ -776,10 +776,8 @@ int turn(Player *player, Table * table) {
 }
 
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
-    int prevPlayer = 0; //idx of prevPlayer
-    int lastHighest = 0;
     int playerIdx  = 0;
-    int countFold = 0;
+    State lastState = None;
     int countCheck = 0;
     int countCall = 0;
     int end_round = 0;
@@ -800,6 +798,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         if (count == 0 && players[playerIdx].state == BB) {
             is_1st_bet = 0;
         } else {
+            lastState = BB;
             is_1st_bet = 1;
         }
         if (is_1st_bet) {
@@ -860,7 +859,8 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
                 countCall = 0;
             }
-            if (countActivePlayer == 1 || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet)) {
+            if (countActivePlayer == 1 || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet) || (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded)) {
+                lastState = None;
                 end_round = 1;
             }
         }
@@ -870,8 +870,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     return countActivePlayer;
 }
 
-void game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx) {
-    int nextBlind = 0;
+int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextBlind) {
     int nextPlayer = 0;
     int prevPlayer = 0;
     int countActivePlayer = num_player;
@@ -886,7 +885,7 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
         players[1].bet = table->ante * 2;
         players[1].money = players[1].money - players[1].bet;
         table->pot_money = players[0].bet + players[1].bet;
-        nextBlind++;
+        nextBlind = 1;
         prevPlayer = 0;
     } else {
         players[nextBlind].isSmallBlind = 1;
@@ -924,6 +923,7 @@ void game (Player * players, Table * table, Deck * deck, int num_player, int gam
             break;
         }
     }
+    return nextBlind;
 }
 
 /*void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int round_idx) {
@@ -1344,7 +1344,9 @@ int main() {
     int opt = 0;
     int opt1 = 0;
     int opt2 = 0;
-    for (int a = 0; ;a++) {
+    int nextBlind = 0;
+    int endProgram = 0;
+    while (!endProgram) {
         mainMenu();
         scanf("%d", &opt);
         if (opt == 1) {
@@ -1362,20 +1364,25 @@ int main() {
             }
             printf("\n");
 
-            // Shuffle the deck
-            shuffleDeck(deck, size);
-
-            // Test shuffle
-            for (int m = 0; m < size; m++) {
-                printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-            }
-            printf("\n");
-
             // Create players
             int num_player = 3;
             Player *players = createPlayers(num_player);
-            game(players, table, deck, num_player, a);
+            for (int gameIdx = 0; ; gameIdx++) {
+                // Shuffle the deck
+                shuffleDeck(deck, size);
 
+                // Test shuffle
+                for (int m = 0; m < size; m++) {
+                    printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
+                }
+                printf("\n");
+                nextBlind = game(players, table, deck, num_player, gameIdx, nextBlind);
+                printf("Continue? (0/1): ");
+                scanf("%d", &opt1);
+                if (opt1 == 0) {
+                    break;
+                }
+            }
             // Free everything
             free(players);
             free(deck);
@@ -1383,7 +1390,7 @@ int main() {
         } else if (opt == 2) {
             printf("Options\n");
         } else if (opt == 3) {
-            break;
+            endProgram = 1;
         }
 
 
