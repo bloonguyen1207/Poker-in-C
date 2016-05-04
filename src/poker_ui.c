@@ -13,13 +13,97 @@
 #define POKER_COLOR_BLUE          2
 #define POKER_COLOR_TEXT          7
 
-static void finish(int sig) {
-    endwin();
+static void init_screen();
+static void finish(int sig);
 
-    /* do your non-curses wrap up here, like freeing the memory allocated */
+void center(int row, char *title) {
+    int len, start_point;
+    for (len = 0; ; len++) {
+        if (title[len] == '\0') {
+            break;
+        }
+    }
+    start_point = (COLS - len) / 2;
+    mvprintw(row, start_point, title);
+    refresh();
+}
 
+void drawMainMenu(int item) {
+    int c;
+    char menu[5][20] = {"Start", "Load", "Options", "Highscore", "Exit"};
 
-    exit(sig);
+    clear();
+    center(3, "POKER");
+    center(6, "Main Menu");
+    for (c = 0; c < 5; c++) {
+        if (c == item) {
+            attron(A_REVERSE);
+        }
+        center(8 + c, menu[c]);
+        attroff(A_REVERSE);
+    }
+    mvaddstr(LINES - 2, COLS - 20, "Move: Arrow keys");
+    mvaddstr(LINES - 1, COLS - 20, "Select: Enter");
+    refresh();
+}
+
+int interactMainMenu() {
+    int key = 0;
+    int item = 0;
+
+    drawMainMenu(item);
+    keypad(stdscr, TRUE);
+    noecho();
+
+    while (key != 13) { //13 is Enter
+        key = getch();
+        switch (key) {
+            case KEY_DOWN:
+                item++;
+                if (item > 4) {
+                    item = 0;
+                }
+                break;
+            case KEY_UP:
+                item--;
+                if (item < 0) {
+                    item = 4;
+                }
+                break;
+            default: break;
+        }
+        drawMainMenu(item);
+    }
+    echo();
+    return item;
+}
+
+int main() {
+    int endProgram = 0;
+    init_screen();
+    while (!endProgram) {
+        struct timespec delay = {0, 500000000L},
+                rem;
+        int choice = interactMainMenu();
+        clear();
+        refresh();
+        if (choice == 0) {
+            center(1, "START GAME");
+            getch();
+        } else if (choice == 1) {
+            center(1, "LOAD GAME");
+            getch();
+        } else if (choice == 2) {
+            center(1, "OPTIONS");
+            getch();
+        } else if (choice == 3) {
+            center(1, "HIGHSCORE");
+            getch();
+        } else if (choice == 4) {
+            endProgram = 1;
+        }
+    }
+    finish(0);
 }
 
 static void init_screen() {
@@ -29,23 +113,34 @@ static void init_screen() {
     (void) nonl();         /* tell curses not to do NL->CR/NL on output */
     (void) cbreak();       /* take input chars one at a time, don't wait for \n */
     (void) noecho();       /* do not echo input */
-    timeout(500);          /* wait maximum 500ms for a character */
+    //timeout(500);          /* wait maximum 500ms for a character */
     /* Use timeout(-1) for blocking mode */
-    printw("Hello World !!!");
+    timeout(-1);
+
     if (has_colors()) {
 
         start_color();
         // initialise you color pairs (foreground, background)
-        init_pair(1, POKER_COLOR_TEXT, POKER_COLOR_BACKGROUND);
+        init_pair(1, COLOR_BLACK, COLOR_WHITE);
+        init_pair(0, POKER_COLOR_TEXT, POKER_COLOR_BACKGROUND);
         init_pair(2, POKER_COLOR_RED, POKER_COLOR_BACKGROUND);
         init_pair(3, POKER_COLOR_BLUE, POKER_COLOR_BACKGROUND);
     }
     /* set default color pair */
     attrset(COLOR_PAIR(1));
+    bkgd(COLOR_PAIR(1));
 }
 
-int main()
-{
+static void finish(int sig) {
+    endwin();
+
+    /* do your non-curses wrap up here, like freeing the memory allocated */
+
+
+    exit(sig);
+}
+
+int xmain1() {
     chtype c;
     init_screen();
     struct timespec delay = {0, 500000000L},
@@ -71,6 +166,7 @@ int main()
         move(y, x);
     }
     finish(0);
+    return 0;
 }
 
 //Menu
