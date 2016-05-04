@@ -822,6 +822,14 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             }
         }
     }
+    for (int f = 0; f < num_player; f++) {
+        if (players[f].state == Allins) {
+            countAllin++;
+        }
+    }
+    if (countAllin == countActivePlayer) {
+        return countActivePlayer;
+    }
     while (!end_round) {
         if (players[playerIdx].state != Folded && players[playerIdx].state != Allins) {
             if (playerIdx >= num_player) {
@@ -864,7 +872,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 }
                 countCall = 0;
             }
-            if (countActivePlayer == 1 || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet) || (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded)) {
+            if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet) || (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded)) {
                 lastState = None;
                 end_round = 1;
             }
@@ -1204,24 +1212,24 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     table->pot_money = players[nextBlind].bet + players[nextPlayer].bet;
     nextBlind++;
     dealStartingHand(players, deck, num_player);
-    int count = 0;
+    int countFold = 0, countAllin = 0;
     int roundIdx;
     for (roundIdx = 0; roundIdx < 4; roundIdx++) {
         countActivePlayer = roundPoker(players, table, deck, num_player, roundIdx, countActivePlayer);
         printf("-------End round--------\n");
-        count = 0;
+        countFold = 0;
         for (int i = 0; i < num_player; i++) {
             if (players[i].status == 0) {
-                count++;
+                countFold++;
             }
         }
-        if (count == num_player - 1) {
+        if (countFold == num_player - 1) {
             //TODO: erase printf after finish the project
             printf("Round Idx: %i\n", roundIdx);
             break;
         }
     }
-    if (count == num_player - 1 && roundIdx < 4 ) {
+    if (countFold == num_player - 1 && roundIdx < 4 ) {
         for (int i = 0; i < num_player; i++) {
             if (players[i].status == 1) {
                 players[i].isWinner = 1;
