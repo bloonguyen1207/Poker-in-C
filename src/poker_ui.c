@@ -28,6 +28,123 @@ void center(int row, char *title) {
     refresh();
 }
 
+void drawStartMenu(int item, int num_computer) {
+    int c;
+    char menu[4][10] = {"<", ">", "Start", "Main Menu"};
+
+    clear();
+    center(5, "Number of Computer Players:");
+    for (c = 0; c < 4; c++) {
+        if (c == item) {
+            attron(A_REVERSE);
+        }
+        if (c == 0) {
+            if (num_computer != 2) {
+                mvaddstr(7, COLS / 2 - 2, menu[c]);
+            }
+        } else if (c == 1) {
+            if (num_computer != 5) {
+                mvaddstr(7, COLS / 2 + 2, menu[c]);
+            }
+        } else if (c == 2) {
+            center(9, menu[c]);
+        } else if (c == 3) {
+            center(11, menu[c]);
+        }
+        attroff(A_REVERSE);
+    }
+
+    mvprintw(7, COLS / 2, "%d", num_computer);
+    mvaddch(0, 0, ' ');
+
+    refresh();
+}
+
+int interactStartMenu(int num_computer) {
+    int key = 0;
+    int item = 0;
+
+    keypad(stdscr, TRUE);
+
+    while (key != 13) { //13 is Enter
+        drawStartMenu(item, num_computer);
+        key = getch();
+        switch (key) {
+            case KEY_DOWN:
+                if (item == 0) {
+                    item = 2;
+                    break;
+                }
+                item++;
+                if (item > 3) {
+                    if (num_computer == 2) {
+                        item = 1;
+                    } else {
+                        item = 0;
+                    }
+                }
+                break;
+            case KEY_UP:
+                if (item == 1) {
+                    item = 3;
+                    break;
+                }
+                if (item == 2 && num_computer == 5) {
+                    item = 1;
+                    break;
+                }
+                item--;
+                if (item < 0) {
+                    item = 3;
+                }
+                break;
+            case KEY_LEFT:
+                if (item == 1) {
+                    if (num_computer != 2) {
+                        item = 0;
+                    }
+                    break;
+                }
+                break;
+            case KEY_RIGHT:
+                if (item == 0) {
+                    if (num_computer != 5) {
+                        item = 1;
+                    }
+                    break;
+                }
+                break;
+            default: break;
+        }
+    }
+    return item;
+}
+
+void startMenu() {
+    int endMenu = 0;
+    int num_computer = 2;
+    while (!endMenu) {
+        int choice = interactStartMenu(num_computer);
+        if (choice == 0) {
+            if (num_computer > 2) {
+                num_computer--;
+            }
+        } else if (choice == 1) {
+            if (num_computer < 5) {
+                num_computer++;
+            }
+        } else if (choice == 2) {
+            clear();
+            center(1, "START GAME");
+            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+            refresh();
+            getch();
+        } else if (choice == 3) {
+            endMenu = 1;
+        }
+    }
+}
+
 void drawMainMenu(int item) {
     int c;
     char menu[5][20] = {"Start", "Load", "Options", "Highscore", "Exit"};
@@ -44,6 +161,8 @@ void drawMainMenu(int item) {
     }
     mvaddstr(LINES - 2, COLS - 20, "Move: Arrow keys");
     mvaddstr(LINES - 1, COLS - 20, "Select: Enter");
+    mvaddch(0, 0, ' ');
+
     refresh();
 }
 
@@ -51,11 +170,10 @@ int interactMainMenu() {
     int key = 0;
     int item = 0;
 
-    drawMainMenu(item);
     keypad(stdscr, TRUE);
-    noecho();
 
     while (key != 13) { //13 is Enter
+        drawMainMenu(item);
         key = getch();
         switch (key) {
             case KEY_DOWN:
@@ -72,9 +190,7 @@ int interactMainMenu() {
                 break;
             default: break;
         }
-        drawMainMenu(item);
     }
-    echo();
     return item;
 }
 
@@ -87,10 +203,7 @@ int main() {
         int choice = interactMainMenu();
         clear();
         if (choice == 0) {
-            center(1, "START GAME");
-            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
-            refresh();
-            getch();
+            startMenu();
         } else if (choice == 1) {
             center(1, "LOAD GAME");
             mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
@@ -129,7 +242,7 @@ static void init_screen() {
         start_color();
         // initialise you color pairs (foreground, background)
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
-        init_pair(0, POKER_COLOR_TEXT, POKER_COLOR_BACKGROUND);
+        init_pair(4, POKER_COLOR_TEXT, POKER_COLOR_BACKGROUND);
         init_pair(2, POKER_COLOR_RED, POKER_COLOR_BACKGROUND);
         init_pair(3, POKER_COLOR_BLUE, POKER_COLOR_BACKGROUND);
     }
