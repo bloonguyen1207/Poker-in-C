@@ -86,18 +86,25 @@ int main() {
                 rem;
         int choice = interactMainMenu();
         clear();
-        refresh();
         if (choice == 0) {
             center(1, "START GAME");
+            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+            refresh();
             getch();
         } else if (choice == 1) {
             center(1, "LOAD GAME");
+            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+            refresh();
             getch();
         } else if (choice == 2) {
             center(1, "OPTIONS");
+            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+            refresh();
             getch();
         } else if (choice == 3) {
             center(1, "HIGHSCORE");
+            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+            refresh();
             getch();
         } else if (choice == 4) {
             endProgram = 1;

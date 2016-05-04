@@ -15,7 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.c" afterPath="$PROJECT_DIR$/src/poker_ui.c" />
     </list>
     <ignored path="COSC2451_A2_s3515305_s3558475.iws" />
@@ -108,12 +107,12 @@
       <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.88559324">
-              <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.8241525">
+              <caret line="111" column="5" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
               <folding>
                 <element signature="e#41#60#0" expanded="true" />
-                <element signature="e#3378#3518#0" expanded="false" />
-                <element signature="e#3520#4233#0" expanded="false" />
+                <element signature="e#3695#3835#0" expanded="false" />
+                <element signature="e#3837#4550#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -1046,12 +1045,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.88559324">
-          <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.8241525">
+          <caret line="111" column="5" selection-start-line="111" selection-start-column="5" selection-end-line="111" selection-end-column="5" />
           <folding>
             <element signature="e#41#60#0" expanded="true" />
-            <element signature="e#3378#3518#0" expanded="false" />
-            <element signature="e#3520#4233#0" expanded="false" />
+            <element signature="e#3695#3835#0" expanded="false" />
+            <element signature="e#3837#4550#0" expanded="false" />
           </folding>
         </state>
       </provider>
