@@ -55,14 +55,13 @@ void drawStartMenu(int item, int num_computer) {
     }
 
     mvprintw(7, COLS / 2, "%d", num_computer);
-    mvaddch(0, 0, ' ');
+    move(0, 0);
 
     refresh();
 }
 
-int interactStartMenu(int num_computer) {
+int interactStartMenu(int num_computer, int item) {
     int key = 0;
-    int item = 0;
 
     keypad(stdscr, TRUE);
 
@@ -90,7 +89,7 @@ int interactStartMenu(int num_computer) {
                     break;
                 }
                 if (item == 2 && num_computer == 5) {
-                    item = 1;
+                    item = 0;
                     break;
                 }
                 item--;
@@ -123,8 +122,12 @@ int interactStartMenu(int num_computer) {
 void startMenu() {
     int endMenu = 0;
     int num_computer = 2;
+    int item;
+    int choice = 0;
+
     while (!endMenu) {
-        int choice = interactStartMenu(num_computer);
+        item = choice;
+        choice = interactStartMenu(num_computer, item);
         if (choice == 0) {
             if (num_computer > 2) {
                 num_computer--;
@@ -161,7 +164,7 @@ void drawMainMenu(int item) {
     }
     mvaddstr(LINES - 2, COLS - 20, "Move: Arrow keys");
     mvaddstr(LINES - 1, COLS - 20, "Select: Enter");
-    mvaddch(0, 0, ' ');
+    move(0, 0);
 
     refresh();
 }
