@@ -163,6 +163,9 @@ void displayTableInfo(Table table) {
 void dealStartingHand(Player*players, Deck* deck, int num_player) {
     for (int j = 0; j < 2; j++) {
         for (int i = 0; i < num_player; i++) {
+            if (players[i].money <= 0) {
+                continue;
+            }
             players[i].hand[j] = deck->cards[deck->card_index];
             deck->card_index++;
         }
@@ -428,6 +431,8 @@ int isStraight(Hand hand, Player*player) {
                 if (searchHandRank(hand, k)) {
                     player->max_hand[check] = searchCard(hand, k);
                     check++;
+                } else {
+                    break;
                 }
             }
             if (check == 5) {
@@ -439,10 +444,12 @@ int isStraight(Hand hand, Player*player) {
                 if (searchHandRank(hand, k)) {
                     player->max_hand[check] = searchCard(hand, k);
                     check++;
+                } else {
+                    break;
                 }
             }
             if (check == 4) {
-                player->max_hand[5] = temp;
+                player->max_hand[check] = searchCard(hand, 1);
                 player->rank = Straight;
                 return 1;
             }
@@ -831,10 +838,11 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         return countActivePlayer;
     }
     while (!end_round) {
-        if (players[playerIdx].state != Folded && players[playerIdx].state != Allins) {
-            if (playerIdx >= num_player) {
-                playerIdx = 0;
-            }
+        if (playerIdx >= num_player) {
+            playerIdx = 0;
+        }
+        if (players[playerIdx].state != Folded && players[playerIdx].state != Allins
+                && players[playerIdx].money > 0 && players[playerIdx].status == 1) {
             printf("State: %i\n", players[playerIdx].state);
             for (int c = 0; c < num_player; c++) {
                 displayPlayerInfo(players[c]);
@@ -872,7 +880,10 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 }
                 countCall = 0;
             }
-            if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer || (countCall == countActivePlayer - 1 && !is_1st_bet) || (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded)) {
+            if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer ||
+                    (countCall == countActivePlayer - 1 && !is_1st_bet) ||
+                    (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded) ||
+                    ((players[playerIdx].state == Called || players[playerIdx].state == Checked) && countAllin == num_player - 1)) {
                 lastState = None;
                 end_round = 1;
             }
@@ -1211,7 +1222,14 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     players[nextBlind].isBigBlind = 0;
     table->pot_money = players[nextBlind].bet + players[nextPlayer].bet;
     nextBlind++;
+
     dealStartingHand(players, deck, num_player);
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].money <= 0) {
+            players[i].status = 0;
+        }
+    }
+
     int countFold = 0, countAllin = 0;
     int roundIdx;
     for (roundIdx = 0; roundIdx < 4; roundIdx++) {
@@ -1474,37 +1492,44 @@ int main() {
     // Test hands
     Hand *hands = createHand(players, table, num_player);
     testHand(hands, players, num_player)
-
-//    Player *test_player = malloc(sizeof(Player));
-//    test_player->max_hand = malloc(sizeof(Card) * 5);
-//    Hand *test = malloc(sizeof(Hand));
-//    test->card[0].rank = 13; test->card[0].suit = HEARTS;
-//    test->card[1].rank = 13; test->card[1].suit = HEARTS;
-//    test->card[2].rank = 13; test->card[2].suit = HEARTS;
-//    test->card[3].rank = 12; test->card[3].suit = HEARTS;
-//    test->card[4].rank = 10; test->card[4].suit = HEARTS;
-//    test->card[5].rank = 10; test->card[5].suit = DIAMONDS;
-//    test->card[6].rank = 2; test->card[6].suit = HEARTS;
-//    for (int j = 0; j < 7; j++) {
-//        printf("%s %i; ", getSuit(test->card[j].suit), test->card[j].rank);
-//    }
-//    if (isFullHouse(*test, test_player)) {
-//        printf("True");
-//    } else {printf("False");}
-//    printf("\n%d\n", test_player->rank);
-//    for (int j = 0; j < 5; j++) {
-//        printf("%s %i; ", getSuit(test_player->max_hand[j].suit), test_player->max_hand[j].rank);
-//    }
--------------------------------------------*/
+*/
+/*    Player *test_player = malloc(sizeof(Player));
+    test_player->max_hand = malloc(sizeof(Card) * 5);
+    Hand *test = malloc(sizeof(Hand));
+    test->card[0].rank = 1;
+    test->card[0].suit = HEARTS;
+    test->card[1].rank = 9;
+    test->card[1].suit = HEARTS;
+    test->card[2].rank = 5;
+    test->card[2].suit = CLUBS;
+    test->card[3].rank = 4;
+    test->card[3].suit = DIAMONDS;
+    test->card[4].rank = 4;
+    test->card[4].suit = HEARTS;
+    test->card[5].rank = 3;
+    test->card[5].suit = DIAMONDS;
+    test->card[6].rank = 2;
+    test->card[6].suit = HEARTS;
+    for (int j = 0; j < 7; j++) {
+        printf("%s %i; ", getSuit(test->card[j].suit), test->card[j].rank);
+    }
+    if (isStraight(*test, test_player)) {
+        printf("True");
+    } else { printf("False"); }
+    printf("\n%d\n", test_player->rank);
+    for (int j = 0; j < 5; j++) {
+        printf("%s %i; ", getSuit(test_player->max_hand[j].suit), test_player->max_hand[j].rank);
+    }
+*/
 
 
 
 //    free(hands);
+//    }
+/*    free(test);
+    free(test_player->max_hand);
+    free(test_player);
+*/
     }
-//    free(test);
-//    free(test_player->max_hand);
-//    free(test_player);
-
     return 0;
 }
-
