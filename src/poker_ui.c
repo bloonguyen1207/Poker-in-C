@@ -15,7 +15,6 @@
 
 static void init_screen();
 static void finish(int sig);
-
 void center(int row, char *title) {
     int len, start_point;
     for (len = 0; ; len++) {
@@ -28,13 +27,14 @@ void center(int row, char *title) {
     refresh();
 }
 
-void drawStartMenu(int item, int num_computer) {
+void drawStartMenu(int item, int num_computer, int difficulty) {
     int c;
-    char menu[4][10] = {"<", ">", "Start", "Main Menu"};
+    char menu[6][10] = {"<", ">", "<", ">" "Start", "Main Menu"};
 
     clear();
     center(5, "Number of Computer Players:");
-    for (c = 0; c < 4; c++) {
+    center(9, "Difficulty");
+    for (c = 0; c < 6; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
@@ -47,26 +47,35 @@ void drawStartMenu(int item, int num_computer) {
                 mvaddstr(7, COLS / 2 + 2, menu[c]);
             }
         } else if (c == 2) {
-            center(9, menu[c]);
+            if (difficulty != 0) {
+                mvaddstr(11, COLS / 2 - 2, menu[c]);
+            }
         } else if (c == 3) {
-            center(11, menu[c]);
+            if (difficulty != 1) {
+                mvaddstr(11, COLS / 2 + 2, menu[c]);
+            }
+        } else if (c == 4) {
+            center(13, menu[c]);
+        } else if (c == 5) {
+            center(15, menu[c]);
         }
         attroff(A_REVERSE);
     }
 
     mvprintw(7, COLS / 2, "%d", num_computer);
+    mvprintw(11, COLS / 2, "%d", difficulty);
     move(0, 0);
 
     refresh();
 }
 
-int interactStartMenu(int num_computer, int item) {
+int interactStartMenu(int difficulty, int num_computer, int item) {
     int key = 0;
 
     keypad(stdscr, TRUE);
 
     while (key != 13) { //13 is Enter
-        drawStartMenu(item, num_computer);
+        drawStartMenu(item, num_computer, difficulty);
         key = getch();
         switch (key) {
             case KEY_DOWN:
@@ -122,12 +131,13 @@ int interactStartMenu(int num_computer, int item) {
 void startMenu() {
     int endMenu = 0;
     int num_computer = 2;
+    int difficulty = 0;
     int item;
     int choice = 0;
 
     while (!endMenu) {
         item = choice;
-        choice = interactStartMenu(num_computer, item);
+        choice = interactStartMenu(difficulty, num_computer, item);
         if (choice == 0) {
             if (num_computer > 2) {
                 num_computer--;
@@ -302,6 +312,18 @@ int xmain1() {
 //int startx = 0;
 //int starty = 0;
 //
+//void center(int row, char *title) {
+//    int len, start_point;
+//    for (len = 0; ; len++) {
+//        if (title[len] == '\0') {
+//            break;
+//        }
+//    }
+//    start_point = (COLS - len) / 2;
+//    mvprintw(row, start_point, title);
+//    refresh();
+//}
+//
 //char *choices[] = {
 //        "Start",
 //        "Load",
@@ -328,12 +350,12 @@ int xmain1() {
 //    menu_win = newwin(HEIGHT, WIDTH, starty, startx);
 //    keypad(menu_win, TRUE);
 //    mvprintw(0, 0, "Use arrow keys to go up and down, Press enter to select a choice");
-//    refresh();
 //    print_menu(menu_win, highlight);
-//    while(1)
-//    {	c = wgetch(menu_win);
-//        switch(c)
-//        {	case KEY_UP:
+//    refresh();
+//    while(1) {
+//        c = wgetch(menu_win);
+//        switch(c) {
+//            case KEY_UP:
 //                if(highlight == 1)
 //                    highlight = n_choices;
 //                else
@@ -349,13 +371,33 @@ int xmain1() {
 //                choice = highlight;
 //                break;
 //            default:
-//                mvprintw(24, 0, "Charcter pressed is = %3d Hopefully it can be printed as '%c'", c, c);
-//                refresh();
 //                break;
 //        }
 //        print_menu(menu_win, highlight);
-//        if(choice != 0)	/* User did a choice come out of the infinite loop */
+//        clear();
+//        if (choice == 1) {
+//            center(1, "START GAME");
+//            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+//            refresh();
+//            getch();
+//        } else if (choice == 2) {
+//            center(1, "LOAD GAME");
+//            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+//            refresh();
+//            getch();
+//        } else if (choice == 3) {
+//            center(1, "OPTIONS");
+//            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+//            refresh();
+//            getch();
+//        } else if (choice == 4) {
+//            center(1, "HIGHSCORE");
+//            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+//            refresh();
+//            getch();
+//        } else if(choice == 5) {
 //            break;
+//        }
 //    }
 //    mvprintw(23, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);
 //    clrtoeol();
@@ -371,6 +413,8 @@ int xmain1() {
 //
 //    x = 2;
 //    y = 2;
+//    center(3, "POKER");
+//    center(6, "Main menu");
 //    box(menu_win, 0, 0);
 //    for(i = 0; i < n_choices; ++i)
 //    {	if(highlight == i + 1) /* High light the present choice */
