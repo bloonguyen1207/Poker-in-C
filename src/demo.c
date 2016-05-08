@@ -1199,17 +1199,27 @@ void reset (Player * players, Table * table, int num_player, Deck * deck) {
 
 int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextBlind) {
     int prevPlayer = nextBlind - 1, nextPlayer = nextBlind + 1;
+    for (int i = 0; i < num_player; i++) {
+        //TODO fix here
+        if (players[nextBlind].money <= 0) {
+            nextBlind++;
+        }
+        if (players[nextPlayer].money <= 0) {
+            nextPlayer++;
+            if (nextPlayer == num_player) {
+                nextPlayer = 0;
+            }
+        }
+        if (nextBlind == num_player) {
+            nextBlind = 0;
+            nextPlayer = 1;
+        } else if (nextBlind == 0) {
+            prevPlayer = num_player - 1;
+        }
+    }
     int countActivePlayer = num_player;
     table->ante = 250;
     reset(players, table, num_player, deck);
-    if (nextBlind == num_player) {
-        nextBlind = 0;
-        nextPlayer = 1;
-    } else if (nextBlind == 0) {
-        prevPlayer = num_player - 1;
-    } else if (nextBlind == num_player - 1) {
-        nextPlayer = 0;
-    }
     players[nextBlind].isSmallBlind = 1;
     players[nextBlind].state = SB;
     players[nextBlind].bet = table->ante;
@@ -1227,10 +1237,11 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     for (int i = 0; i < num_player; i++) {
         if (players[i].money <= 0) {
             players[i].status = 0;
+            countActivePlayer--;
         }
     }
 
-    int countFold = 0, countAllin = 0;
+    int countFold = 0;
     int roundIdx;
     for (roundIdx = 0; roundIdx < 4; roundIdx++) {
         countActivePlayer = roundPoker(players, table, deck, num_player, roundIdx, countActivePlayer);
@@ -1524,12 +1535,6 @@ int main() {
 
 
 
-//    free(hands);
-//    }
-/*    free(test);
-    free(test_player->max_hand);
-    free(test_player);
-*/
     }
     return 0;
 }

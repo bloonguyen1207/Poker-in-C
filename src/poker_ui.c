@@ -27,14 +27,13 @@ void center(int row, char *title) {
     refresh();
 }
 
-void drawStartMenu(int item, int num_computer, int difficulty) {
+void drawStartMenu(int item, int num_computer) {
     int c;
-    char menu[6][10] = {"<", ">", "<", ">" "Start", "Main Menu"};
+    char menu[4][10] = {"<", ">", "Start", "Main Menu"};
 
     clear();
     center(5, "Number of Computer Players:");
-    center(9, "Difficulty");
-    for (c = 0; c < 6; c++) {
+    for (c = 0; c < 4; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
@@ -47,35 +46,26 @@ void drawStartMenu(int item, int num_computer, int difficulty) {
                 mvaddstr(7, COLS / 2 + 2, menu[c]);
             }
         } else if (c == 2) {
-            if (difficulty != 0) {
-                mvaddstr(11, COLS / 2 - 2, menu[c]);
-            }
+            center(9, menu[c]);
         } else if (c == 3) {
-            if (difficulty != 1) {
-                mvaddstr(11, COLS / 2 + 2, menu[c]);
-            }
-        } else if (c == 4) {
-            center(13, menu[c]);
-        } else if (c == 5) {
-            center(15, menu[c]);
+            center(11, menu[c]);
         }
         attroff(A_REVERSE);
     }
 
     mvprintw(7, COLS / 2, "%d", num_computer);
-    mvprintw(11, COLS / 2, "%d", difficulty);
     move(0, 0);
 
     refresh();
 }
 
-int interactStartMenu(int difficulty, int num_computer, int item) {
+int interactStartMenu(int num_computer, int item) {
     int key = 0;
 
     keypad(stdscr, TRUE);
 
     while (key != 13) { //13 is Enter
-        drawStartMenu(item, num_computer, difficulty);
+        drawStartMenu(item, num_computer);
         key = getch();
         switch (key) {
             case KEY_DOWN:
@@ -131,13 +121,12 @@ int interactStartMenu(int difficulty, int num_computer, int item) {
 void startMenu() {
     int endMenu = 0;
     int num_computer = 2;
-    int difficulty = 0;
     int item;
     int choice = 0;
 
     while (!endMenu) {
         item = choice;
-        choice = interactStartMenu(difficulty, num_computer, item);
+        choice = interactStartMenu(num_computer, item);
         if (choice == 0) {
             if (num_computer > 2) {
                 num_computer--;
