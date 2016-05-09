@@ -43,7 +43,6 @@ struct player {
     int isBigBlind;
     int isSmallBlind;
     Option option;
-    int isTurn;
     int isWinner;
 };
 typedef struct player Player;
@@ -784,6 +783,124 @@ int turn(Player *player, Table * table) {
     return input;
 }
 
+void checkHandRanking(Hand * hand, Player * player) {
+    sortHand(hand, 1);
+    if (isRoyalStraightFlush(*hand, player)) {
+    } else if (isStraightFlush(*hand, player)) {
+    } else if (is4OfAKind(*hand, player)) {
+    } else if (isFullHouse(*hand, player)) {
+    } else if (isFlush(*hand, player)) {
+    } else if (isStraight(*hand, player)) {
+    } else if (is3OfAKind(*hand, player)) {
+    } else if (is2Pair(*hand, player)) {
+    } else if (isPair(*hand, player)) {
+    } else {
+        isHighCard(*hand, player);
+    }
+}
+
+void firstAIround0(Player * ai, Table * table) {
+    if (ai->hand[0].rank == ai->hand[1].rank ||
+        (ai->hand[0].rank >= 10 && ai->hand[1].rank >= 10) ||
+        ai->hand[0].rank == 1 ||
+        ai->hand[1].rank == 1) {
+        if (isCallRaise(*ai, *table)) {
+            int money = minMoney(*ai, *table);
+            if (ai->money >= money * 3) {
+                raise(ai, table, (int) (money * 1.5));
+                return;
+            }
+        } else if (isCheckBet(*ai, *table)) {
+            int money = minMoney(*ai, *table);
+            if (ai->money >= money * 3) {
+                bet(ai, table, (int) (money * 1.5));
+                return;
+            }
+        }
+    }
+    if (abs(ai->hand[0].rank - ai->hand[1].rank) > 5 && ai->hand[0].suit != ai->hand[1].suit) {
+        if (ai->hand[0].rank < 11 && ai->hand[1].rank < 11) {
+            fold(ai);
+            return;
+        }
+    }
+    if (isCallRaise(*ai, *table)) {
+        if (ai->money >= minMoney(*ai, *table)) {
+            call(ai, table);
+            return;
+        }
+    } else if (isCheckBet(*ai, *table)) {
+        check(ai);
+        return;
+    }
+    fold(ai);
+    return;
+
+}
+
+void firstAIrounds(Player * ai, Table * table) {
+    Hand * temp = malloc(sizeof(Hand));
+    temp->card[0] = ai->hand[0];
+    temp->card[1] = ai->hand[1];
+    for (int i = 0; i <= table->card_idx; i++) {
+        temp->card[i+2] = table->card[i];
+    }
+
+    checkHandRanking(temp, ai);
+
+    int money = minMoney(*ai, *table);
+    if (ai->rank > 0) {
+        if (ai->rank >= 2) {
+            if (isCallRaise(*ai, *table)) {
+                raise(ai, table, ai->money);
+                return;
+            } else if (isCheckBet(*ai, *table)) {
+                bet(ai, table, ai->money);
+                return;
+            }
+        }
+        if (ai->money >= money * 3) {
+            if (isCallRaise(*ai, *table)) {
+                raise(ai, table, (int)(money * 1.5));
+                return;
+            } else if (isCheckBet(*ai, *table)) {
+                bet(ai, table, (int)(money * 1.5));
+                return;
+            }
+        }
+        if (isCallRaise(*ai, *table)) {
+            call(ai, table);
+            return;
+        } else if (isCheckBet(*ai, *table)) {
+            check(ai);
+            return;
+        }
+    }
+
+    if (ai->money >= money * 2) {
+        if (isCallRaise(*ai, *table)) {
+            call(ai, table);
+            return;
+        } else if (isCheckBet(*ai, *table)) {
+            check(ai);
+            return;
+        }
+
+    }
+    fold(ai);
+
+    free(temp);
+    return;
+}
+
+void firstAI(Player * ai, Table * table, int roundIdx) {
+    if (roundIdx == 0) {
+        firstAIround0(ai, table);
+    } else {
+        firstAIrounds(ai, table);
+    }
+}
+
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
     int playerIdx  = 0, countCheck = 0, countAllin = 0, countCall = 0, end_round = 0, is_1st_bet = 0, count = 0;
     State lastState = None;
@@ -852,7 +969,11 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 is_1st_bet = 0;
             }
             displayTableInfo(*table);
-            turn(&players[playerIdx], table);
+            if (playerIdx == 1) {
+                firstAI(&players[playerIdx], table, roundIdx);
+            } else {
+                turn(&players[playerIdx], table);
+            }
             if (is_1st_bet) {
                 if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
                     end_round = 1;
@@ -1273,143 +1394,6 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     award(players, table, num_player);
     printf("Next Blind: %i\n", nextBlind);
     return nextBlind;
-}
-
-void checkHandRanking(Hand * hand, Player * player) {
-    sortHand(hand, 1);
-    if (isRoyalStraightFlush(*hand, player)) {
-    } else if (isStraightFlush(*hand, player)) {
-    } else if (is4OfAKind(*hand, player)) {
-    } else if (isFullHouse(*hand, player)) {
-    } else if (isFlush(*hand, player)) {
-    } else if (isStraight(*hand, player)) {
-    } else if (is3OfAKind(*hand, player)) {
-    } else if (is2Pair(*hand, player)) {
-    } else if (isPair(*hand, player)) {
-    } else {
-        isHighCard(*hand, player);
-    }
-}
-
-void firstAIround0(Player * ai, Table * table) {
-    if (ai->hand[0].rank == ai->hand[1].rank ||
-        (ai->hand[0].rank >= 10 && ai->hand[1].rank >= 10) ||
-        ai->hand[0].rank == 1 ||
-        ai->hand[1].rank == 1) {
-        if (isCallRaise(*ai, *table)) {
-            int money = minMoney(*ai, *table);
-            if (ai->money >= money * 3) {
-                raise(ai, table, (int) (money * 1.5));
-                ai->isTurn = 0;
-                return;
-            }
-        } else if (isCheckBet(*ai, *table)) {
-            int money = minMoney(*ai, *table);
-            if (ai->money >= money * 3) {
-                bet(ai, table, (int) (money * 1.5));
-                ai->isTurn = 0;
-                return;
-            }
-        }
-    }
-    if (abs(ai->hand[0].rank - ai->hand[1].rank) > 5 && ai->hand[0].suit != ai->hand[1].suit) {
-        if (ai->hand[0].rank < 11 && ai->hand[1].rank < 11) {
-            fold(ai);
-            ai->isTurn = 0;
-            return;
-        }
-    }
-    if (isCallRaise(*ai, *table)) {
-        if (ai->money >= minMoney(*ai, *table)) {
-            call(ai, table);
-            ai->isTurn = 0;
-            return;
-        }
-    } else if (isCheckBet(*ai, *table)) {
-        check(ai);
-        ai->isTurn = 0;
-        return;
-    }
-    fold(ai);
-    ai->isTurn = 0;
-    return;
-
-}
-
-void firstAIrounds(Player * ai, Table * table) {
-    Hand * temp = malloc(sizeof(Hand));
-    temp->card[0] = ai->hand[0];
-    temp->card[1] = ai->hand[1];
-    for (int i = 0; i <= table->card_idx; i++) {
-        temp->card[i+2] = table->card[i];
-    }
-
-    checkHandRanking(temp, ai);
-
-    int money = minMoney(*ai, *table);
-    if (ai->rank > 0) {
-        if (ai->rank >= 2) {
-            if (isCallRaise(*ai, *table)) {
-                raise(ai, table, ai->money);
-                ai->isTurn = 0;
-                return;
-            } else if (isCheckBet(*ai, *table)) {
-                bet(ai, table, ai->money);
-                ai->isTurn = 0;
-                return;
-            }
-        }
-        if (ai->money >= money * 3) {
-            if (isCallRaise(*ai, *table)) {
-                raise(ai, table, (int)(money * 1.5));
-                ai->isTurn = 0;
-                return;
-            } else if (isCheckBet(*ai, *table)) {
-                bet(ai, table, (int)(money * 1.5));
-                ai->isTurn = 0;
-                return;
-            }
-        }
-        if (isCallRaise(*ai, *table)) {
-            call(ai, table);
-            ai->isTurn = 0;
-            return;
-        } else if (isCheckBet(*ai, *table)) {
-            check(ai);
-            ai->isTurn = 0;
-            return;
-        }
-    }
-
-    if (ai->money >= money * 2) {
-        if (isCallRaise(*ai, *table)) {
-            call(ai, table);
-            ai->isTurn = 0;
-            return;
-        } else if (isCheckBet(*ai, *table)) {
-            check(ai);
-            ai->isTurn = 0;
-            return;
-        }
-
-    }
-    fold(ai);
-    ai->isTurn = 0;
-
-    free(temp);
-    return;
-}
-
-void firstAI(Player * ai, Table * table, int roundIdx) {
-    while (ai->isTurn && ai->status == 1) {
-        if (roundIdx == 0) {
-            firstAIround0(ai, table);
-        } else {
-            firstAIrounds(ai, table);
-        }
-        ai->isTurn = 0;
-        break;
-    }
 }
 
 void mainMenu(){
