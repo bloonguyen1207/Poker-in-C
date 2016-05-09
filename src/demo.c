@@ -797,7 +797,14 @@ int firstAIrounds(Player * ai, Table * table) {
     for (int i = 0; i < table->card_idx; i++) {
         temp->card[i+2] = table->card[i];
     }
-
+    if (table->card_idx >= 3) {
+        if (table->card_idx == 3) {
+            temp->card[5].rank = -1;
+            temp->card[5].suit = HEARTS;
+        }
+        temp->card[6].rank = -2;
+        temp->card[6].suit = CLUBS;
+    }
     checkHandRanking(temp, ai);
 
     int money = minMoney(*ai, *table);
