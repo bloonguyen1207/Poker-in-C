@@ -735,54 +735,6 @@ void runOption(Player * player, Table * table, int option, int money) {
     }
 }
 
-int turn(Player *player, Table * table) {
-    int input;
-    printf("\n\n%s's Turn\n", player->name);
-
-    //print cards in hand
-    for (int j = 0; j < 2; j++) {
-        printf("%s %i; ", getSuit(player->hand[j].suit), player->hand[j].rank);
-    }
-    printf("\n\n");
-
-    //let user choose option
-    displayOption(*player, * table);
-    input = scanInput(3);
-    //let user input money if they choose raise or bet
-    int money = 0;
-    int isRaiseOrBet = 0;
-    if (isCallRaise(*player, *table)) {
-        int call_money = table->highest_bet - player->bet;
-        if (player->money >= call_money + table->last_bet){
-            if (input == 2) {
-                isRaiseOrBet = 1;
-            }
-        }
-    } else if (isCheckBet(*player, *table)) {
-        if (player->money >= table->ante * 2) {
-            if (input == 2) {
-                isRaiseOrBet = 1;
-            }
-        }
-    }
-    if (isRaiseOrBet == 1) {
-        int min = minMoney(*player, *table);
-        displayRangeMoney(min, player->money);
-        money = inputMoney(min, player->money);
-    }
-
-    //execute the option
-    runOption(player, table, input, money);
-
-    //Update highest_bet
-    if (player->bet > table->highest_bet) {
-        table->highest_bet = player->bet;
-    }
-    printf("\nHigh bet: %i\n", table->highest_bet);
-    printf("\n------End%sTurn-----\n", player->name);
-    return input;
-}
-
 void checkHandRanking(Hand * hand, Player * player) {
     sortHand(hand, 1);
     if (isRoyalStraightFlush(*hand, player)) {
@@ -799,7 +751,7 @@ void checkHandRanking(Hand * hand, Player * player) {
     }
 }
 
-void firstAIround0(Player * ai, Table * table) {
+int firstAIround0(Player * ai, Table * table) {
     if (ai->hand[0].rank == ai->hand[1].rank ||
         (ai->hand[0].rank >= 10 && ai->hand[1].rank >= 10) ||
         ai->hand[0].rank == 1 ||
@@ -808,41 +760,41 @@ void firstAIround0(Player * ai, Table * table) {
             int money = minMoney(*ai, *table);
             if (ai->money >= money * 3) {
                 raise(ai, table, (int) (money * 1.5));
-                return;
+                return 2;
             }
         } else if (isCheckBet(*ai, *table)) {
             int money = minMoney(*ai, *table);
             if (ai->money >= money * 3) {
                 bet(ai, table, (int) (money * 1.5));
-                return;
+                return 2;
             }
         }
     }
     if (abs(ai->hand[0].rank - ai->hand[1].rank) > 5 && ai->hand[0].suit != ai->hand[1].suit) {
         if (ai->hand[0].rank < 11 && ai->hand[1].rank < 11) {
             fold(ai);
-            return;
+            return 3;
         }
     }
     if (isCallRaise(*ai, *table)) {
         if (ai->money >= minMoney(*ai, *table)) {
             call(ai, table);
-            return;
+            return 1;
         }
     } else if (isCheckBet(*ai, *table)) {
         check(ai);
-        return;
+        return 1;
     }
     fold(ai);
-    return;
+    return 3;
 
 }
 
-void firstAIrounds(Player * ai, Table * table) {
+int firstAIrounds(Player * ai, Table * table) {
     Hand * temp = malloc(sizeof(Hand));
     temp->card[0] = ai->hand[0];
     temp->card[1] = ai->hand[1];
-    for (int i = 0; i <= table->card_idx; i++) {
+    for (int i = 0; i < table->card_idx; i++) {
         temp->card[i+2] = table->card[i];
     }
 
@@ -853,52 +805,108 @@ void firstAIrounds(Player * ai, Table * table) {
         if (ai->rank >= 2) {
             if (isCallRaise(*ai, *table)) {
                 raise(ai, table, ai->money);
-                return;
+                return 2;
             } else if (isCheckBet(*ai, *table)) {
                 bet(ai, table, ai->money);
-                return;
+                return 2;
             }
         }
         if (ai->money >= money * 3) {
             if (isCallRaise(*ai, *table)) {
                 raise(ai, table, (int)(money * 1.5));
-                return;
+                return 2;
             } else if (isCheckBet(*ai, *table)) {
                 bet(ai, table, (int)(money * 1.5));
-                return;
+                return 2;
             }
         }
         if (isCallRaise(*ai, *table)) {
             call(ai, table);
-            return;
+            return 1;
         } else if (isCheckBet(*ai, *table)) {
             check(ai);
-            return;
+            return 1;
         }
     }
 
     if (ai->money >= money * 2) {
         if (isCallRaise(*ai, *table)) {
             call(ai, table);
-            return;
+            return 1;
         } else if (isCheckBet(*ai, *table)) {
             check(ai);
-            return;
+            return 1;
         }
 
     }
     fold(ai);
 
     free(temp);
-    return;
+    return 3;
 }
 
-void firstAI(Player * ai, Table * table, int roundIdx) {
+int firstAI(Player * ai, Table * table, int roundIdx) {
+    int input;
     if (roundIdx == 0) {
-        firstAIround0(ai, table);
+        input = firstAIround0(ai, table);
     } else {
-        firstAIrounds(ai, table);
+        input = firstAIrounds(ai, table);
     }
+    return input;
+}
+
+int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
+    int input;
+    printf("\n\n%s's Turn\n", player->name);
+
+    //print cards in hand
+    for (int j = 0; j < 2; j++) {
+        printf("%s %i; ", getSuit(player->hand[j].suit), player->hand[j].rank);
+    }
+    printf("\n\n");
+
+    //let user choose option
+    displayOption(*player, * table);
+    //TODO: add AI here
+    if (playerIdx == 1) {
+        input = firstAI(player, table, roundIdx);
+    } else {
+        input = scanInput(3);
+
+        //let user input money if they choose raise or bet
+        int money = 0;
+        int isRaiseOrBet = 0;
+        if (isCallRaise(*player, *table)) {
+            int call_money = table->highest_bet - player->bet;
+            if (player->money >= call_money + table->last_bet) {
+                if (input == 2) {
+                    isRaiseOrBet = 1;
+                }
+            }
+        } else if (isCheckBet(*player, *table)) {
+            if (player->money >= table->ante * 2) {
+                if (input == 2) {
+                    isRaiseOrBet = 1;
+                }
+            }
+        }
+        if (isRaiseOrBet == 1) {
+            int min = minMoney(*player, *table);
+            displayRangeMoney(min, player->money);
+            money = inputMoney(min, player->money);
+        }
+
+        //execute the option
+        runOption(player, table, input, money);
+    }
+
+    //Update highest_bet
+    if (player->bet > table->highest_bet) {
+        table->highest_bet = player->bet;
+    }
+    printf("\nHigh bet: %i\n", table->highest_bet);
+    printf("\n------End%sTurn-----\n", player->name);
+    return input;
 }
 
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
@@ -958,6 +966,9 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         if (playerIdx >= num_player) {
             playerIdx = 0;
         }
+        if (countAllin == countActivePlayer - 1 && players[playerIdx].bet == table->highest_bet) {
+            break;
+        }
         if (players[playerIdx].state != Folded && players[playerIdx].state != Allins
                 && players[playerIdx].money > 0 && players[playerIdx].status == 1) {
             printf("State: %i\n", players[playerIdx].state);
@@ -969,11 +980,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 is_1st_bet = 0;
             }
             displayTableInfo(*table);
-            if (playerIdx == 1) {
-                firstAI(&players[playerIdx], table, roundIdx);
-            } else {
-                turn(&players[playerIdx], table);
-            }
+            turn(&players[playerIdx], table, roundIdx, playerIdx);
             if (is_1st_bet) {
                 if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
                     end_round = 1;
@@ -982,6 +989,9 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 if (players[playerIdx].state == Checked) {
                     countCheck++;
                 }
+            }
+            if (players[playerIdx].state == Allins) {
+                countAllin++;
             }
             if (players[playerIdx].state == Called) {
                 if (players[playerIdx].money == 0) {
@@ -1004,7 +1014,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer ||
                     (countCall == countActivePlayer - 1 && !is_1st_bet) ||
                     (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded) ||
-                    ((players[playerIdx].state == Called || players[playerIdx].state == Checked) && countAllin == num_player - 1)) {
+                    (countAllin == countActivePlayer - 1 && (players[playerIdx].state == Called || players[playerIdx].state == Checked))) {
                 lastState = None;
                 end_round = 1;
             }
@@ -1015,68 +1025,6 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     printf("Active Player: %i\n", countActivePlayer);
     return countActivePlayer;
 }
-
-/*void roundPoker(Player *players, Table *table, Deck *deck, int num_player, int round_idx) {
-    int prevPlayer = 0; //idx of prevPlayer
-    int count_fold = 0;
-    int the_end = 0;
-    int isFirstTurn = 1;
-
-    if (round_idx > 0) {
-        dealSharedCards(table, deck, round_idx);
-    }
-
-    while (!the_end) {
-        //Except for first turn, if there is still any active or not allin player that bet < highest_bet , continue round
-        int check = 0;
-        if (!isFirstTurn) {
-            for (int x = 0; x < num_player; x++) {
-                if ((players[x].status != 0 || !isAllin(&players[x])) && players[x].bet < table->highest_bet) {
-                    check++;
-                }
-            }
-            if (check == 0) {
-                break;
-            }
-        }
-        for (int i = 0; i < num_player; i++) {
-            //TODO check if there is only 1 active player (work), but game also need to check again to break game
-            if (count_fold == num_player - 1) {
-                the_end = 1;
-                break;
-            }
-            printf("\nCountFold: %i\n", count_fold);
-            //set prevPlayer
-            if (i == 0) {
-                prevPlayer = num_player - 1;
-            } else {
-                prevPlayer = i - 1;
-            }
-            while (players[prevPlayer].status == 0 && prevPlayer != i) {
-                if (prevPlayer == 0) {
-                    prevPlayer = num_player - 1;
-                } else {
-                    prevPlayer--;
-                }
-            }
-
-            //check if the user is able to choose option (get turn)
-            if (players[i].option != Allin  && players[i].status == 1) {
-                displayTableInfo(*table);
-                //print all player info
-                for (int z = 0; z < num_player; z++) {
-                    displayPlayerInfo(players[z]);
-                    printf("\n");
-                }
-                if (turn(&players[i], table) == 3) {
-                    count_fold++;
-                }
-            }
-        }
-        isFirstTurn = 0;
-    }
-    printf("-------------------EndRound------------------------\n\n");
-}*/
 
 void checkWinner(Player * players, int num_player) {
     int winner_idx[num_player]; //create an int array which stores idx of winner
@@ -1241,7 +1189,7 @@ void testHand(Hand *hands, Player * players, int num_player) {
             //if there is more than 2 winners, check them
         else if (countWinners >= 2) {
             //create a temporary pointer
-            Player * temp = malloc(sizeof(temp) * countWinners);
+            Player * temp = malloc(sizeof(Player) * countWinners);
             //copy the value of temporary winners to the addresses where temp pointer points to
             int idx = 0;
             for (int i = 0; i < num_player; i++) {
@@ -1318,41 +1266,77 @@ void reset (Player * players, Table * table, int num_player, Deck * deck) {
     table->last_bet = 0;
 }
 
-int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextBlind) {
-    int prevPlayer = nextBlind - 1, nextPlayer = nextBlind + 1;
-    for (int i = 0; i < num_player; i++) {
-        //TODO fix here
-        if (players[nextBlind].money <= 0) {
-            nextBlind++;
-        }
-        if (players[nextPlayer].money <= 0) {
-            nextPlayer++;
-            if (nextPlayer == num_player) {
-                nextPlayer = 0;
+int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextSB) {
+    int prevPlayer = nextSB - 1, nextBB = nextSB + 1;
+    int countActivePlayer = num_player;
+    if (players[nextSB].money == 0) {
+        for (int i = 0; i < num_player; i++) {
+            nextSB++;
+            if (nextSB == num_player){
+                nextSB = 0;
+            }
+            if (players[nextSB].money > 0) {
+                nextBB = nextSB + 1;
+                break;
             }
         }
-        if (nextBlind == num_player) {
-            nextBlind = 0;
-            nextPlayer = 1;
-        } else if (nextBlind == 0) {
-            prevPlayer = num_player - 1;
+    }
+
+    if (players[nextBB].money == 0) {
+        for (int i = 0; i < num_player; i++) {
+            nextBB++;
+            if (nextBB == num_player){
+                nextBB = 0;
+            }
+            if (players[nextBB].money > 0) {
+                break;
+            }
         }
     }
-    int countActivePlayer = num_player;
+
+    if (nextSB == num_player - 1) {
+        nextBB = 0;
+    }
+    if (nextSB == num_player) {
+        nextSB = 0;
+        nextBB = 1;
+    }
+//    //TODO fix here
+//    while (players[nextSB].money <= 0) {
+//        nextSB++;
+//        if (nextSB == num_player) {
+//            nextSB = 0;
+//        }
+//    }
+//    while (players[nextBB].money <= 0 || players[nextBB].isSmallBlind) {
+//        nextBB++;
+//        if (nextBB == num_player) {
+//            nextBB = 0;
+//        }
+//    }
+//    if (nextSB == 0) {
+//        prevPlayer = num_player - 1;
+//        while (players[prevPlayer].money <= 0) {
+//            prevPlayer--;
+//            if (prevPlayer == -1) {
+//                prevPlayer = num_player - 1;
+//            }
+//        }
+//    }
     table->ante = 250;
     reset(players, table, num_player, deck);
-    players[nextBlind].isSmallBlind = 1;
-    players[nextBlind].state = SB;
-    players[nextBlind].bet = table->ante;
-    players[nextBlind].money = players[nextBlind].money - players[nextBlind].bet;
-    players[nextPlayer].isBigBlind = 1;
-    players[nextPlayer].state = BB;
-    players[nextPlayer].bet = table->ante * 2;
-    players[nextPlayer].money = players[nextPlayer].money - players[nextPlayer].bet;
+    players[nextSB].isSmallBlind = 1;
+    players[nextSB].state = SB;
+    players[nextSB].bet = table->ante;
+    players[nextSB].money = players[nextSB].money - players[nextSB].bet;
+    players[nextBB].isBigBlind = 1;
+    players[nextBB].state = BB;
+    players[nextBB].bet = table->ante * 2;
+    players[nextBB].money = players[nextBB].money - players[nextBB].bet;
     players[prevPlayer].isSmallBlind = 0;
-    players[nextBlind].isBigBlind = 0;
-    table->pot_money = players[nextBlind].bet + players[nextPlayer].bet;
-    nextBlind++;
+    players[nextSB].isBigBlind = 0;
+    table->pot_money = players[nextSB].bet + players[nextBB].bet;
+    nextSB++;
 
     dealStartingHand(players, deck, num_player);
     for (int i = 0; i < num_player; i++) {
@@ -1392,8 +1376,8 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         free(hands);
     }
     award(players, table, num_player);
-    printf("Next Blind: %i\n", nextBlind);
-    return nextBlind;
+    printf("Next Blind: %i\n", nextSB);
+    return nextSB;
 }
 
 void mainMenu(){
@@ -1404,9 +1388,9 @@ int main() {
     int opt = 0;
     int opt1 = 0;
     int opt2 = 0;
-    int nextBlind = 0;
     int endProgram = 0;
     while (!endProgram) {
+        int nextBlind = 0;
         mainMenu();
         scanf("%d", &opt);
         if (opt == 1) {
@@ -1428,8 +1412,18 @@ int main() {
             int num_player = 5;
             Player *players = createPlayers(num_player);
             for (int gameIdx = 0; ; gameIdx++) {
+                int remain = num_player;
                 printf("Gameidx: %i\n", gameIdx);
-
+                for (int m = 0; m < num_player; m++) {
+                    if (players[m].money <= 0) {
+                        remain--;
+                    }
+                }
+                printf("remain: %i\n", remain);
+                if (remain == 1) {
+                    printf("No player left.\n");
+                    break;
+                }
                 // Shuffle the deck
                 shuffleDeck(deck, size);
 
@@ -1457,8 +1451,6 @@ int main() {
         } else if (opt == 3) {
             endProgram = 1;
         }
-
-
 /*---------------------------------------------------
     // Deal hole cards for players
     dealStartingHand(players, deck, num_player);
@@ -1516,9 +1508,6 @@ int main() {
         printf("%s %i; ", getSuit(test_player->max_hand[j].suit), test_player->max_hand[j].rank);
     }
 */
-
-
-
     }
     return 0;
 }

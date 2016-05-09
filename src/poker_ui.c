@@ -7,14 +7,140 @@
 #include <signal.h>
 #include <time.h>
 #include <unistd.h>
+#include <string.h>
 
 #define POKER_COLOR_BACKGROUND    0
 #define POKER_COLOR_RED           1
 #define POKER_COLOR_BLUE          2
 #define POKER_COLOR_TEXT          7
 
+enum suit {HEARTS, DIAMONDS, CLUBS, SPADES, NONE};
+typedef enum suit Suit;
+
+enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
+typedef enum rank Rank;
+
+enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
+typedef enum state State;
+
+enum option {Call, Raise, Check, Bet, Allin, Fold};
+typedef enum option Option;
+
+struct card {
+    Suit suit;
+    int rank;
+};
+typedef struct card Card;
+
+struct player {
+    char name[20];
+    int money;
+    int bet;
+    int status;
+    Card hand[2];
+    Card *max_hand;
+    Rank rank;
+    State state;
+    int isBigBlind;
+    int isSmallBlind;
+    Option option;
+    int isTurn;
+    int isWinner;
+};
+typedef struct player Player;
+
+struct table {
+    int pot_money;
+    int ante;
+    int highest_bet; //the largest amount of total bet in one round
+    Card card[5];
+    int card_idx;
+    int last_bet;
+};
+typedef struct table Table;
+
+char* getSuit(Suit s) {
+    switch(s){
+        case HEARTS: return "\u2665";
+        case DIAMONDS: return "\u2666";
+        case CLUBS: return "\u2663";
+        case SPADES: return "\u2660";
+        default: break;
+    }
+    return NULL;
+}
+
+Player* createPlayers(int num_player) {
+    if (num_player >= 2 && num_player <= 10) {
+        Player *players = malloc(sizeof(Player) * num_player);
+        for (int i = 0; i < num_player; i++) {
+            strcpy(players[i].name, "Player 0");
+            players[i].status = 1;
+            players[i].state = None;
+            players[i].name[7] += i + 1;
+            players[i].money = 5000;
+            players[i].max_hand = malloc(sizeof(Card) * 5);
+            players[i].bet = 0;
+            players[i].isBigBlind = 0;
+            players[i].isSmallBlind = 0;
+        }
+        return players;
+    }
+    return NULL;
+}
+
+Table * createTable() {
+    Table * table = malloc(sizeof(Table));
+    table->card_idx = 0;
+    table->highest_bet = 0;
+    return table;
+}
+
 static void init_screen();
 static void finish(int sig);
+
+void drawCard(Card card, int y, int x) {
+    if (card.suit == SPADES) {
+        mvaddstr(y, x, ".______."); y++;
+        mvprintw(y, x, "|%d  .  |", card.suit); y++;
+        mvaddstr(y, x, "|  / \\ |"); y++;
+        mvaddstr(y, x, "| (_,_)|"); y++;
+        mvaddstr(y, x, "|   I  |"); y++;
+        mvaddstr(y, x, ".______.");
+    } else if (card.suit == CLUBS) {
+        mvaddstr(y, x, ".______."); y++;
+        mvprintw(y, x, "|%d  _  |", card.suit); y++;
+        mvaddstr(y, x, "|  ( ) |"); y++;
+        mvaddstr(y, x, "| (_x_)|"); y++;
+        mvaddstr(y, x, "|   I  |"); y++;
+        mvaddstr(y, x, ".______.");
+    } else if (card.suit == DIAMONDS) {
+        mvaddstr(y, x, ".______."); y++;
+        mvprintw(y, x, "|%d /\\  |", card.suit); y++;
+        mvaddstr(y, x, "| /  \\ |"); y++;
+        mvaddstr(y, x, "| \\  / |"); y++;
+        mvaddstr(y, x, "|  \\/  "); y++;
+        mvaddstr(y, x, ".______.");
+    } else if (card.suit == HEARTS) {
+        mvaddstr(y, x, ".______."); y++;
+        mvprintw(y, x, "|%d_  _ |", card.suit); y++;
+        mvaddstr(y, x, "|( \\/ )|"); y++;
+        mvaddstr(y, x, "| \\  / |"); y++;
+        mvaddstr(y, x, "|  \\/  |"); y++;
+        mvaddstr(y, x, ".______.");
+    } else if (card.suit == NONE) {
+        mvaddstr(y, x, ".______."); y++;
+        mvaddstr(y, x, "|______|"); y++;
+        mvaddstr(y, x, "|______|"); y++;
+        mvaddstr(y, x, "|______|"); y++;
+        mvaddstr(y, x, "|______|"); y++;
+        mvaddstr(y, x, ".______.");
+    }
+
+    move(0, 0);
+    refresh();
+}
+
 void center(int row, char *title) {
     int len, start_point;
     for (len = 0; ; len++) {
@@ -27,22 +153,87 @@ void center(int row, char *title) {
     refresh();
 }
 
-void drawStartMenu(int item, int num_computer) {
+void drawGame(int num_player, int roundIdx, Player * players, Table * table) {
+    Card card;
+    card.suit = NONE;
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].status == 0) {
+            continue;
+        }
+        if (i == 0) {
+            drawCard(players[i].hand[0], 13, 20);
+            drawCard(players[i].hand[1], 13, 28);
+        } else if (i == 1) {
+            drawCard(card, 1, 20);
+            drawCard(card, 1, 28);
+        } else if (i == 2) {
+            for (int j = 0; j < 2; j++) {
+                drawCard(card, 1, 0);
+                drawCard(card, 1, 8);
+            }
+        } else if (i == 3) {
+            for (int j = 0; j < 2; j++) {
+                drawCard(card, 1, 41);
+                drawCard(card, 1, 49);
+            }
+        } else if (i == 4) {
+            for (int j = 0; j < 2; j++) {
+                drawCard(card, 13, 0);
+                drawCard(card, 13, 8);
+            }
+        } else if (i == 5) {
+            for (int j = 0; j < 2; j++) {
+                drawCard(card, 13, 41);
+                drawCard(card, 13, 49);
+            }
+        }
+    }
+    if (roundIdx > 0) {
+        int x = 6;
+        for (int i = 0; i < roundIdx + 2; i++) {
+            drawCard(table->card[i], 7, x);
+            x += 8;
+        }
+    }
+    refresh();
+}
+
+void game() {
+    int num_player = 6;
+    Player * players = createPlayers(num_player);
+    Table * table = createTable();
+    for (int i = 0; i < 5; i++) {
+        table->card[i].suit = HEARTS;
+        table->card[i].rank = 5;
+    }
+    players[0].hand[0].rank = 4;
+    players[0].hand[0].suit = CLUBS;
+    players[0].hand[1].rank = 2;
+    players[0].hand[1].suit = DIAMONDS;
+    for (int i = 0; i < 4; i++) {
+        drawGame(num_player, i, players, table);
+        getch();
+    }
+    free(players);
+    free(table);
+}
+
+void drawStartMenu(int item, int num_player) {
     int c;
     char menu[4][10] = {"<", ">", "Start", "Main Menu"};
 
     clear();
-    center(5, "Number of Computer Players:");
+    center(5, "Number of Players:");
     for (c = 0; c < 4; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
         if (c == 0) {
-            if (num_computer != 2) {
+            if (num_player != 2) {
                 mvaddstr(7, COLS / 2 - 2, menu[c]);
             }
         } else if (c == 1) {
-            if (num_computer != 5) {
+            if (num_player != 6) {
                 mvaddstr(7, COLS / 2 + 2, menu[c]);
             }
         } else if (c == 2) {
@@ -53,19 +244,19 @@ void drawStartMenu(int item, int num_computer) {
         attroff(A_REVERSE);
     }
 
-    mvprintw(7, COLS / 2, "%d", num_computer);
+    mvprintw(7, COLS / 2, "%d", num_player);
     move(0, 0);
 
     refresh();
 }
 
-int interactStartMenu(int num_computer, int item) {
+int interactStartMenu(int num_player, int item) {
     int key = 0;
 
     keypad(stdscr, TRUE);
 
     while (key != 13) { //13 is Enter
-        drawStartMenu(item, num_computer);
+        drawStartMenu(item, num_player);
         key = getch();
         switch (key) {
             case KEY_DOWN:
@@ -75,7 +266,7 @@ int interactStartMenu(int num_computer, int item) {
                 }
                 item++;
                 if (item > 3) {
-                    if (num_computer == 2) {
+                    if (num_player == 2) {
                         item = 1;
                     } else {
                         item = 0;
@@ -87,7 +278,7 @@ int interactStartMenu(int num_computer, int item) {
                     item = 3;
                     break;
                 }
-                if (item == 2 && num_computer == 5) {
+                if (item == 2 && num_player == 6) {
                     item = 0;
                     break;
                 }
@@ -98,7 +289,7 @@ int interactStartMenu(int num_computer, int item) {
                 break;
             case KEY_LEFT:
                 if (item == 1) {
-                    if (num_computer != 2) {
+                    if (num_player != 2) {
                         item = 0;
                     }
                     break;
@@ -106,7 +297,7 @@ int interactStartMenu(int num_computer, int item) {
                 break;
             case KEY_RIGHT:
                 if (item == 0) {
-                    if (num_computer != 5) {
+                    if (num_player != 6) {
                         item = 1;
                     }
                     break;
@@ -120,26 +311,24 @@ int interactStartMenu(int num_computer, int item) {
 
 void startMenu() {
     int endMenu = 0;
-    int num_computer = 2;
+    int num_player = 2;
     int item;
     int choice = 0;
 
     while (!endMenu) {
         item = choice;
-        choice = interactStartMenu(num_computer, item);
+        choice = interactStartMenu(num_player, item);
         if (choice == 0) {
-            if (num_computer > 2) {
-                num_computer--;
+            if (num_player > 2) {
+                num_player--;
             }
         } else if (choice == 1) {
-            if (num_computer < 5) {
-                num_computer++;
+            if (num_player < 6) {
+                num_player++;
             }
         } else if (choice == 2) {
             clear();
-            center(1, "START GAME");
-            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
-            refresh();
+            game();
             getch();
         } else if (choice == 3) {
             endMenu = 1;
@@ -244,9 +433,8 @@ static void init_screen() {
         start_color();
         // initialise you color pairs (foreground, background)
         init_pair(1, COLOR_BLACK, COLOR_WHITE);
-        init_pair(4, POKER_COLOR_TEXT, POKER_COLOR_BACKGROUND);
-        init_pair(2, POKER_COLOR_RED, POKER_COLOR_BACKGROUND);
-        init_pair(3, POKER_COLOR_BLUE, POKER_COLOR_BACKGROUND);
+        init_pair(2, COLOR_WHITE, COLOR_RED);
+        init_pair(3, COLOR_WHITE, COLOR_BLACK);
     }
     /* set default color pair */
     attrset(COLOR_PAIR(1));
