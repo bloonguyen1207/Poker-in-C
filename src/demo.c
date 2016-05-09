@@ -1120,7 +1120,7 @@ void testHand(Hand *hands, Player * players, int num_player) {
             //if there is more than 2 winners, check them
         else if (countWinners >= 2) {
             //create a temporary pointer
-            Player * temp = malloc(sizeof(temp) * countWinners);
+            Player * temp = malloc(sizeof(Player) * countWinners);
             //copy the value of temporary winners to the addresses where temp pointer points to
             int idx = 0;
             for (int i = 0; i < num_player; i++) {
