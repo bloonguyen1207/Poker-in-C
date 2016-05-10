@@ -603,17 +603,7 @@ int inputMoney(int min, int max) {
     return input;
 }
 
-int isAllin(Player player, Table table) {
-    return player.money < table.highest_bet - player.bet;
-}
 
-int isCallRaise(Player player, Table table) {
-    return player.bet < table.highest_bet;
-}
-
-int isCheckBet(Player player, Table table) {
-    return player.bet == table.highest_bet;
-}
 
 void allin(Player *player, Table * table) {
     if (isAllin(*player, *table)) {

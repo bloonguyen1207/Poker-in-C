@@ -15,8 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" afterPath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="$PROJECT_DIR$/src/demo.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.c" afterPath="$PROJECT_DIR$/src/poker_ui.c" />
     </list>
@@ -39,16 +37,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="demo.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="demo.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/demo.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14035088">
-              <caret line="799" column="0" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="576" column="0" selection-start-line="576" selection-start-column="0" selection-end-line="578" selection-end-column="1" />
               <folding>
                 <element signature="e#0#2#0" expanded="false" />
                 <element signature="e#119#162#1" expanded="false" />
-                <element signature="e#189#304#1" expanded="false" />
-                <element signature="e#331#403#1" expanded="false" />
                 <element signature="e#432#482#1" expanded="false" />
                 <element signature="e#513#557#1" expanded="false" />
                 <element signature="e#586#641#1" expanded="false" />
@@ -67,14 +63,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="1" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0992647">
+              <caret line="167" column="10" selection-start-line="167" selection-start-column="10" selection-end-line="167" selection-end-column="10" />
               <folding>
                 <element signature="e#41#60#0" expanded="true" />
-                <element signature="e#341#592#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -113,8 +108,8 @@
         <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/poker.sh" />
         <option value="$PROJECT_DIR$/src/poker.c" />
-        <option value="$PROJECT_DIR$/src/poker_ui.c" />
         <option value="$PROJECT_DIR$/src/demo.c" />
+        <option value="$PROJECT_DIR$/src/poker_ui.c" />
       </list>
     </option>
   </component>
@@ -170,7 +165,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/COSC2451_A2_s1234567_2016A" />
   </component>
-  <component name="RunManager" selected="Application.demo">
+  <component name="RunManager" selected="Application.poker_ui">
     <configuration default="false" name="poker.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
@@ -232,17 +227,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="33" width="1600" height="763" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24731183" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8885449" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33436534" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.5092166" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16408668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.77863777" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24699177" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16873065" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.116099074" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41021672" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -250,7 +246,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -309,8 +304,6 @@
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
-            <element signature="e#189#304#1" expanded="false" />
-            <element signature="e#331#403#1" expanded="false" />
             <element signature="e#432#482#1" expanded="false" />
             <element signature="e#513#557#1" expanded="false" />
             <element signature="e#586#641#1" expanded="false" />
@@ -355,8 +348,6 @@
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
-            <element signature="e#189#304#1" expanded="false" />
-            <element signature="e#331#403#1" expanded="false" />
             <element signature="e#432#482#1" expanded="false" />
             <element signature="e#513#557#1" expanded="false" />
             <element signature="e#586#641#1" expanded="false" />
@@ -401,8 +392,6 @@
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
-            <element signature="e#189#304#1" expanded="false" />
-            <element signature="e#331#403#1" expanded="false" />
             <element signature="e#432#482#1" expanded="false" />
             <element signature="e#513#557#1" expanded="false" />
             <element signature="e#586#641#1" expanded="false" />
@@ -477,8 +466,6 @@
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
-            <element signature="e#189#304#1" expanded="false" />
-            <element signature="e#331#403#1" expanded="false" />
             <element signature="e#432#482#1" expanded="false" />
             <element signature="e#513#557#1" expanded="false" />
             <element signature="e#586#641#1" expanded="false" />
@@ -523,8 +510,6 @@
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
-            <element signature="e#189#304#1" expanded="false" />
-            <element signature="e#331#403#1" expanded="false" />
             <element signature="e#432#482#1" expanded="false" />
             <element signature="e#513#557#1" expanded="false" />
             <element signature="e#586#641#1" expanded="false" />
@@ -651,23 +636,6 @@
           <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
           <folding>
             <element signature="e#41#60#0" expanded="true" />
-            <element signature="e#341#592#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/demo.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14035088">
-          <caret line="799" column="0" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#2#0" expanded="false" />
-            <element signature="e#119#162#1" expanded="false" />
-            <element signature="e#189#304#1" expanded="false" />
-            <element signature="e#331#403#1" expanded="false" />
-            <element signature="e#432#482#1" expanded="false" />
-            <element signature="e#513#557#1" expanded="false" />
-            <element signature="e#586#641#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -677,17 +645,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="1" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="1" />
-          <folding>
-            <element signature="e#41#60#0" expanded="true" />
-            <element signature="e#341#592#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -704,6 +661,30 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/demo.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="576" column="0" selection-start-line="576" selection-start-column="0" selection-end-line="578" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#119#162#1" expanded="false" />
+            <element signature="e#432#482#1" expanded="false" />
+            <element signature="e#513#557#1" expanded="false" />
+            <element signature="e#586#641#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0992647">
+          <caret line="167" column="10" selection-start-line="167" selection-start-column="10" selection-end-line="167" selection-end-column="10" />
+          <folding>
+            <element signature="e#41#60#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

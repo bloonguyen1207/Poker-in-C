@@ -96,6 +96,18 @@ Table * createTable() {
     return table;
 }
 
+int isAllin(Player player, Table table) {
+    return player.money < table.highest_bet - player.bet;
+}
+
+int isCallRaise(Player player, Table table) {
+    return player.bet < table.highest_bet;
+}
+
+int isCheckBet(Player player, Table table) {
+    return player.bet == table.highest_bet;
+}
+
 static void init_screen();
 static void finish(int sig);
 
@@ -119,7 +131,7 @@ void drawCard(Card card, int y, int x) {
         mvprintw(y, x, "|%d /\\  |", card.suit); y++;
         mvaddstr(y, x, "| /  \\ |"); y++;
         mvaddstr(y, x, "| \\  / |"); y++;
-        mvaddstr(y, x, "|  \\/  "); y++;
+        mvaddstr(y, x, "|  \\/  |"); y++;
         mvaddstr(y, x, ".______.");
     } else if (card.suit == HEARTS) {
         mvaddstr(y, x, ".______."); y++;
@@ -153,65 +165,120 @@ void center(int row, char *title) {
     refresh();
 }
 
-void drawGame(int num_player, int roundIdx, Player * players, Table * table) {
+//TODO fix
+void drawRangeMoney(int min, int max) {
+    printf("The money should be between %i and %i\n", min, max);
+}
+
+void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx) {
     Card card;
     card.suit = NONE;
+    int players_posyx[5][2] = {{15, 20}, {1, 40}, {1, 20}, {1, 0}, {15, 0}};
+    if (num_player == 2) {
+        players_posyx[1][0] = 1; players_posyx[1][1] = 20;
+    }
+    if (num_player == 3) {
+        players_posyx[2][0] = 1; players_posyx[2][1] = 0;
+    }
+
+    //draw players' cards
     for (int i = 0; i < num_player; i++) {
+        if (i < 4 && i > 0 ) {
+            mvprintw(players_posyx[i][0] - 1, players_posyx[i][1], "%s", players[i].name);
+            if (players[i].isBigBlind) {
+                mvaddstr(players_posyx[i][0] - 1, players_posyx[i][1] + 13, "BB");
+            } else if (players[i].isSmallBlind) {
+                mvaddstr(players_posyx[i][0] - 1, players_posyx[i][1] + 13, "SB");
+            }
+        } else {
+            mvprintw(players_posyx[i][0] + 6, players_posyx[i][1], "%s", players[i].name);
+            if (players[i].isBigBlind) {
+                mvaddstr(players_posyx[i][0] + 6, players_posyx[i][1] + 13, "BB");
+            } else if (players[i]. isSmallBlind) {
+                mvaddstr(players_posyx[i][0] + 6, players_posyx[i][1] + 13, "SB");
+            }
+        }
         if (players[i].status == 0) {
             continue;
         }
         if (i == 0) {
-            drawCard(players[i].hand[0], 13, 20);
-            drawCard(players[i].hand[1], 13, 28);
-        } else if (i == 1) {
-            drawCard(card, 1, 20);
-            drawCard(card, 1, 28);
-        } else if (i == 2) {
-            for (int j = 0; j < 2; j++) {
-                drawCard(card, 1, 0);
-                drawCard(card, 1, 8);
-            }
-        } else if (i == 3) {
-            for (int j = 0; j < 2; j++) {
-                drawCard(card, 1, 41);
-                drawCard(card, 1, 49);
-            }
-        } else if (i == 4) {
-            for (int j = 0; j < 2; j++) {
-                drawCard(card, 13, 0);
-                drawCard(card, 13, 8);
-            }
-        } else if (i == 5) {
-            for (int j = 0; j < 2; j++) {
-                drawCard(card, 13, 41);
-                drawCard(card, 13, 49);
-            }
+            drawCard(players[i].hand[0], players_posyx[i][0], players_posyx[i][1]);
+            drawCard(players[i].hand[1], players_posyx[i][0], players_posyx[i][1] + 7);
+        } else {
+            drawCard(card, players_posyx[i][0], players_posyx[i][1]);
+            drawCard(card, players_posyx[i][0], players_posyx[i][1] + 7);
         }
     }
+
+    //draw shared cards
     if (roundIdx > 0) {
-        int x = 6;
+        int x = 9;
         for (int i = 0; i < roundIdx + 2; i++) {
-            drawCard(table->card[i], 7, x);
-            x += 8;
+            drawCard(table->card[i], 8, x);
+            x += 7;
         }
     }
+
+    //draw players' info
+    int info_y = 0;
+    mvaddstr(info_y, 67, "Money   Bet"); info_y += 2;
+    for (int i = 0; i < num_player; i++) {
+        mvprintw(info_y, 57, "%s", players[i].name);
+        mvprintw(info_y, 67, "%d", players[i].money);
+        mvprintw(info_y, 74, "%d", players[i].bet);
+        info_y += 2;
+    }
+
+    //draw pot money
+    mvaddstr(12, 57, "----------------------");
+    mvprintw(14, 57, "Pot: %d", table->pot_money);
+
+    //draw option
+    if (playerIdx == 0) {
+        if (isCallRaise(players[0], *table)) {
+            if (isAllin(players[0], *table)) {
+                mvaddstr(16, 45, "1. Allin");
+            } else if (players[0].money < table->highest_bet - players[0].bet + table->last_bet) {
+                mvaddstr(16, 45, "1. Call");
+                mvaddstr(18, 45, "2. Allin");
+            } else {
+                mvaddstr(16, 45, "1. Call");
+                mvaddstr(18, 45, "2. Raise");
+            }
+        } else if (isCheckBet(players[0], *table)) {
+            mvaddstr(16, 40, "1. Check");
+            if (players[0].money >= table->ante * 2) {
+                mvaddstr(18, 45, "2. Bet");
+            } else {
+                mvaddstr(18, 45, "2. Allin");
+            }
+        }
+        mvaddstr(20, 45, "3. Fold");
+    }
+
+    move(0, 0);
     refresh();
 }
 
-void game() {
-    int num_player = 6;
+void game(int num_player) {
     Player * players = createPlayers(num_player);
     Table * table = createTable();
     for (int i = 0; i < 5; i++) {
-        table->card[i].suit = HEARTS;
+        table->card[i].suit = SPADES;
         table->card[i].rank = 5;
     }
     players[0].hand[0].rank = 4;
     players[0].hand[0].suit = CLUBS;
     players[0].hand[1].rank = 2;
     players[0].hand[1].suit = DIAMONDS;
+    players[0].isBigBlind = 1;
+    players[0].money = 20000;
+    players[0].bet = 10000;
     for (int i = 0; i < 4; i++) {
-        drawGame(num_player, i, players, table);
+        table->pot_money += 200;
+        table->highest_bet += 15000;
+        int playerIdx = 0;
+        drawGame(num_player, i, players, table, playerIdx);
         getch();
     }
     free(players);
@@ -233,7 +300,7 @@ void drawStartMenu(int item, int num_player) {
                 mvaddstr(7, COLS / 2 - 2, menu[c]);
             }
         } else if (c == 1) {
-            if (num_player != 6) {
+            if (num_player != 5) {
                 mvaddstr(7, COLS / 2 + 2, menu[c]);
             }
         } else if (c == 2) {
@@ -278,7 +345,7 @@ int interactStartMenu(int num_player, int item) {
                     item = 3;
                     break;
                 }
-                if (item == 2 && num_player == 6) {
+                if (item == 2 && num_player == 5) {
                     item = 0;
                     break;
                 }
@@ -297,7 +364,7 @@ int interactStartMenu(int num_player, int item) {
                 break;
             case KEY_RIGHT:
                 if (item == 0) {
-                    if (num_player != 6) {
+                    if (num_player != 5) {
                         item = 1;
                     }
                     break;
@@ -323,12 +390,12 @@ void startMenu() {
                 num_player--;
             }
         } else if (choice == 1) {
-            if (num_player < 6) {
+            if (num_player < 5) {
                 num_player++;
             }
         } else if (choice == 2) {
             clear();
-            game();
+            game(num_player);
             getch();
         } else if (choice == 3) {
             endMenu = 1;
