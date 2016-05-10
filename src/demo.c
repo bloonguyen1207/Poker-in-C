@@ -872,12 +872,12 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
     }
     printf("\n\n");
 
-    //let user choose option
-    displayOption(*player, * table);
     //TODO: add AI here
-    if (playerIdx == 1) {
+    if (playerIdx != 0) {
         input = firstAI(player, table, roundIdx);
     } else {
+        //let user choose option
+        displayOption(*player, * table);
         input = scanInput(3);
 
         //let user input money if they choose raise or bet
