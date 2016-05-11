@@ -137,10 +137,6 @@ void fold(Player * player);
 
 int minMoney(Player player, Table table);
 
-void displayOption(Player player, Table table);
-
-void runOption(Player * player, Table * table, int option, int money);
-
 void checkHandRanking(Hand * hand, Player * player);
 
 int aggrAIround0(Player *ai, Table *table);
@@ -155,10 +151,6 @@ int consAIrounds(Player *ai, Table * table);
 
 int consAI (Player *ai, Table *table, int roundIdx);
 
-int turn(Player *player, Table * table, int roundIdx, int playerIdx);
-
-int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer);
-
 void checkWinner(Player * players, int num_player);
 
 void testHand(Hand *hands, Player * players, int num_player);
@@ -166,8 +158,6 @@ void testHand(Hand *hands, Player * players, int num_player);
 void award(Player * players, Table * table, int num_player);
 
 void reset (Player * players, Table * table, int num_player, Deck * deck);
-
-int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextSB);
 
 void mainMenu();
 

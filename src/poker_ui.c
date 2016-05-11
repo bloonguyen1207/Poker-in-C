@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "poker.h"
+#include "poker_ui.h"
 #define POKER_COLOR_BACKGROUND    6
 #define POKER_COLOR_RED           1
 #define POKER_COLOR_YELLOW        3
@@ -249,7 +250,7 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
 
     //draw Option menu
     int c;
-    char menu[7][15] = {"1. Call", "2. Raise", "1. Check", "2. Bet", "1-2. Allin", "3. Fold", "Exit"};
+    char menu[7][15] = {"Call", "Raise", "Check", "Bet", "Allin", "Fold", "Exit"};
 
     for (c = 0; c < 7; c++) {
         if (c == item) {
@@ -482,7 +483,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     return item;
 }
 
-void gamePoker(int num_player) {
+void gamePoker1(int num_player) {
     int item = 0;
     Player * players = createPlayers(num_player);
     Table * table = createTable();
@@ -541,6 +542,327 @@ void gamePoker(int num_player) {
         getch();
     }
     free(players);
+    free(table);
+}
+
+int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player) {
+    int input = 6;
+    int money = -1;
+
+    //TODO: add AI here
+    if (playerIdx != 0) {
+        if (playerIdx % 2  == 0) {
+            input = aggrAI(&players[playerIdx], table, roundIdx);
+        } else {
+            input = consAI(&players[playerIdx], table, roundIdx);
+        }
+    } else {
+        //let user choose option
+        while (money < 0) {
+            input = interactGame(num_player, roundIdx, players, table, playerIdx);
+            if (input == 1 || input == 3) {
+                int min = minMoney(players[0], *table);
+                money = rangeMoney(min, players[0].money);
+            } else if (input == 4) {
+                money = players[0].money;
+            } else if (input == 6) {
+                break;
+            } else {
+                money = 0;
+            }
+        }
+        if (input == 6) {
+            return -1;
+        }
+    }
+
+    //execute option
+    if (input == 0) {
+        call(&players[playerIdx], table);
+    } else if (input == 1) {
+        raisePoker(&players[playerIdx], table, money);
+        table->last_bet = money;
+    } else if (input == 2) {
+        check(&players[playerIdx]);
+    } else if (input == 3) {
+        bet(&players[playerIdx], table, money);
+        table->last_bet = money;
+    } else if (input == 4) {
+        allin(&players[playerIdx], table);
+    } else if (input == 5) {
+        fold(&players[playerIdx]);
+    }
+
+    //Update highest_bet
+    if (players[playerIdx].bet > table->highest_bet) {
+        table->highest_bet = players[playerIdx].bet;
+    }
+    return input;
+}
+
+int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
+    int playerIdx  = 0, countCheck = 0, countAllin = 0, countCall = 0, end_round = 0, is_1st_bet = 0, count = 0;
+    State lastState = None;
+
+    if (roundIdx > 0) {
+        dealSharedCards(table, deck, roundIdx);
+        table->last_bet = 0;
+    }
+
+    if (roundIdx == 0) {
+        for (int b = 0; b < num_player; b++) {
+            if (players[b].state != BB && players[b].state != SB) {
+                count++;
+            }
+        }
+        if (count == 0 && players[playerIdx].state == BB) {
+            is_1st_bet = 0;
+        } else {
+            lastState = BB;
+            is_1st_bet = 1;
+        }
+        if (is_1st_bet) {
+            for (int i = 0; i < num_player; i++) {
+                if (players[i].state == BB || players[playerIdx].state == SB) {
+                    if (players[i].state == BB) {
+                        playerIdx = i + 1;
+                        if (playerIdx >= num_player) {
+                            playerIdx = 0;
+                        }
+                        table->last_bet = players[i].bet;
+                    }
+                    continue;
+                }
+            }
+            table->highest_bet = table->ante * 2;
+        }
+    } else {
+        for (int e = 0; e < num_player; e++) {
+            if (players[e].isBigBlind && players[e].status == 1) {
+                playerIdx = e;
+            } else if (players[e].isSmallBlind && players[e].status == 1) {
+                playerIdx = e;
+            }
+        }
+    }
+    for (int f = 0; f < num_player; f++) {
+        if (players[f].state == Allins) {
+            countAllin++;
+        }
+    }
+    if (countAllin == countActivePlayer && is_1st_bet == 0) {
+        return countActivePlayer;
+    }
+    while (!end_round) {
+        if (playerIdx >= num_player) {
+            playerIdx = 0;
+        }
+        if (countAllin == countActivePlayer - 1 && players[playerIdx].bet == table->highest_bet) {
+            break;
+        }
+        if (players[playerIdx].state != Folded && players[playerIdx].state != Allins
+            && players[playerIdx].money > 0 && players[playerIdx].status == 1) {
+            printf("State: %i\n", players[playerIdx].state);
+            for (int c = 0; c < num_player; c++) {
+                displayPlayerInfo(players[c]);
+                printf("\n");
+            }
+            if (players[playerIdx].state == BB) {
+                is_1st_bet = 0;
+            }
+            displayTableInfo(*table);
+            if (turn(players, table, roundIdx, playerIdx, num_player) == -1) {
+                return -1;
+            }
+            if (is_1st_bet) {
+                if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
+                    end_round = 1;
+                }
+            } else {
+                if (players[playerIdx].state == Checked) {
+                    countCheck++;
+                }
+            }
+            if (players[playerIdx].state == Allins) {
+                countAllin++;
+            }
+            if (players[playerIdx].state == Called) {
+                if (players[playerIdx].money == 0) {
+                    players[playerIdx].state = Allins;
+                    countAllin++;
+                } else {
+                    countCall++;
+                }
+            }
+            if (players[playerIdx].state == Folded) {
+                countActivePlayer--;
+            }
+            if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
+                if (players[playerIdx].money == 0) {
+                    players[playerIdx].state = Allins;
+                    countAllin++;
+                }
+                countCall = 0;
+            }
+            if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer ||
+                (countCall == countActivePlayer - 1 && !is_1st_bet) ||
+                (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded) ||
+                (countAllin == countActivePlayer - 1 && (players[playerIdx].state == Called || players[playerIdx].state == Checked))) {
+                lastState = None;
+                end_round = 1;
+            }
+        }
+        printf("PlayerIdx: %i\n", playerIdx);
+        playerIdx++;
+    }
+    printf("Active Player: %i\n", countActivePlayer);
+    return countActivePlayer;
+}
+
+int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextSB) {
+    int prevPlayer = nextSB - 1, nextBB = nextSB + 1;
+    int countActivePlayer = num_player;
+    if (players[nextSB].money == 0) {
+        for (int i = 0; i < num_player; i++) {
+            nextSB++;
+            if (nextSB == num_player){
+                nextSB = 0;
+            }
+            if (players[nextSB].money > 0) {
+                nextBB = nextSB + 1;
+                break;
+            }
+        }
+    }
+
+    if (players[nextBB].money == 0) {
+        for (int i = 0; i < num_player; i++) {
+            nextBB++;
+            if (nextBB == num_player){
+                nextBB = 0;
+            }
+            if (players[nextBB].money > 0) {
+                break;
+            }
+        }
+    }
+
+    if (nextSB == num_player - 1) {
+        nextBB = 0;
+    }
+    if (nextSB == num_player) {
+        nextSB = 0;
+        nextBB = 1;
+    }
+
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].money == 0) {
+            players[i].isBigBlind = 0;
+            players[i].isSmallBlind = 0;
+        }
+    }
+
+    table->ante = 250;
+    reset(players, table, num_player, deck);
+    players[nextSB].isSmallBlind = 1;
+    players[nextSB].state = SB;
+    if (players[nextSB].money <= table->ante) {
+        players[nextSB].bet = players[nextSB].money;
+    } else {
+        players[nextSB].bet = table->ante;
+    }
+    players[nextSB].money = players[nextSB].money - players[nextSB].bet;
+    players[nextBB].isBigBlind = 1;
+    players[nextBB].state = BB;
+    if (players[nextBB].money <= table->ante * 2) {
+        players[nextBB].bet = players[nextBB].money;
+    } else {
+        players[nextBB].bet = table->ante * 2;
+    }
+    players[nextBB].money = players[nextBB].money - players[nextBB].bet;
+    players[prevPlayer].isSmallBlind = 0;
+    players[nextSB].isBigBlind = 0;
+    table->pot_money = players[nextSB].bet + players[nextBB].bet;
+    nextSB++;
+
+    dealStartingHand(players, deck, num_player);
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].money <= 0) {
+            players[i].status = 0;
+            countActivePlayer--;
+        }
+    }
+
+    int countFold = 0;
+    int roundIdx;
+
+    //begin game
+    for (roundIdx = 0; roundIdx < 4; roundIdx++) {
+        countActivePlayer = roundPoker(players, table, deck, num_player, roundIdx, countActivePlayer);
+        if (countActivePlayer == -1) {
+            return -1;
+        }
+        countFold = 0;
+        for (int i = 0; i < num_player; i++) {
+            if (players[i].status == 0) {
+                countFold++;
+            }
+        }
+        if (countFold == num_player - 1) {
+            break;
+        }
+    }
+
+    //check winner
+    if (countFold == num_player - 1 && roundIdx < 4 ) {
+        for (int i = 0; i < num_player; i++) {
+            if (players[i].status == 1) {
+                players[i].isWinner = 1;
+                break;
+            }
+        }
+    } else {
+        Hand *hands = createHand(players, table, num_player);
+        testHand(hands, players, num_player);
+        free(hands);
+    }
+    award(players, table, num_player);
+    return nextSB;
+}
+
+void setUpGame(int num_player) {
+    int nextBlind = 0;
+    Table *table = createTable();
+    Deck *deck;
+    deck = newDeck();
+    int size = 52;
+    Player *players = createPlayers(num_player);
+    for (int gameIdx = 0; ; gameIdx++) {
+        int remain = num_player;
+        for (int m = 0; m < num_player; m++) {
+            if (players[m].money <= 0) {
+                remain--;
+            }
+        }
+        if (remain == 1) {
+            clear();
+            center(0,"No player left");
+            refresh();
+            getch();
+            break;
+        }
+        shuffleDeck(deck, size);
+        nextBlind = game(players, table, deck, num_player, gameIdx, nextBlind);
+        if (nextBlind == -1) {
+            break;
+        }
+    }
+    // Free everything
+    for (int i = 0; i < num_player; i++) {
+        free(players[i].max_hand);
+    }
+    free(players);
+    free(deck);
     free(table);
 }
 
@@ -653,7 +975,9 @@ void startMenu() {
                 num_player++;
             }
         } else if (choice == 2) {
-            gamePoker(num_player);
+            //gamePoker1(num_player);
+            setUpGame(num_player);
+
         } else if (choice == 3) {
             endMenu = 1;
         }
@@ -774,34 +1098,34 @@ static void finish(int sig) {
     exit(sig);
 }
 
-int xmain1() {
-    chtype c;
-    init_screen();
-    struct timespec delay = {0, 500000000L},
-            rem;
-    int endProgram = 0, x = 0, y = 0, maxx, maxy;
-    while (!endProgram) {
-        c = (chtype) getch();
-        if (c == 'q') {
-            endProgram = 1;
-        }
-        getmaxyx(stdscr, maxy, maxx);
-        raw();
-        keypad(stdscr, TRUE);        /* Get keyboard	input	*/
-        noecho();
-        if (c == KEY_DOWN && y < maxy - 1) {
-            y++;
-        } else if (c == KEY_RIGHT && x < maxx - 1) {
-            x++;
-        } else if (c == ' ' || c == -1) {
-            c = mvinch(y, x);
-            mvaddch(y, x, c+1);
-        }
-        move(y, x);
-    }
-    finish(0);
-    return 0;
-}
+//int xmain1() {
+//    chtype c;
+//    init_screen();
+//    struct timespec delay = {0, 500000000L},
+//            rem;
+//    int endProgram = 0, x = 0, y = 0, maxx, maxy;
+//    while (!endProgram) {
+//        c = (chtype) getch();
+//        if (c == 'q') {
+//            endProgram = 1;
+//        }
+//        getmaxyx(stdscr, maxy, maxx);
+//        raw();
+//        keypad(stdscr, TRUE);        /* Get keyboard	input	*/
+//        noecho();
+//        if (c == KEY_DOWN && y < maxy - 1) {
+//            y++;
+//        } else if (c == KEY_RIGHT && x < maxx - 1) {
+//            x++;
+//        } else if (c == ' ' || c == -1) {
+//            c = mvinch(y, x);
+//            mvaddch(y, x, c+1);
+//        }
+//        move(y, x);
+//    }
+//    finish(0);
+//    return 0;
+//}
 
 //Menu
 //static void init_screen();
