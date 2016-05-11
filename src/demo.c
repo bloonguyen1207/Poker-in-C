@@ -698,7 +698,7 @@ void checkHandRanking(Hand * hand, Player * player) {
     }
 }
 
-int firstAIround0(Player * ai, Table * table) {
+int aggrAIround0(Player *ai, Table *table) {
     if (ai->hand[0].rank == ai->hand[1].rank ||
         (ai->hand[0].rank >= 10 && ai->hand[1].rank >= 10) ||
         ai->hand[0].rank == 1 ||
@@ -737,7 +737,7 @@ int firstAIround0(Player * ai, Table * table) {
 
 }
 
-int firstAIrounds(Player * ai, Table * table) {
+int aggrAIrounds(Player *ai, Table *table) {
     Hand * temp = malloc(sizeof(Hand));
     temp->card[0] = ai->hand[0];
     temp->card[1] = ai->hand[1];
@@ -747,10 +747,10 @@ int firstAIrounds(Player * ai, Table * table) {
     if (table->card_idx >= 3) {
         if (table->card_idx == 3) {
             temp->card[5].rank = -1;
-            temp->card[5].suit = HEARTS;
+            temp->card[5].suit = NONE;
         }
         temp->card[6].rank = -2;
-        temp->card[6].suit = CLUBS;
+        temp->card[6].suit = NONE;
     }
     checkHandRanking(temp, ai);
 
@@ -799,12 +799,67 @@ int firstAIrounds(Player * ai, Table * table) {
     return 3;
 }
 
-int firstAI(Player * ai, Table * table, int roundIdx) {
+int aggrAI(Player *ai, Table *table, int roundIdx) {
     int input;
     if (roundIdx == 0) {
-        input = firstAIround0(ai, table);
+        input = aggrAIround0(ai, table);
     } else {
-        input = firstAIrounds(ai, table);
+        input = aggrAIrounds(ai, table);
+    }
+    return input;
+}
+
+int consAIround0(Player *ai, Table * table) {
+    if (ai->hand[0].rank == 1 || ai->hand[1].rank == 1 ||
+        (ai->hand[0].rank == ai->hand[1].rank && (ai->hand[0].rank == 1 || ai->hand[0].rank > 6)) ||
+        (ai->hand[0].rank > 7 && ai->hand[1].rank > 7)) {
+        if (isCallRaise(*ai, *table)) {
+            call(ai, table);
+            return 1;
+        } else if (isCheckBet(*ai, *table)) {
+            check(ai);
+            return 1;
+        }
+    }
+    fold(ai);
+    return 3;
+}
+
+int consAIrounds(Player *ai, Table * table) {
+    Hand * temp = malloc(sizeof(Hand));
+    temp->card[0] = ai->hand[0];
+    temp->card[1] = ai->hand[1];
+    for (int i = 0; i < table->card_idx; i++) {
+        temp->card[i+2] = table->card[i];
+    }
+    if (table->card_idx >= 3) {
+        if (table->card_idx == 3) {
+            temp->card[5].rank = -1;
+            temp->card[5].suit = NONE;
+        }
+        temp->card[6].rank = -2;
+        temp->card[6].suit = NONE;
+    }
+    checkHandRanking(temp, ai);
+    if (ai->rank > 1) {
+        if (isCallRaise(*ai, *table)) {
+            call(ai, table);
+            return 1;
+        } else if (isCheckBet(*ai, *table)) {
+            check(ai);
+            return 1;
+        }
+    }
+    fold(ai);
+    return 3;
+}
+
+int consAI (Player *ai, Table *table, int roundIdx) {
+    int input;
+    if (roundIdx == 0) {
+        input = consAIround0(ai, table);
+    } else {
+        input = consAIrounds(ai, table);
     }
     return input;
 }
@@ -821,7 +876,11 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
 
     //TODO: add AI here
     if (playerIdx != 0) {
-        input = firstAI(player, table, roundIdx);
+        if (playerIdx % 2  == 0) {
+            input = aggrAI(player, table, roundIdx);
+        } else {
+        input = consAI(player, table, roundIdx);
+        }
     } else {
         //let user choose option
         displayOption(*player, * table);

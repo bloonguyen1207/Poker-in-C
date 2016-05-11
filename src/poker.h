@@ -141,11 +141,17 @@ void runOption(Player * player, Table * table, int option, int money);
 
 void checkHandRanking(Hand * hand, Player * player);
 
-int firstAIround0(Player * ai, Table * table);
+int aggrAIround0(Player *ai, Table *table);
 
-int firstAIrounds(Player * ai, Table * table);
+int aggrAIrounds(Player *ai, Table *table);
 
-int firstAI(Player * ai, Table * table, int roundIdx);
+int aggrAI(Player *ai, Table *table, int roundIdx);
+
+int consAIround0(Player *ai, Table * table);
+
+int consAIrounds(Player *ai, Table * table);
+
+int consAI (Player *ai, Table *table, int roundIdx);
 
 int turn(Player *player, Table * table, int roundIdx, int playerIdx);
 
