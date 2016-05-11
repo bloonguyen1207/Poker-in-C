@@ -138,31 +138,106 @@ void drawSharedCard(Table table, int roundIdx) {
     }
 }
 
-//TODO not test
 void drawRangeMoney(int min, int max, int item, int money) {
     int c;
-    char menu[2][1] = {"<", ">"};
+    char menu[4][10] = {"<", ">", "OK", "Cancel"};
 
-    for (c = 0; c < 2; c++) {
+    for (c = 0; c < 4; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
         if (c == 0) {
             if (money != min) {
-                mvaddstr(34, 50, menu[c]);
+                mvaddstr(28, 65, menu[c]);
             }
         } else if (c == 1) {
             if (money != max) {
-                mvaddstr(34, 60, menu[c]);
+                mvaddstr(28, 75, menu[c]);
             }
+        } else if (c == 2) {
+            mvaddstr(29, 65, menu[c]);
+        } else if (c == 3) {
+            mvaddstr(29, 70, menu[c]);
         }
         attroff(A_REVERSE);
     }
+    mvaddstr(27, 66, "How much?");
+    mvprintw(28, 68, "%d", money);
 
-    mvprintw(34, 53, "%d", money);
+
     move(0, 0);
 
     refresh();
+}
+
+int interactRangeMoney(int min, int max, int money, int item) {
+    int key = 0;
+
+    keypad(stdscr, TRUE);
+
+    while (key != 13) { //13 is Enter
+        drawRangeMoney(min, max, item, money);
+        key = getch();
+        switch (key) {
+            case KEY_DOWN:
+                if (item == 0 || item == 1) {
+                    item += 2;
+                } else if (item < 3){
+                    item++;
+                }
+                break;
+            case KEY_UP:
+                if (item == 2 || item == 3) {
+                    if (money == min && item == 2) {
+                        item--;
+                    } else if (money == max && item == 3) {
+                        item++;
+                    } else {
+                        item -= 2;
+                    }
+                }
+                break;
+            case KEY_RIGHT:
+                if ((item == 0 && money != max) || item == 2) {
+                    item++;
+                }
+                break;
+            case KEY_LEFT:
+                if ((item == 1 && money != min) || item == 3) {
+                    item--;
+                }
+                break;
+            default: break;
+        }
+    }
+    return item;
+}
+
+int rangeMoney(int min, int max) {
+    int money = min;
+    int choice = 1;
+    int endMenu = 0;
+    int item;
+
+    while (!endMenu) {
+        item = choice;
+        choice = interactRangeMoney(min, max, money, item);
+        if (choice == 0) {
+            if (money > min) {
+                money--;
+            }
+        } else if (choice == 1) {
+            if (money < max) {
+                money++;
+            }
+        } else if (choice == 2 || choice == 3) {
+            if (choice == 3) {
+                money = -1;
+            }
+            endMenu = 1;
+        }
+    }
+    return money;
 }
 
 void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx, int item) {
@@ -174,13 +249,13 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
 
     //draw Option menu
     int c;
-    char menu[7][10] = {"1. Call", "2. Rasie", "1. Check", "2. Bet", "2. Allin", "3. Fold", "Exit"};
+    char menu[7][15] = {"1. Call", "2. Raise", "1. Check", "2. Bet", "1-2. Allin", "3. Fold", "Exit"};
 
     for (c = 0; c < 7; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
-        if (playerIdx == 0) {
+        if (playerIdx == 0 && players[playerIdx].status != 0) {
             if (isCallRaise(players[0], *table)) {
                 if (isAllin(players[0], *table)) {
                     if (c == 4) {
@@ -218,7 +293,7 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
             }
         }
         if (c == 6) {
-            mvaddstr(32, 100, menu[6]);
+            mvaddstr(30, 100, menu[6]);
         }
         attroff(A_REVERSE);
     }
@@ -232,7 +307,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     int item = 0;
 
     //initialize the first option that player can choose
-    if (playerIdx == 0) {
+    if (playerIdx == 0 && players[playerIdx].status != 0) {
         if (isCallRaise(players[0], *table)) {
             if (isAllin(players[0], *table)) {
                 item = 4;
@@ -254,7 +329,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     while (key != 13) { //13 is Enter
         drawGame(num_player, roundIdx, players, table, playerIdx, item);
         key = getch();
-        if (playerIdx == 0) {
+        if (playerIdx == 0 && players[playerIdx].status != 0) {
             if (isCallRaise(players[0], *table)) {
                 if (isAllin(players[0], *table)) {
                     switch (key) {
@@ -407,7 +482,8 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     return item;
 }
 
-void gameP(int num_player) {
+void gamePoker(int num_player) {
+    int item = 0;
     Player * players = createPlayers(num_player);
     Table * table = createTable();
     for (int i = 0; i < 5; i++) {
@@ -422,10 +498,47 @@ void gameP(int num_player) {
     players[0].money = 20000;
     players[0].bet = 10000;
     for (int i = 0; i < 4; i++) {
+        int money = -1;
         table->pot_money += 200;
         table->highest_bet += 15000;
         int playerIdx = 0;
-        drawGame(num_player, i, players, table, playerIdx, 0);
+        while (money == -1) {
+            item = interactGame(num_player, i, players, table, playerIdx);
+            if (item == 0) {
+                //call "call" func
+                money = 0;
+            } else if (item == 2) {
+                //call "check" func
+                money = 0;
+            } else if (item == 1 || item == 3) {
+                int min = minMoney(players[0], *table);
+                money = rangeMoney(min, players[0].money);
+                if (money == -1) {
+                    mvaddstr(36, 30, "Cancel");
+                } else {
+                    mvprintw(36, 30, "Money: %d", money);
+                }
+                refresh();
+            } else if (item == 4) {
+                //call "all in" func
+                money = players[0].money;
+            } else if (item == 5) {
+                players[0].status = 0;
+                money = 0;
+            } else if (item == 6) {
+                break;
+
+            }
+        }
+        if (item == 6) {
+            //break;
+            //to test, use the bellow code, will be erased late
+            money = 0;
+            getch();
+        }
+
+        mvprintw(38, 30, "Item is: %d", item);
+        refresh();
         getch();
     }
     free(players);
@@ -527,7 +640,7 @@ void startMenu() {
     int endMenu = 0;
     int num_player = 2;
     int item;
-    int choice = 0;
+    int choice = 1;
 
     while (!endMenu) {
         item = choice;
@@ -542,7 +655,7 @@ void startMenu() {
             }
         } else if (choice == 2) {
             clear();
-            gameP(num_player);
+            gamePoker(num_player);
             getch();
         } else if (choice == 3) {
             endMenu = 1;
