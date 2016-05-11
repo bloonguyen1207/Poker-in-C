@@ -1,5 +1,4 @@
 [Configuration]
-ColorPalette=#eee8d5;#dc322f;#859900;#b58900;#268bd2;#d33682;#2aa198;#073642;#fdf6e3;#cb4b16;#93a1a1;#839496;#657b83;#6c71c4;#586e75;#002b36
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
 MiscBordersDefault=TRUE
@@ -16,11 +15,10 @@ MiscTabCloseButtons=TRUE
 MiscTabCloseMiddleClick=TRUE
 MiscTabPosition=GTK_POS_TOP
 MiscHighlightUrls=TRUE
-ColorForeground=#657b83
-ColorBackground=#fdf6e3
-ColorCursor=#586e75
-ColorBold=#586e75
-ColorBoldUseDefault=FALSE
-TabActivityColor=#dc322f
 MiscScrollAlternateScreen=TRUE
+FontName=Monospace 11
+ColorForeground=#000000
+ColorBackground=#ffffff
+ColorCursor=#ffffffffffff
+ColorPalette=#000000000000;#aaaa00000000;#0000aaaa0000;#ffff80000000;#11456a997e56;#aaaa0000aaaa;#0ef3373e373e;#aaaaaaaaaaaa;#555555555555;#ffff55555555;#5555ffff5555;#ffffffff5555;#55555555ffff;#ffff5555ffff;#5555ffffffff;#ffffffffffff
 

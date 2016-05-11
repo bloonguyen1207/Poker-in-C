@@ -8,105 +8,106 @@
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
-
-#define POKER_COLOR_BACKGROUND    0
+#include "poker.h"
+#include "poker.c"
+#define POKER_COLOR_BACKGROUND    6
 #define POKER_COLOR_RED           1
-#define POKER_COLOR_BLUE          2
-#define POKER_COLOR_TEXT          7
+#define POKER_COLOR_YELLOW        3
+#define POKER_COLOR_WHITE         7
 
-enum suit {HEARTS, DIAMONDS, CLUBS, SPADES, NONE};
-typedef enum suit Suit;
-
-enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
-typedef enum rank Rank;
-
-enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
-typedef enum state State;
-
-enum option {Call, Raise, Check, Bet, Allin, Fold};
-typedef enum option Option;
-
-struct card {
-    Suit suit;
-    int rank;
-};
-typedef struct card Card;
-
-struct player {
-    char name[20];
-    int money;
-    int bet;
-    int status;
-    Card hand[2];
-    Card *max_hand;
-    Rank rank;
-    State state;
-    int isBigBlind;
-    int isSmallBlind;
-    Option option;
-    int isTurn;
-    int isWinner;
-};
-typedef struct player Player;
-
-struct table {
-    int pot_money;
-    int ante;
-    int highest_bet; //the largest amount of total bet in one round
-    Card card[5];
-    int card_idx;
-    int last_bet;
-};
-typedef struct table Table;
-
-char* getSuit(Suit s) {
-    switch(s){
-        case HEARTS: return "\u2665";
-        case DIAMONDS: return "\u2666";
-        case CLUBS: return "\u2663";
-        case SPADES: return "\u2660";
-        default: break;
-    }
-    return NULL;
-}
-
-Player* createPlayers(int num_player) {
-    if (num_player >= 2 && num_player <= 10) {
-        Player *players = malloc(sizeof(Player) * num_player);
-        for (int i = 0; i < num_player; i++) {
-            strcpy(players[i].name, "Player 0");
-            players[i].status = 1;
-            players[i].state = None;
-            players[i].name[7] += i + 1;
-            players[i].money = 5000;
-            players[i].max_hand = malloc(sizeof(Card) * 5);
-            players[i].bet = 0;
-            players[i].isBigBlind = 0;
-            players[i].isSmallBlind = 0;
-        }
-        return players;
-    }
-    return NULL;
-}
-
-Table * createTable() {
-    Table * table = malloc(sizeof(Table));
-    table->card_idx = 0;
-    table->highest_bet = 0;
-    return table;
-}
-
-int isAllin(Player player, Table table) {
-    return player.money < table.highest_bet - player.bet;
-}
-
-int isCallRaise(Player player, Table table) {
-    return player.bet < table.highest_bet;
-}
-
-int isCheckBet(Player player, Table table) {
-    return player.bet == table.highest_bet;
-}
+//enum suit {HEARTS, DIAMONDS, CLUBS, SPADES, NONE};
+//typedef enum suit Suit;
+//
+//enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
+//typedef enum rank Rank;
+//
+//enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
+//typedef enum state State;
+//
+//enum option {Call, Raise, Check, Bet, Allin, Fold};
+//typedef enum option Option;
+//
+//struct card {
+//    Suit suit;
+//    int rank;
+//};
+//typedef struct card Card;
+//
+//struct player {
+//    char name[20];
+//    int money;
+//    int bet;
+//    int status;
+//    Card hand[2];
+//    Card *max_hand;
+//    Rank rank;
+//    State state;
+//    int isBigBlind;
+//    int isSmallBlind;
+//    Option option;
+//    int isTurn;
+//    int isWinner;
+//};
+//typedef struct player Player;
+//
+//struct table {
+//    int pot_money;
+//    int ante;
+//    int highest_bet; //the largest amount of total bet in one round
+//    Card card[5];
+//    int card_idx;
+//    int last_bet;
+//};
+//typedef struct table Table;
+//
+//char* getSuit(Suit s) {
+//    switch(s){
+//        case HEARTS: return "\u2665";
+//        case DIAMONDS: return "\u2666";
+//        case CLUBS: return "\u2663";
+//        case SPADES: return "\u2660";
+//        default: break;
+//    }
+//    return NULL;
+//}
+//
+//Player* createPlayers(int num_player) {
+//    if (num_player >= 2 && num_player <= 10) {
+//        Player *players = malloc(sizeof(Player) * num_player);
+//        for (int i = 0; i < num_player; i++) {
+//            strcpy(players[i].name, "Player 0");
+//            players[i].status = 1;
+//            players[i].state = None;
+//            players[i].name[7] += i + 1;
+//            players[i].money = 5000;
+//            players[i].max_hand = malloc(sizeof(Card) * 5);
+//            players[i].bet = 0;
+//            players[i].isBigBlind = 0;
+//            players[i].isSmallBlind = 0;
+//        }
+//        return players;
+//    }
+//    return NULL;
+//}
+//
+//Table * createTable() {
+//    Table * table = malloc(sizeof(Table));
+//    table->card_idx = 0;
+//    table->highest_bet = 0;
+//    return table;
+//}
+//
+//int isAllin(Player player, Table table) {
+//    return player.money < table.highest_bet - player.bet;
+//}
+//
+//int isCallRaise(Player player, Table table) {
+//    return player.bet < table.highest_bet;
+//}
+//
+//int isCheckBet(Player player, Table table) {
+//    return player.bet == table.highest_bet;
+//}
 
 static void init_screen();
 static void finish(int sig);
@@ -173,12 +174,13 @@ void drawRangeMoney(int min, int max) {
 void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx) {
     Card card;
     card.suit = NONE;
-    int players_posyx[5][2] = {{15, 20}, {1, 40}, {1, 20}, {1, 0}, {15, 0}};
+    clear();
+    int players_posyx[5][2] = {{25, 30}, {5, 50}, {5, 30}, {5, 10}, {25, 10}};
     if (num_player == 2) {
-        players_posyx[1][0] = 1; players_posyx[1][1] = 20;
+        players_posyx[1][0] = 5; players_posyx[1][1] = 30;
     }
     if (num_player == 3) {
-        players_posyx[2][0] = 1; players_posyx[2][1] = 0;
+        players_posyx[2][0] = 5; players_posyx[2][1] = 10;
     }
 
     //draw players' cards
@@ -212,55 +214,55 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
 
     //draw shared cards
     if (roundIdx > 0) {
-        int x = 9;
+        int x = 20;
         for (int i = 0; i < roundIdx + 2; i++) {
-            drawCard(table->card[i], 8, x);
+            drawCard(table->card[i], 15, x);
             x += 7;
         }
     }
 
     //draw players' info
     int info_y = 0;
-    mvaddstr(info_y, 67, "Money   Bet"); info_y += 2;
+    mvaddstr(info_y, 100, "Money   Bet"); info_y += 2;
     for (int i = 0; i < num_player; i++) {
-        mvprintw(info_y, 57, "%s", players[i].name);
-        mvprintw(info_y, 67, "%d", players[i].money);
-        mvprintw(info_y, 74, "%d", players[i].bet);
+        mvprintw(info_y, 90, "%s", players[i].name);
+        mvprintw(info_y, 100, "%d", players[i].money);
+        mvprintw(info_y, 107, "%d", players[i].bet);
         info_y += 2;
     }
 
     //draw pot money
-    mvaddstr(12, 57, "----------------------");
-    mvprintw(14, 57, "Pot: %d", table->pot_money);
+    mvaddstr(12, 90, "----------------------");
+    mvprintw(14, 90, "Pot: %d", table->pot_money);
 
     //draw option
     if (playerIdx == 0) {
         if (isCallRaise(players[0], *table)) {
             if (isAllin(players[0], *table)) {
-                mvaddstr(16, 45, "1. Allin");
+                mvaddstr(26, 55, "1. Allin");
             } else if (players[0].money < table->highest_bet - players[0].bet + table->last_bet) {
-                mvaddstr(16, 45, "1. Call");
-                mvaddstr(18, 45, "2. Allin");
+                mvaddstr(26, 55, "1. Call");
+                mvaddstr(28, 55, "2. Allin");
             } else {
-                mvaddstr(16, 45, "1. Call");
-                mvaddstr(18, 45, "2. Raise");
+                mvaddstr(26, 55, "1. Call");
+                mvaddstr(28, 55, "2. Raise");
             }
         } else if (isCheckBet(players[0], *table)) {
-            mvaddstr(16, 40, "1. Check");
+            mvaddstr(26, 55, "1. Check");
             if (players[0].money >= table->ante * 2) {
-                mvaddstr(18, 45, "2. Bet");
+                mvaddstr(28, 55, "2. Bet");
             } else {
-                mvaddstr(18, 45, "2. Allin");
+                mvaddstr(28, 55, "2. Allin");
             }
         }
-        mvaddstr(20, 45, "3. Fold");
+        mvaddstr(30, 55, "3. Fold");
     }
 
     move(0, 0);
     refresh();
 }
 
-void game(int num_player) {
+void gameP(int num_player) {
     Player * players = createPlayers(num_player);
     Table * table = createTable();
     for (int i = 0; i < 5; i++) {
@@ -395,7 +397,7 @@ void startMenu() {
             }
         } else if (choice == 2) {
             clear();
-            game(num_player);
+            gameP(num_player);
             getch();
         } else if (choice == 3) {
             endMenu = 1;
@@ -405,7 +407,7 @@ void startMenu() {
 
 void drawMainMenu(int item) {
     int c;
-    char menu[5][20] = {"Start", "Load", "Options", "Highscore", "Exit"};
+    char menu[5][20] = {"Start", "Load", "Credit", "Highscore", "Exit"};
 
     clear();
     center(3, "POKER");
@@ -414,7 +416,7 @@ void drawMainMenu(int item) {
         if (c == item) {
             attron(A_REVERSE);
         }
-        center(8 + c, menu[c]);
+        mvaddstr(8 + c, COLS / 2 - 4, menu[c]);
         attroff(A_REVERSE);
     }
     mvaddstr(LINES - 2, COLS - 20, "Move: Arrow keys");
@@ -499,9 +501,9 @@ static void init_screen() {
 
         start_color();
         // initialise you color pairs (foreground, background)
-        init_pair(1, COLOR_BLACK, COLOR_WHITE);
-        init_pair(2, COLOR_WHITE, COLOR_RED);
-        init_pair(3, COLOR_WHITE, COLOR_BLACK);
+        init_pair(1, POKER_COLOR_YELLOW, POKER_COLOR_BACKGROUND);
+        init_pair(2, POKER_COLOR_RED, POKER_COLOR_BACKGROUND);
+        init_pair(3, POKER_COLOR_WHITE, POKER_COLOR_BACKGROUND);
     }
     /* set default color pair */
     attrset(COLOR_PAIR(1));
