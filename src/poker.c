@@ -86,6 +86,8 @@ Table * createTable() {
     Table * table = malloc(sizeof(Table));
     table->card_idx = 0;
     table->highest_bet = 0;
+    table->pot_money = 0;
+    table->last_bet = 0;
     return table;
 }
 

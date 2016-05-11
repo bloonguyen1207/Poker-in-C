@@ -6,7 +6,61 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "poker.h"
+
+enum suit {HEARTS, DIAMONDS, CLUBS, SPADES, NONE};
+typedef enum suit Suit;
+
+enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
+typedef enum rank Rank;
+
+enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
+typedef enum state State;
+
+enum option {Call, Raise, Check, Bet, Allin, Fold};
+typedef enum option Option;
+
+struct card {
+    Suit suit;
+    int rank;
+};
+typedef struct card Card;
+
+struct deck {
+    Card cards[52];
+    int card_index;
+};
+typedef struct deck Deck;
+
+struct player {
+    char name[20];
+    int money;
+    int bet;
+    int status;
+    Card hand[2];
+    Card *max_hand;
+    Rank rank;
+    State state;
+    int isBigBlind;
+    int isSmallBlind;
+    Option option;
+    int isWinner;
+};
+typedef struct player Player;
+
+struct table {
+    int pot_money;
+    int ante;
+    int highest_bet; //the largest amount of total bet in one round
+    Card card[5];
+    int card_idx;
+    int last_bet;
+};
+typedef struct table Table;
+
+struct hand {
+    Card card[7];
+};
+typedef struct hand Hand;
 
 char* getSuit(Suit s) {
     switch(s){

@@ -61,6 +61,8 @@ typedef struct hand Hand;
 
 char* getSuit(Suit s);
 
+Deck* newDeck();
+
 void shuffleDeck(Deck* deck, int size);
 
 Player* createPlayers(int num_player);

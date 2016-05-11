@@ -71,37 +71,10 @@ void center(int row, char *title) {
     refresh();
 }
 
-//TODO fix
-void drawRangeMoney(int min, int max, int item, int money) {
-    int c;
-    char menu[2][1] = {"<", ">"};
-
-    for (c = 0; c < 2; c++) {
-        if (c == item) {
-            attron(A_REVERSE);
-        }
-        if (c == 0) {
-            if (money != min) {
-                mvaddstr(34, 50, menu[c]);
-            }
-        } else if (c == 1) {
-            if (money != max) {
-                mvaddstr(34, 60, menu[c]);
-            }
-        }
-        attroff(A_REVERSE);
-    }
-
-    mvprintw(7, COLS / 2, "%d", money);
-    move(0, 0);
-
-    refresh();
-}
-
-void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx) {
+void drawPlayerCards(Player * players, int num_player) {
     Card card;
     card.suit = NONE;
-    clear();
+
     int players_posyx[5][2] = {{25, 30}, {5, 50}, {5, 30}, {5, 10}, {25, 10}};
     if (num_player == 2) {
         players_posyx[1][0] = 5; players_posyx[1][1] = 30;
@@ -110,7 +83,6 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
         players_posyx[2][0] = 5; players_posyx[2][1] = 10;
     }
 
-    //draw players' cards
     for (int i = 0; i < num_player; i++) {
         if (i < 4 && i > 0 ) {
             mvprintw(players_posyx[i][0] - 1, players_posyx[i][1], "%s", players[i].name);
@@ -138,17 +110,9 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
             drawCard(card, players_posyx[i][0], players_posyx[i][1] + 7);
         }
     }
+}
 
-    //draw shared cards
-    if (roundIdx > 0) {
-        int x = 20;
-        for (int i = 0; i < roundIdx + 2; i++) {
-            drawCard(table->card[i], 15, x);
-            x += 7;
-        }
-    }
-
-    //draw players' info
+void drawPlayerInfo(Player * players, int num_player) {
     int info_y = 0;
     mvaddstr(info_y, 100, "Money   Bet"); info_y += 2;
     for (int i = 0; i < num_player; i++) {
@@ -157,36 +121,290 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
         mvprintw(info_y, 107, "%d", players[i].bet);
         info_y += 2;
     }
+}
 
-    //draw pot money
+void drawPot(Table table) {
     mvaddstr(12, 90, "----------------------");
-    mvprintw(14, 90, "Pot: %d", table->pot_money);
+    mvprintw(14, 90, "Pot: %d", table.pot_money);
+}
 
-    //draw option
-    if (playerIdx == 0) {
-        if (isCallRaise(players[0], *table)) {
-            if (isAllin(players[0], *table)) {
-                mvaddstr(26, 55, "1. Allin");
-            } else if (players[0].money < table->highest_bet - players[0].bet + table->last_bet) {
-                mvaddstr(26, 55, "1. Call");
-                mvaddstr(28, 55, "2. Allin");
-            } else {
-                mvaddstr(26, 55, "1. Call");
-                mvaddstr(28, 55, "2. Raise");
+void drawSharedCard(Table table, int roundIdx) {
+    if (roundIdx > 0) {
+        int x = 20;
+        for (int i = 0; i < roundIdx + 2; i++) {
+            drawCard(table.card[i], 15, x);
+            x += 7;
+        }
+    }
+}
+
+//TODO not test
+void drawRangeMoney(int min, int max, int item, int money) {
+    int c;
+    char menu[2][1] = {"<", ">"};
+
+    for (c = 0; c < 2; c++) {
+        if (c == item) {
+            attron(A_REVERSE);
+        }
+        if (c == 0) {
+            if (money != min) {
+                mvaddstr(34, 50, menu[c]);
             }
-        } else if (isCheckBet(players[0], *table)) {
-            mvaddstr(26, 55, "1. Check");
-            if (players[0].money >= table->ante * 2) {
-                mvaddstr(28, 55, "2. Bet");
-            } else {
-                mvaddstr(28, 55, "2. Allin");
+        } else if (c == 1) {
+            if (money != max) {
+                mvaddstr(34, 60, menu[c]);
             }
         }
-        mvaddstr(30, 55, "3. Fold");
+        attroff(A_REVERSE);
+    }
+
+    mvprintw(34, 53, "%d", money);
+    move(0, 0);
+
+    refresh();
+}
+
+void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx, int item) {
+    clear();
+    drawPlayerCards(players, num_player);
+    drawSharedCard(*table, roundIdx);
+    drawPlayerInfo(players, num_player);
+    drawPot(*table);
+
+    //draw Option menu
+    int c;
+    char menu[7][10] = {"1. Call", "2. Rasie", "1. Check", "2. Bet", "2. Allin", "3. Fold", "Exit"};
+
+    for (c = 0; c < 7; c++) {
+        if (c == item) {
+            attron(A_REVERSE);
+        }
+        if (playerIdx == 0) {
+            if (isCallRaise(players[0], *table)) {
+                if (isAllin(players[0], *table)) {
+                    if (c == 4) {
+                        mvaddstr(26, 55, menu[c]);
+                    }
+                } else if (players[0].money < table->highest_bet - players[0].bet + table->last_bet) {
+                    if (c == 0) {
+                        mvaddstr(26, 55, menu[c]);
+                    } else if (c == 4) {
+                        mvaddstr(28, 55, menu[c]);
+                    }
+                } else {
+                    if (c == 0) {
+                        mvaddstr(26, 55, menu[c]);
+                    } else if (c == 1) {
+                        mvaddstr(28, 55, menu[c]);
+                    }
+                }
+            } else if (isCheckBet(players[0], *table)) {
+                if (c == 2) {
+                    mvaddstr(26, 55, menu[c]);
+                }
+                if (players[0].money >= table->ante * 2) {
+                    if (c == 3) {
+                        mvaddstr(28, 55, menu[c]);
+                    }
+                } else {
+                    if (c == 4) {
+                        mvaddstr(28, 55, menu[c]);
+                    }
+                }
+            }
+            if (c == 5) {
+                mvaddstr(30, 55, menu[c]);
+            }
+        }
+        if (c == 6) {
+            mvaddstr(32, 100, menu[6]);
+        }
+        attroff(A_REVERSE);
     }
 
     move(0, 0);
     refresh();
+}
+
+int interactGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx) {
+    int key = 0;
+    int item = 0;
+
+    //initialize the first option that player can choose
+    if (playerIdx == 0) {
+        if (isCallRaise(players[0], *table)) {
+            if (isAllin(players[0], *table)) {
+                item = 4;
+            } else {
+                item = 0;
+            }
+        } else if (isCheckBet(players[0], *table)) {
+            item = 2;
+
+        } else {
+            item = 5;
+        }
+    } else {
+        item = 6;
+    }
+
+    keypad(stdscr, TRUE);
+
+    while (key != 13) { //13 is Enter
+        drawGame(num_player, roundIdx, players, table, playerIdx, item);
+        key = getch();
+        if (playerIdx == 0) {
+            if (isCallRaise(players[0], *table)) {
+                if (isAllin(players[0], *table)) {
+                    switch (key) {
+                        case KEY_DOWN:
+                            item++;
+                            if (item > 6) {
+                                item = 4;
+                            }
+                            break;
+                        case KEY_UP:
+                            item--;
+                            if (item < 4) {
+                                item = 6;
+                            }
+                            break;
+                        case KEY_RIGHT:
+                            item = 6;
+                            break;
+                        case KEY_LEFT:
+                            item = 5;
+                            break;
+                        default: break;
+                    }
+                } else if (players[0].money < table->highest_bet - players[0].bet + table->last_bet) {
+                    switch (key) {
+                        case KEY_DOWN:
+                            if (item == 0) {
+                                item = 4;
+                            } else {
+                                item++;
+                            }
+                            if (item > 6) {
+                                item = 0;
+                            }
+                            break;
+                        case KEY_UP:
+                            if (item == 4) {
+                                item = 0;
+                            } else {
+                                item--;
+                            }
+                            if (item < 0) {
+                                item = 6;
+                            }
+                            break;
+                        case KEY_RIGHT:
+                            item = 6;
+                            break;
+                        case KEY_LEFT:
+                            item = 5;
+                            break;
+                        default: break;
+                    }
+                } else {
+                    switch (key) {
+                        case KEY_DOWN:
+                            if (item == 1) {
+                                item = 5;
+                            } else {
+                                item++;
+                            }
+                            if (item > 6) {
+                                item = 0;
+                            }
+                            break;
+                        case KEY_UP:
+                            if (item == 5) {
+                                item = 1;
+                            } else {
+                                item--;
+                            }
+                            if (item < 0) {
+                                item = 6;
+                            }
+                            break;
+                        case KEY_RIGHT:
+                            item = 6;
+                            break;
+                        case KEY_LEFT:
+                            item = 5;
+                            break;
+                        default: break;
+                    }
+                }
+            } else if (isCheckBet(players[0], *table)) {
+                if (players[0].money >= table->ante * 2) {
+                    switch (key) {
+                        case KEY_DOWN:
+                            if (item == 3) {
+                                item = 5;
+                            } else {
+                                item++;
+                            }
+                            if (item > 6) {
+                                item = 2;
+                            }
+                            break;
+                        case KEY_UP:
+                            if (item == 5) {
+                                item = 3;
+                            } else {
+                                item--;
+                            }
+                            if (item < 2) {
+                                item = 6;
+                            }
+                            break;
+                        case KEY_RIGHT:
+                            item = 6;
+                            break;
+                        case KEY_LEFT:
+                            item = 5;
+                            break;
+                        default: break;
+                    }
+                } else {
+                    switch (key) {
+                        case KEY_DOWN:
+                            if (item == 2) {
+                                item = 4;
+                            } else {
+                                item++;
+                            }
+                            if (item > 6) {
+                                item = 2;
+                            }
+                            break;
+                        case KEY_UP:
+                            if (item == 4) {
+                                item = 2;
+                            } else {
+                                item--;
+                            }
+                            if (item < 2) {
+                                item = 6;
+                            }
+                            break;
+                        case KEY_RIGHT:
+                            item = 6;
+                            break;
+                        case KEY_LEFT:
+                            item = 5;
+                            break;
+                        default: break;
+                    }
+                }
+            }
+        }
+    }
+    return item;
 }
 
 void gameP(int num_player) {
@@ -207,7 +425,7 @@ void gameP(int num_player) {
         table->pot_money += 200;
         table->highest_bet += 15000;
         int playerIdx = 0;
-        drawGame(num_player, i, players, table, playerIdx);
+        drawGame(num_player, i, players, table, playerIdx, 0);
         getch();
     }
     free(players);
@@ -338,12 +556,12 @@ void drawMainMenu(int item) {
 
     clear();
     center(3, "POKER");
-    center(6, "Main Menu");
+    center(7, "Main Menu");
     for (c = 0; c < 5; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
-        mvaddstr(8 + c, COLS / 2 - 5, menu[c]);
+        mvaddstr(11 + (c * 2), COLS / 2 - 5, menu[c]);
         attroff(A_REVERSE);
     }
     mvaddstr(LINES - 2, COLS - 20, "Move: Arrow keys");
