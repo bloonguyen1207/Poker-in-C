@@ -966,7 +966,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             countAllin++;
         }
     }
-    if (countAllin == countActivePlayer) {
+    if (countAllin == countActivePlayer && is_1st_bet == 0) {
         return countActivePlayer;
     }
     while (!end_round) {
