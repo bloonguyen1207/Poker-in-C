@@ -15,8 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="$PROJECT_DIR$/src/demo.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.c" afterPath="$PROJECT_DIR$/src/poker_ui.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="COSC2451_A2_s3515305_s3558475.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,11 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="demo.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="demo.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/demo.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="576" column="0" selection-start-line="576" selection-start-column="0" selection-end-line="578" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.870229">
+              <caret line="618" column="35" selection-start-line="618" selection-start-column="35" selection-end-line="618" selection-end-column="35" />
               <folding>
                 <element signature="e#0#2#0" expanded="false" />
                 <element signature="e#119#162#1" expanded="false" />
@@ -63,10 +62,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0992647">
+            <state vertical-scroll-proportion="0.0">
               <caret line="167" column="10" selection-start-line="167" selection-start-column="10" selection-end-line="167" selection-end-column="10" />
               <folding>
                 <element signature="e#41#60#0" expanded="true" />
@@ -108,8 +107,8 @@
         <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/poker.sh" />
         <option value="$PROJECT_DIR$/src/poker.c" />
-        <option value="$PROJECT_DIR$/src/demo.c" />
         <option value="$PROJECT_DIR$/src/poker_ui.c" />
+        <option value="$PROJECT_DIR$/src/demo.c" />
       </list>
     </option>
   </component>
@@ -238,7 +237,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.77863777" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24699177" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.116099074" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3498452" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41021672" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -664,26 +663,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/demo.c">
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="576" column="0" selection-start-line="576" selection-start-column="0" selection-end-line="578" selection-end-column="1" />
+          <caret line="167" column="10" selection-start-line="167" selection-start-column="10" selection-end-line="167" selection-end-column="10" />
+          <folding>
+            <element signature="e#41#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/demo.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.870229">
+          <caret line="618" column="35" selection-start-line="618" selection-start-column="35" selection-end-line="618" selection-end-column="35" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#162#1" expanded="false" />
             <element signature="e#432#482#1" expanded="false" />
             <element signature="e#513#557#1" expanded="false" />
             <element signature="e#586#641#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0992647">
-          <caret line="167" column="10" selection-start-line="167" selection-start-column="10" selection-end-line="167" selection-end-column="10" />
-          <folding>
-            <element signature="e#41#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
