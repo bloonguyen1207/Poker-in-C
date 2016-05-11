@@ -749,10 +749,10 @@ int aggrAIrounds(Player *ai, Table *table) {
     if (table->card_idx >= 3) {
         if (table->card_idx == 3) {
             temp->card[5].rank = -1;
-            temp->card[5].suit = HEARTS;
+            temp->card[5].suit = NONE;
         }
         temp->card[6].rank = -2;
-        temp->card[6].suit = CLUBS;
+        temp->card[6].suit = NONE;
     }
     checkHandRanking(temp, ai);
 

@@ -148,21 +148,21 @@ void drawRangeMoney(int min, int max, int item, int money) {
         }
         if (c == 0) {
             if (money != min) {
-                mvaddstr(28, 65, menu[c]);
+                mvaddstr(28, 70, menu[c]);
             }
         } else if (c == 1) {
             if (money != max) {
-                mvaddstr(28, 75, menu[c]);
+                mvaddstr(28, 80, menu[c]);
             }
         } else if (c == 2) {
-            mvaddstr(29, 65, menu[c]);
-        } else if (c == 3) {
             mvaddstr(29, 70, menu[c]);
+        } else if (c == 3) {
+            mvaddstr(29, 75, menu[c]);
         }
         attroff(A_REVERSE);
     }
-    mvaddstr(27, 66, "How much?");
-    mvprintw(28, 68, "%d", money);
+    mvaddstr(27, 71, "How much?");
+    mvprintw(28, 73, "%d", money);
 
 
     move(0, 0);
@@ -533,7 +533,6 @@ void gamePoker(int num_player) {
         if (item == 6) {
             //break;
             //to test, use the bellow code, will be erased late
-            money = 0;
             getch();
         }
 
@@ -654,9 +653,7 @@ void startMenu() {
                 num_player++;
             }
         } else if (choice == 2) {
-            clear();
             gamePoker(num_player);
-            getch();
         } else if (choice == 3) {
             endMenu = 1;
         }
@@ -728,7 +725,7 @@ int main() {
             refresh();
             getch();
         } else if (choice == 2) {
-            center(1, "OPTIONS");
+            center(1, "CREDIT");
             mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
             refresh();
             getch();
