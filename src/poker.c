@@ -45,6 +45,25 @@ char* getRank(Rank r) {
     }
 }
 
+char* getCardRank(int rank) {
+    switch(rank){
+        case 13: return "K";
+        case 12: return "Q";
+        case 11: return "J";
+        case 10: return "10";
+        case 9: return "9";
+        case 8: return "8";
+        case 7: return "7";
+        case 6: return "6";
+        case 5: return "5";
+        case 4: return "4";
+        case 3: return "3";
+        case 2: return "2";
+        case 1: return "A";
+        default: return NULL;
+    }
+}
+
 Deck* newDeck() {
     Deck* deck = malloc(sizeof(Deck));
     int k = 0;
@@ -82,11 +101,12 @@ Player* createPlayers(int num_player) {
             players[i].status = 1;
             players[i].state = None;
             players[i].name[7] += i + 1;
-            players[i].money = 5000;
+            players[i].money = 300;
             players[i].max_hand = malloc(sizeof(Card) * 5);
             players[i].bet = 0;
             players[i].isBigBlind = 0;
             players[i].isSmallBlind = 0;
+            players[i].isWinner = 0;
         }
         return players;
     }
@@ -96,10 +116,11 @@ Player* createPlayers(int num_player) {
 Table * createTable() {
     Table * table = malloc(sizeof(Table));
     table->card_idx = 0;
-    table->highest_bet = 0;
     table->pot_money = 0;
     table->last_bet = 0;
     table->showCard = 0;
+    table->ante = 2;
+    table->highest_bet = table->ante * 2;
     return table;
 }
 

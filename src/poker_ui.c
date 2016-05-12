@@ -21,28 +21,47 @@ static void finish(int sig);
 void drawCard(Card card, int y, int x) {
     if (card.suit == SPADES) {
         mvaddstr(y, x, ".______."); y++;
-        mvprintw(y, x, "|%d  .  |", card.suit); y++;
+        if (card.rank == 10) {
+            mvprintw(y, x, "|%s .  |", getCardRank(card.rank)); y++;
+        } else {
+            mvprintw(y, x, "|%s  .  |", getCardRank(card.rank));
+            y++;
+        }
         mvaddstr(y, x, "|  / \\ |"); y++;
         mvaddstr(y, x, "| (_,_)|"); y++;
         mvaddstr(y, x, "|   I  |"); y++;
         mvaddstr(y, x, ".______.");
     } else if (card.suit == CLUBS) {
         mvaddstr(y, x, ".______."); y++;
-        mvprintw(y, x, "|%d  _  |", card.suit); y++;
+        if (card.rank == 10) {
+            mvprintw(y, x, "|%s _  |", getCardRank(card.rank)); y++;
+        } else {
+            mvprintw(y, x, "|%s  _  |", getCardRank(card.rank));
+            y++;
+        }
         mvaddstr(y, x, "|  ( ) |"); y++;
         mvaddstr(y, x, "| (_x_)|"); y++;
         mvaddstr(y, x, "|   I  |"); y++;
         mvaddstr(y, x, ".______.");
     } else if (card.suit == DIAMONDS) {
         mvaddstr(y, x, ".______."); y++;
-        mvprintw(y, x, "|%d /\\  |", card.suit); y++;
+        if (card.rank == 10) {
+            mvprintw(y, x, "|%s/\\  |", getCardRank(card.rank)); y++;
+        } else {
+            mvprintw(y, x, "|%s /\\  |", getCardRank(card.rank));
+            y++;
+        }
         mvaddstr(y, x, "| /  \\ |"); y++;
         mvaddstr(y, x, "| \\  / |"); y++;
         mvaddstr(y, x, "|  \\/  |"); y++;
         mvaddstr(y, x, ".______.");
     } else if (card.suit == HEARTS) {
         mvaddstr(y, x, ".______."); y++;
-        mvprintw(y, x, "|%d_  _ |", card.suit); y++;
+        if (card.rank == 10) {
+            mvprintw(y, x, "|%s_ _ |", getCardRank(card.rank)); y++;
+        } else {
+            mvprintw(y, x, "|%s_  _ |", getCardRank(card.rank)); y++;
+        }
         mvaddstr(y, x, "|( \\/ )|"); y++;
         mvaddstr(y, x, "| \\  / |"); y++;
         mvaddstr(y, x, "|  \\/  |"); y++;
@@ -161,6 +180,9 @@ void drawWinner(Player * players, int num_player, Table table, int roundIdx) {
 void drawPot(Table table) {
     mvaddstr(12, 90, "----------------------");
     mvprintw(14, 90, "Pot: %d", table.pot_money);
+    //TODO test
+    mvprintw(0, 0, "Last bet: %d", table.last_bet);
+    mvprintw(1, 0, "Highest bet: %d", table.highest_bet);
     move(0, 0);
     refresh();}
 
@@ -199,7 +221,7 @@ void drawRangeMoney(int min, int max, int item, int money) {
         attroff(A_REVERSE);
     }
     mvaddstr(27, 71, "How much?");
-    mvprintw(28, 73, "%d", money);
+    mvprintw(28, 74, "%d", money);
 
 
     move(0, 0);
@@ -287,7 +309,7 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
     clear();
     updateInfo(players, num_player, *table, roundIdx, playerIdx);
 
-    //draw Option menu
+    //draw Options menu
     int c;
     char menu[7][15] = {"Call", "Raise", "Check", "Bet", "Allin", "Fold", "Exit"};
 
@@ -569,6 +591,7 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
         table->last_bet = money;
     } else if (input == 4) {
         allin(&players[playerIdx], table);
+        table->last_bet = players[playerIdx].money;
     } else if (input == 5) {
         fold(&players[playerIdx]);
     }
@@ -683,7 +706,8 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer ||
                 (countCall == countActivePlayer - 1 && !is_1st_bet) ||
                 (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded) ||
-                (countAllin == countActivePlayer - 1 && (players[playerIdx].state == Called || players[playerIdx].state == Checked))) {
+                (countAllin == countActivePlayer - 1 && (players[playerIdx].state == Called || players[playerIdx].state == Checked)) ||
+                        (countAllin + countCall || countAllin + countCheck) == countActivePlayer  ) {
                 lastState = None;
                 end_round = 1;
             }
@@ -736,7 +760,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         }
     }
 
-    table->ante = 250;
+    table->ante = 2;
     reset(players, table, num_player, deck);
     players[nextSB].isSmallBlind = 1;
     players[nextSB].state = SB;
@@ -819,17 +843,18 @@ void setUpGame(int num_player) {
         for (int m = 0; m < num_player; m++) {
             if (players[m].money <= 0) {
                 remain--;
+                if (m == 0) {
+                    clear();
+                    center(0,"Game Over");
+                    refresh();
+                    getch();
+                    break;
+                }
             }
         }
         if (remain == 1) {
             clear();
             center(0,"No player left");
-            refresh();
-            getch();
-            break;
-        } else if (players[0].money == 0) {
-            clear();
-            center(0,"Game Over");
             refresh();
             getch();
             break;
@@ -1033,6 +1058,10 @@ int main() {
             getch();
         } else if (choice == 2) {
             center(1, "CREDIT");
+            mvaddstr(5, COLS / 2 - 20, "Nguyen Ha Phuong Mai");
+            mvaddstr(5, COLS / 2 + 10, "s3558475");
+            mvaddstr(7, COLS / 2 - 20, "Nguyen Thi Mai Thao");
+            mvaddstr(7, COLS / 2 + 10, "s3515305");
             mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
             refresh();
             getch();

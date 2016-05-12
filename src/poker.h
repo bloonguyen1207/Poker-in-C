@@ -66,6 +66,8 @@ char* getState(State s);
 
 char* getRank(Rank r);
 
+char* getCardRank(int rank);
+
 Deck* newDeck();
 
 void shuffleDeck(Deck* deck, int size);
