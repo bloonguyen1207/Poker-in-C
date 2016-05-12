@@ -129,7 +129,8 @@ void drawPlayerInfo(Player * players, int num_player, int playerIdx) {
     refresh();
 }
 
-void drawWinner(Player * players, int num_player) {
+void drawWinner(Player * players, int num_player, Table table, int roundIdx) {
+    drawPlayerCards(players, num_player, table);
     int players_posyx[5][2] = {{25, 30}, {5, 50}, {5, 30}, {5, 10}, {25, 10}};
     if (num_player == 2) {
         players_posyx[1][0] = 5;
@@ -141,9 +142,9 @@ void drawWinner(Player * players, int num_player) {
     }
     int y = 22;
     for (int i = 0; i < num_player; i++) {
-        if (players[i].status == 1) {
+        if (players[i].status == 1 && roundIdx == 3) {
             attron(A_REVERSE);
-            mvprintw(players_posyx[i][0] + 3, players_posyx[i][1] + 7, "%s", getRank(players[i].rank));
+            mvprintw(players_posyx[i][0] + 5, players_posyx[i][1] + 2, "%s", getRank(players[i].rank));
             attroff(A_REVERSE);
         }
         if (players[i].isWinner) {
@@ -151,6 +152,8 @@ void drawWinner(Player * players, int num_player) {
             y += 2;
         }
     }
+    mvaddstr(y, 90, "Press any key to play again");
+
     move(0, 0);
     refresh();
 }
@@ -273,12 +276,16 @@ int rangeMoney(int min, int max) {
     return money;
 }
 
+void updateInfo(Player * players, int num_player, Table table, int roundIdx, int playerIdx) {
+    drawPlayerCards(players, num_player, table);
+    drawSharedCard(table, roundIdx);
+    drawPlayerInfo(players, num_player, playerIdx);
+    drawPot(table);
+}
+
 void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx, int item) {
     clear();
-    drawPlayerCards(players, num_player, *table);
-    drawSharedCard(*table, roundIdx);
-    drawPlayerInfo(players, num_player, playerIdx);
-    drawPot(*table);
+    updateInfo(players, num_player, *table, roundIdx, playerIdx);
 
     //draw Option menu
     int c;
@@ -526,9 +533,9 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
         } else {
             input = consAI(&players[playerIdx], table, roundIdx);
         }
-        drawGame(num_player, roundIdx, players, table, playerIdx, 0);
-        drawPlayerCards(players, num_player, *table);
-        sleep(1);
+        clear();
+        updateInfo(players, num_player, *table, roundIdx, playerIdx);
+        napms(500);
     } else {
         //let user choose option
         while (money < 0) {
@@ -794,7 +801,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         free(hands);
     }
     table->showCard = 1;
-    drawWinner(players, num_player);
+    drawWinner(players, num_player, *table, roundIdx);
     getch();
     award(players, table, num_player);
     return nextSB;
@@ -817,6 +824,12 @@ void setUpGame(int num_player) {
         if (remain == 1) {
             clear();
             center(0,"No player left");
+            refresh();
+            getch();
+            break;
+        } else if (players[0].money == 0) {
+            clear();
+            center(0,"Game Over");
             refresh();
             getch();
             break;
