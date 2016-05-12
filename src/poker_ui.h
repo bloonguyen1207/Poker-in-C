@@ -5,9 +5,9 @@ void drawCard(Card card, int y, int x);
 
 void center(int row, char *title);
 
-void drawPlayerCards(Player * players, int num_player);
+void drawPlayerCards(Player * players, int num_player, Table table);
 
-void drawPlayerInfo(Player * players, int num_player);
+void drawPlayerInfo(Player * players, int num_player, int playerIdx);
 
 void drawPot(Table table);
 
@@ -24,10 +24,6 @@ int rangeMoney(int min, int max);
 void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx, int item);
 
 int interactGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx);
-
-void gamePoker1(int num_player);
-
-int gamePoker(int num_player, int playerIdx, Player *players, Table *table, int roundIdx);
 
 int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player);
 

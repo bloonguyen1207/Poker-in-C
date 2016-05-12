@@ -72,7 +72,7 @@ void center(int row, char *title) {
     refresh();
 }
 
-void drawPlayerCards(Player * players, int num_player) {
+void drawPlayerCards(Player * players, int num_player, Table table) {
     Card card;
     card.suit = NONE;
 
@@ -103,7 +103,7 @@ void drawPlayerCards(Player * players, int num_player) {
         if (players[i].status == 0) {
             continue;
         }
-        if (i == 0) {
+        if (i == 0 || (table.showCard == 1 && players[i].state != Folded)) {
             drawCard(players[i].hand[0], players_posyx[i][0], players_posyx[i][1]);
             drawCard(players[i].hand[1], players_posyx[i][0], players_posyx[i][1] + 7);
         } else {
@@ -111,23 +111,55 @@ void drawPlayerCards(Player * players, int num_player) {
             drawCard(card, players_posyx[i][0], players_posyx[i][1] + 7);
         }
     }
+    refresh();
 }
 
-void drawPlayerInfo(Player * players, int num_player) {
+void drawPlayerInfo(Player * players, int num_player, int playerIdx) {
     int info_y = 0;
-    mvaddstr(info_y, 100, "Money   Bet"); info_y += 2;
+    mvaddstr(info_y, 100, "Money   Bet   State"); info_y += 2;
     for (int i = 0; i < num_player; i++) {
         mvprintw(info_y, 90, "%s", players[i].name);
         mvprintw(info_y, 100, "%d", players[i].money);
         mvprintw(info_y, 107, "%d", players[i].bet);
+        mvprintw(info_y, 114, "%s", getState(players[i].state));
         info_y += 2;
     }
+    mvprintw(20, 90, "%s 's Turn", players[playerIdx].name);
+    move(0, 0);
+    refresh();
+}
+
+void drawWinner(Player * players, int num_player) {
+    int players_posyx[5][2] = {{25, 30}, {5, 50}, {5, 30}, {5, 10}, {25, 10}};
+    if (num_player == 2) {
+        players_posyx[1][0] = 5;
+        players_posyx[1][1] = 30;
+    }
+    if (num_player == 3) {
+        players_posyx[2][0] = 5;
+        players_posyx[2][1] = 10;
+    }
+    int y = 22;
+    for (int i = 0; i < num_player; i++) {
+        if (players[i].status == 1) {
+            attron(A_REVERSE);
+            mvprintw(players_posyx[i][0] + 3, players_posyx[i][1] + 7, "%s", getRank(players[i].rank));
+            attroff(A_REVERSE);
+        }
+        if (players[i].isWinner) {
+            mvprintw(y, 90, "%s is a winner", players[i].name);
+            y += 2;
+        }
+    }
+    move(0, 0);
+    refresh();
 }
 
 void drawPot(Table table) {
     mvaddstr(12, 90, "----------------------");
     mvprintw(14, 90, "Pot: %d", table.pot_money);
-}
+    move(0, 0);
+    refresh();}
 
 void drawSharedCard(Table table, int roundIdx) {
     if (roundIdx > 0) {
@@ -137,7 +169,8 @@ void drawSharedCard(Table table, int roundIdx) {
             x += 7;
         }
     }
-}
+    move(0, 0);
+    refresh();}
 
 void drawRangeMoney(int min, int max, int item, int money) {
     int c;
@@ -167,7 +200,6 @@ void drawRangeMoney(int min, int max, int item, int money) {
 
 
     move(0, 0);
-
     refresh();
 }
 
@@ -243,9 +275,9 @@ int rangeMoney(int min, int max) {
 
 void drawGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx, int item) {
     clear();
-    drawPlayerCards(players, num_player);
+    drawPlayerCards(players, num_player, *table);
     drawSharedCard(*table, roundIdx);
-    drawPlayerInfo(players, num_player);
+    drawPlayerInfo(players, num_player, playerIdx);
     drawPot(*table);
 
     //draw Option menu
@@ -483,68 +515,6 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     return item;
 }
 
-void gamePoker1(int num_player) {
-    int item = 0;
-    Player * players = createPlayers(num_player);
-    Table * table = createTable();
-    for (int i = 0; i < 5; i++) {
-        table->card[i].suit = SPADES;
-        table->card[i].rank = 5;
-    }
-    players[0].hand[0].rank = 4;
-    players[0].hand[0].suit = CLUBS;
-    players[0].hand[1].rank = 2;
-    players[0].hand[1].suit = DIAMONDS;
-    players[0].isBigBlind = 1;
-    players[0].money = 20000;
-    players[0].bet = 10000;
-    for (int i = 0; i < 4; i++) {
-        int money = -1;
-        table->pot_money += 200;
-        table->highest_bet += 15000;
-        int playerIdx = 0;
-        while (money == -1) {
-            item = interactGame(num_player, i, players, table, playerIdx);
-            if (item == 0) {
-                //call "call" func
-                money = 0;
-            } else if (item == 2) {
-                //call "check" func
-                money = 0;
-            } else if (item == 1 || item == 3) {
-                int min = minMoney(players[0], *table);
-                money = rangeMoney(min, players[0].money);
-                if (money == -1) {
-                    mvaddstr(36, 30, "Cancel");
-                } else {
-                    mvprintw(36, 30, "Money: %d", money);
-                }
-                refresh();
-            } else if (item == 4) {
-                //call "all in" func
-                money = players[0].money;
-            } else if (item == 5) {
-                players[0].status = 0;
-                money = 0;
-            } else if (item == 6) {
-                break;
-
-            }
-        }
-        if (item == 6) {
-            //break;
-            //to test, use the bellow code, will be erased late
-            getch();
-        }
-
-        mvprintw(38, 30, "Item is: %d", item);
-        refresh();
-        getch();
-    }
-    free(players);
-    free(table);
-}
-
 int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player) {
     int input = 6;
     int money = -1;
@@ -556,6 +526,9 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
         } else {
             input = consAI(&players[playerIdx], table, roundIdx);
         }
+        drawGame(num_player, roundIdx, players, table, playerIdx, 0);
+        drawPlayerCards(players, num_player, *table);
+        sleep(1);
     } else {
         //let user choose option
         while (money < 0) {
@@ -651,6 +624,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         }
     }
     if (countAllin == countActivePlayer && is_1st_bet == 0) {
+        table->showCard = 1;
         return countActivePlayer;
     }
     while (!end_round) {
@@ -658,19 +632,14 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             playerIdx = 0;
         }
         if (countAllin == countActivePlayer - 1 && players[playerIdx].bet == table->highest_bet) {
+            table->showCard = 1;
             break;
         }
         if (players[playerIdx].state != Folded && players[playerIdx].state != Allins
             && players[playerIdx].money > 0 && players[playerIdx].status == 1) {
-            printf("State: %i\n", players[playerIdx].state);
-            for (int c = 0; c < num_player; c++) {
-                displayPlayerInfo(players[c]);
-                printf("\n");
-            }
             if (players[playerIdx].state == BB) {
                 is_1st_bet = 0;
             }
-            displayTableInfo(*table);
             if (turn(players, table, roundIdx, playerIdx, num_player) == -1) {
                 return -1;
             }
@@ -712,10 +681,8 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 end_round = 1;
             }
         }
-        printf("PlayerIdx: %i\n", playerIdx);
         playerIdx++;
     }
-    printf("Active Player: %i\n", countActivePlayer);
     return countActivePlayer;
 }
 
@@ -826,6 +793,9 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         testHand(hands, players, num_player);
         free(hands);
     }
+    table->showCard = 1;
+    drawWinner(players, num_player);
+    getch();
     award(players, table, num_player);
     return nextSB;
 }
@@ -893,8 +863,8 @@ void drawStartMenu(int item, int num_player) {
     }
 
     mvprintw(7, COLS / 2, "%d", num_player);
-    move(0, 0);
 
+    move(0, 0);
     refresh();
 }
 
@@ -1000,8 +970,8 @@ void drawMainMenu(int item) {
     }
     mvaddstr(LINES - 2, COLS - 20, "Move: Arrow keys");
     mvaddstr(LINES - 1, COLS - 20, "Select: Enter");
-    move(0, 0);
 
+    move(0, 0);
     refresh();
 }
 

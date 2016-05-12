@@ -10,7 +10,8 @@
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES, NONE};
 typedef enum suit Suit;
 
-enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
+enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalFlush
+};
 typedef enum rank Rank;
 
 enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
@@ -534,7 +535,7 @@ int isRoyalStraightFlush(Hand hand, Player* player) {
             }
             if (check == 5) {
                 free(temp);
-                player->rank = RoyalStraightFlush;
+                player->rank = RoyalFlush;
                 return 1;
             }
         }
@@ -1238,7 +1239,7 @@ void testHand(Hand *hands, Player * players, int num_player) {
 
 
     int countWinners;
-    for (Rank rank = RoyalStraightFlush; rank >= HighCard; rank--) {
+    for (Rank rank = RoyalFlush; rank >= HighCard; rank--) {
         countWinners = 0;
 
         //if the player's rank == the checking rank, add his idx to winner_idx array

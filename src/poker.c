@@ -14,9 +14,35 @@ char* getSuit(Suit s) {
         case DIAMONDS: return "\u2666";
         case CLUBS: return "\u2663";
         case SPADES: return "\u2660";
-        case NONE: return NULL;
+        default: return NULL;
     }
-    return NULL;
+}
+
+char* getState(State s) {
+    switch(s){
+        case Called: return "Call";
+        case Raised: return "Raise";
+        case Checked: return "Check";
+        case Allins: return "Allin";
+        case Folded: return "Fold";
+        case Bets: return "Bets";
+        default: return "None";
+    }
+}
+
+char* getRank(Rank r) {
+    switch(r){
+        case OnePair: return "OnePair";
+        case TwoPairs: return "TwoPairs";
+        case Three: return "3OfAKind";
+        case Four: return "4OfAKind";
+        case Straight: return "Straight";
+        case Flush: return "Flush";
+        case FullHouse: return "FullHouse";
+        case StraightFlush: return "StraightFlush";
+        case RoyalFlush: return "RoyalFlush";
+        default: return "HighCard";
+    }
 }
 
 Deck* newDeck() {
@@ -88,6 +114,7 @@ Table * createTable() {
     table->highest_bet = 0;
     table->pot_money = 0;
     table->last_bet = 0;
+    table->showCard = 0;
     return table;
 }
 
@@ -482,7 +509,7 @@ int isRoyalStraightFlush(Hand hand, Player* player) {
             }
             if (check == 5) {
                 free(temp);
-                player->rank = RoyalStraightFlush;
+                player->rank = RoyalFlush;
                 return 1;
             }
         }
@@ -949,7 +976,7 @@ void testHand(Hand *hands, Player * players, int num_player) {
 
 
     int countWinners;
-    for (Rank rank = RoyalStraightFlush; rank >= HighCard; rank--) {
+    for (Rank rank = RoyalFlush; rank >= HighCard; rank--) {
         countWinners = 0;
 
         //if the player's rank == the checking rank, add his idx to winner_idx array
@@ -1037,6 +1064,7 @@ void reset (Player * players, Table * table, int num_player, Deck * deck) {
     deck->card_index = 0;
     table->pot_money = 0;
     table->card_idx = 0;
+    table->showCard = 0;
     for (int i = 0; i < 5; i++) {
         table->card[i].rank = 0;
     }

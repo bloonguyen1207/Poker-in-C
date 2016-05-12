@@ -7,7 +7,7 @@
 enum suit {HEARTS, DIAMONDS, CLUBS, SPADES, NONE};
 typedef enum suit Suit;
 
-enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalStraightFlush};
+enum rank {HighCard, OnePair, TwoPairs, Three, Four, Straight, Flush, FullHouse, StraightFlush, RoyalFlush};
 typedef enum rank Rank;
 
 enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
@@ -51,6 +51,7 @@ struct table {
     Card card[5];
     int card_idx;
     int last_bet;
+    int showCard;
 };
 typedef struct table Table;
 
@@ -60,6 +61,10 @@ struct hand {
 typedef struct hand Hand;
 
 char* getSuit(Suit s);
+
+char* getState(State s);
+
+char* getRank(Rank r);
 
 Deck* newDeck();
 
