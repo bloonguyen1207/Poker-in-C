@@ -1365,12 +1365,15 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     if (nextSB == num_player - 1) {
         nextBB = 0;
     }
-    if (nextSB == num_player) {
+    if (nextSB >= num_player) {
         nextSB = 0;
         nextBB = 1;
     }
 
     for (int i = 0; i < num_player; i++) {
+        if (i != nextSB) {
+            players[i].isSmallBlind = 0;
+        }
         if (players[i].money == 0) {
             players[i].isBigBlind = 0;
             players[i].isSmallBlind = 0;
@@ -1399,6 +1402,9 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     players[nextSB].isBigBlind = 0;
     table->pot_money = players[nextSB].bet + players[nextBB].bet;
     nextSB++;
+    if (nextSB == num_player) {
+        nextSB = 0;
+    }
 
     dealStartingHand(players, deck, num_player);
     for (int i = 0; i < num_player; i++) {
