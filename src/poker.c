@@ -608,14 +608,16 @@ int aggrAIround0(Player *ai, Table *table) {
         ai->hand[1].rank == 1) {
         if (isCallRaise(*ai, *table)) {
             int money = minMoney(*ai, *table);
-            if (ai->money >= money * 3) {
-                raisePoker(ai, table, (int) (money * 1.5));
+            if (ai->money >= money * 25) {
+                raisePoker(ai, table, money * 5);
+                table->last_bet = money;
                 return 1;
             }
         } else if (isCheckBet(*ai, *table)) {
             int money = minMoney(*ai, *table);
-            if (ai->money >= money * 3) {
-                bet(ai, table, (int) (money * 1.5));
+            if (ai->money >= money * 25) {
+                bet(ai, table, money * 5);
+                table->last_bet = money;
                 return 3;
             }
         }
@@ -658,22 +660,26 @@ int aggrAIrounds(Player *ai, Table *table) {
     checkHandRanking(temp, ai);
 
     int money = minMoney(*ai, *table);
-    if (ai->rank > 0) {
-        if (ai->rank >= 2) {
+    if (ai->rank >= OnePair) {
+        if (ai->rank >= Three) {
             if (isCallRaise(*ai, *table)) {
                 raisePoker(ai, table, ai->money);
+                table->last_bet = money;
                 return 1;
             } else if (isCheckBet(*ai, *table)) {
                 bet(ai, table, ai->money);
+                table->last_bet = money;
                 return 3;
             }
         }
-        if (ai->money >= money * 3) {
+        if (ai->money >= money * 25) {
             if (isCallRaise(*ai, *table)) {
-                raisePoker(ai, table, (int) (money * 1.5));
+                raisePoker(ai, table, money * 5);
+                table->last_bet = money;
                 return 1;
             } else if (isCheckBet(*ai, *table)) {
-                bet(ai, table, (int)(money * 1.5));
+                bet(ai, table, money * 5);
+                table->last_bet = money;
                 return 3;
             }
         }
@@ -686,7 +692,7 @@ int aggrAIrounds(Player *ai, Table *table) {
         }
     }
 
-    if (ai->money >= money * 2) {
+    if (ai->money >= money * 5) {
         if (isCallRaise(*ai, *table)) {
             call(ai, table);
             return 0;

@@ -161,9 +161,9 @@ void drawWinner(Player * players, int num_player, Table table, int roundIdx) {
     }
     int y = 22;
     for (int i = 0; i < num_player; i++) {
-        if (players[i].status == 1 && roundIdx == 3) {
+        if (players[i].status == 1 && roundIdx == 4) {
             attron(A_REVERSE);
-            mvprintw(players_posyx[i][0] + 5, players_posyx[i][1] + 2, "%s", getRank(players[i].rank));
+            mvprintw(players_posyx[i][0] + 7, players_posyx[i][1], "%s", getRank(players[i].rank));
             attroff(A_REVERSE);
         }
         if (players[i].isWinner) {
@@ -546,9 +546,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
 
 int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player) {
     int input = 6;
-    int money = -1;
 
-    //TODO: add AI here
     if (playerIdx != 0) {
         if (playerIdx % 2  == 0) {
             input = consAI(&players[playerIdx], table, roundIdx);
@@ -557,43 +555,44 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
         }
         clear();
         updateInfo(players, num_player, *table, roundIdx, playerIdx);
-        napms(500);
+        if (!(players[0].status == 0 || (players[0].money == 0 && players[0].state != Allins))) {
+            napms(500);
+        }
     } else {
         //let user choose option
+        int money = -1;
         while (money < 0) {
             input = interactGame(num_player, roundIdx, players, table, playerIdx);
-            if (input == 1 || input == 3) {
+            if (input == 0 || input == 2) {
+                if (input == 0) {
+                    call(&players[playerIdx], table);
+                } else {
+                    check(&players[playerIdx]);
+                }
+                money = 0;
+            } else if (input == 1 || input == 3) {
                 int min = minMoney(players[0], *table);
                 money = rangeMoney(min, players[0].money);
+                if (input == 1) {
+                    raisePoker(&players[playerIdx], table, money);
+                } else {
+                    bet(&players[playerIdx], table, money);
+                }
+                table->last_bet = money;
             } else if (input == 4) {
+                allin(&players[playerIdx], table);
                 money = players[0].money;
+                table->last_bet = players[playerIdx].money;
+            } else if (input == 5) {
+                fold(&players[playerIdx]);
+                money = 0;
             } else if (input == 6) {
                 break;
-            } else {
-                money = 0;
             }
         }
         if (input == 6) {
             return -1;
         }
-    }
-
-    //execute option
-    if (input == 0) {
-        call(&players[playerIdx], table);
-    } else if (input == 1) {
-        raisePoker(&players[playerIdx], table, money);
-        table->last_bet = money;
-    } else if (input == 2) {
-        check(&players[playerIdx]);
-    } else if (input == 3) {
-        bet(&players[playerIdx], table, money);
-        table->last_bet = money;
-    } else if (input == 4) {
-        allin(&players[playerIdx], table);
-        table->last_bet = players[playerIdx].money;
-    } else if (input == 5) {
-        fold(&players[playerIdx]);
     }
 
     //Update highest_bet
@@ -854,18 +853,15 @@ void setUpGame(int num_player) {
         for (int m = 0; m < num_player; m++) {
             if (players[m].money <= 0) {
                 remain--;
-                if (m == 0) {
-                    clear();
-                    center(0,"Game Over");
-                    refresh();
-                    getch();
-                    break;
-                }
             }
         }
-        if (remain == 1) {
+        if (players[0].money == 0 || remain == 1) {
             clear();
-            center(0,"No player left");
+            if (players[0].money == 0) {
+                center(0,"Game Over");
+            } else {
+                center(0,"No player left");
+            }
             refresh();
             getch();
             break;
