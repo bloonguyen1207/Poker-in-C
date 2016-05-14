@@ -16,11 +16,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test.txt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" afterPath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="$PROJECT_DIR$/src/demo.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker.c" afterPath="$PROJECT_DIR$/src/poker.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker.h" afterPath="$PROJECT_DIR$/src/poker.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.c" afterPath="$PROJECT_DIR$/src/poker_ui.c" />
     </list>
     <ignored path="COSC2451_A2_s3515305_s3558475.iws" />
@@ -46,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/src/poker.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
+              <caret line="166" column="4" selection-start-line="166" selection-start-column="4" selection-end-line="166" selection-end-column="4" />
               <folding>
                 <element signature="e#380#430#1" expanded="false" />
                 <element signature="e#461#505#1" expanded="false" />
@@ -61,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/src/poker.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="777" column="24" selection-start-line="777" selection-start-column="24" selection-end-line="777" selection-end-column="24" />
+              <caret line="792" column="17" selection-start-line="792" selection-start-column="17" selection-end-line="792" selection-end-column="17" />
               <folding>
                 <element signature="e#0#2#0" expanded="false" />
                 <element signature="e#138#367#0" expanded="false" />
@@ -108,22 +106,12 @@
                 <element signature="e#21320#21810#0" expanded="false" />
                 <element signature="e#21812#22571#0" expanded="false" />
                 <element signature="e#22573#22787#0" expanded="false" />
-                <element signature="e#24599#28123#0" expanded="false" />
-                <element signature="e#28125#30494#0" expanded="false" />
-                <element signature="e#30496#31251#0" expanded="false" />
-                <element signature="e#31253#31941#0" expanded="false" />
-                <element signature="e#31943#31957#0" expanded="false" />
+                <element signature="e#24823#28347#0" expanded="false" />
+                <element signature="e#28349#30718#0" expanded="false" />
+                <element signature="e#30720#31475#0" expanded="false" />
+                <element signature="e#31477#32165#0" expanded="false" />
+                <element signature="e#32167#32181#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -132,7 +120,7 @@
         <entry file="file://$PROJECT_DIR$/src/demo.c">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="981" column="28" selection-start-line="981" selection-start-column="28" selection-end-line="981" selection-end-column="28" />
+              <caret line="982" column="29" selection-start-line="982" selection-start-column="4" selection-end-line="982" selection-end-column="29" />
               <folding>
                 <element signature="e#0#2#0" expanded="false" />
                 <element signature="e#119#168#1" expanded="false" />
@@ -218,11 +206,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="607" column="24" selection-start-line="607" selection-start-column="24" selection-end-line="607" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.82217574">
+              <caret line="610" column="35" selection-start-line="610" selection-start-column="35" selection-end-line="610" selection-end-column="35" />
               <folding>
                 <element signature="e#0#2#0" expanded="false" />
                 <element signature="e#402#2538#0" expanded="false" />
@@ -238,18 +226,18 @@
                 <element signature="e#9055#9308#0" expanded="false" />
                 <element signature="e#9310#11317#0" expanded="false" />
                 <element signature="e#11319#18349#0" expanded="false" />
-                <element signature="e#20676#25065#0" expanded="false" />
-                <element signature="e#25067#28463#0" expanded="false" />
-                <element signature="e#28465#29578#0" expanded="false" />
-                <element signature="e#29580#30341#0" expanded="false" />
-                <element signature="e#30343#31861#0" expanded="false" />
-                <element signature="e#31863#32463#0" expanded="false" />
-                <element signature="e#32465#32972#0" expanded="false" />
-                <element signature="e#32974#33542#0" expanded="false" />
-                <element signature="e#33544#34653#0" expanded="false" />
-                <element signature="e#34655#35620#0" expanded="false" />
-                <element signature="e#35622#35762#0" expanded="false" />
-                <element signature="e#35764#35780#0" expanded="false" />
+                <element signature="e#20793#25182#0" expanded="false" />
+                <element signature="e#25184#28580#0" expanded="false" />
+                <element signature="e#28582#29695#0" expanded="false" />
+                <element signature="e#29697#30458#0" expanded="false" />
+                <element signature="e#30460#31978#0" expanded="false" />
+                <element signature="e#31980#32580#0" expanded="false" />
+                <element signature="e#32582#33089#0" expanded="false" />
+                <element signature="e#33091#33659#0" expanded="false" />
+                <element signature="e#33661#34770#0" expanded="false" />
+                <element signature="e#34772#35737#0" expanded="false" />
+                <element signature="e#35739#35879#0" expanded="false" />
+                <element signature="e#35881#35897#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -276,11 +264,11 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/poker.sh" />
         <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/poker.h" />
         <option value="$PROJECT_DIR$/src/poker_ui.h" />
-        <option value="$PROJECT_DIR$/src/poker_ui.c" />
         <option value="$PROJECT_DIR$/src/demo.c" />
         <option value="$PROJECT_DIR$/src/poker.c" />
+        <option value="$PROJECT_DIR$/src/poker.h" />
+        <option value="$PROJECT_DIR$/src/poker_ui.c" />
       </list>
     </option>
   </component>
@@ -291,10 +279,10 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="41" />
-    <option name="y" value="-4" />
-    <option name="width" value="1325" />
-    <option name="height" value="772" />
+    <option name="x" value="-5" />
+    <option name="y" value="33" />
+    <option name="width" value="1610" />
+    <option name="height" value="768" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -335,7 +323,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
+              <option name="myItemId" value="cosc2451_a2_s3515305_s3558475" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -345,25 +333,11 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
+              <option name="myItemId" value="cosc2451_a2_s3515305_s3558475" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -381,7 +355,7 @@
       <recent name="$PROJECT_DIR$/bin" />
     </key>
   </component>
-  <component name="RunManager" selected="Bash.poker.sh">
+  <component name="RunManager" selected="Application.poker_ui">
     <configuration default="false" name="poker.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
@@ -393,34 +367,11 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="INTERPRETER_PATH" value="/bin/bash" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="COSC2451_A2_s3515305_s3558475" TARGET_NAME="COSC2451_A2_s3515305_s3558475" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
     </configuration>
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS="FALSE" PROJECT_NAME="COSC2451_A2_s3515305_s3558475" TARGET_NAME="COSC2451_A2_s3515305_s3558475" CONFIG_NAME="Debug">
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
-      <command value="run-script" />
-      <scripts />
       <envs />
       <method />
     </configuration>
@@ -440,18 +391,12 @@
       <envs />
       <method />
     </configuration>
-    <list size="5">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.demo" />
       <item index="2" class="java.lang.String" itemvalue="Application.poker_ui" />
       <item index="3" class="java.lang.String" itemvalue="Application.poker" />
-      <item index="4" class="java.lang.String" itemvalue="Bash.poker.sh" />
     </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Bash.poker.sh" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -476,27 +421,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="41" y="-4" width="1325" height="772" extended-state="6" />
-    <editor active="true" />
+    <frame x="-5" y="33" width="1610" height="768" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24500768" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24445851" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26893353" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26780185" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.5092166" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12210201" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26893353" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24572514" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2194745" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21826625" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40958267" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26893353" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12210201" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40958267" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -517,6 +462,57 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="94" selection-start-line="27" selection-start-column="94" selection-end-line="27" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="607" column="24" selection-start-line="607" selection-start-column="24" selection-end-line="607" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#402#2538#0" expanded="false" />
+            <element signature="e#2540#2791#0" expanded="false" />
+            <element signature="e#2793#4503#0" expanded="false" />
+            <element signature="e#4505#5048#0" expanded="false" />
+            <element signature="e#5050#5964#0" expanded="false" />
+            <element signature="e#5966#6249#0" expanded="false" />
+            <element signature="e#6251#6504#0" expanded="false" />
+            <element signature="e#6506#7239#0" expanded="false" />
+            <element signature="e#7241#8450#0" expanded="false" />
+            <element signature="e#8452#9053#0" expanded="false" />
+            <element signature="e#9055#9308#0" expanded="false" />
+            <element signature="e#9310#11317#0" expanded="false" />
+            <element signature="e#11319#18349#0" expanded="false" />
+            <element signature="e#20793#25182#0" expanded="false" />
+            <element signature="e#25184#28580#0" expanded="false" />
+            <element signature="e#28582#29695#0" expanded="false" />
+            <element signature="e#29697#30458#0" expanded="false" />
+            <element signature="e#30460#31978#0" expanded="false" />
+            <element signature="e#31980#32580#0" expanded="false" />
+            <element signature="e#32582#33089#0" expanded="false" />
+            <element signature="e#33091#33659#0" expanded="false" />
+            <element signature="e#33661#34770#0" expanded="false" />
+            <element signature="e#34772#35737#0" expanded="false" />
+            <element signature="e#35739#35879#0" expanded="false" />
+            <element signature="e#35881#35897#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -602,11 +598,11 @@
             <element signature="e#21320#21810#0" expanded="false" />
             <element signature="e#21812#22571#0" expanded="false" />
             <element signature="e#22573#22787#0" expanded="false" />
-            <element signature="e#24599#28123#0" expanded="false" />
-            <element signature="e#28125#30494#0" expanded="false" />
-            <element signature="e#30496#31251#0" expanded="false" />
-            <element signature="e#31253#31941#0" expanded="false" />
-            <element signature="e#31943#31957#0" expanded="false" />
+            <element signature="e#24823#28347#0" expanded="false" />
+            <element signature="e#28349#30718#0" expanded="false" />
+            <element signature="e#30720#31475#0" expanded="false" />
+            <element signature="e#31477#32165#0" expanded="false" />
+            <element signature="e#32167#32181#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -682,11 +678,11 @@
             <element signature="e#21320#21810#0" expanded="false" />
             <element signature="e#21812#22571#0" expanded="false" />
             <element signature="e#22573#22787#0" expanded="false" />
-            <element signature="e#24599#28123#0" expanded="false" />
-            <element signature="e#28125#30494#0" expanded="false" />
-            <element signature="e#30496#31251#0" expanded="false" />
-            <element signature="e#31253#31941#0" expanded="false" />
-            <element signature="e#31943#31957#0" expanded="false" />
+            <element signature="e#24823#28347#0" expanded="false" />
+            <element signature="e#28349#30718#0" expanded="false" />
+            <element signature="e#30720#31475#0" expanded="false" />
+            <element signature="e#31477#32165#0" expanded="false" />
+            <element signature="e#32167#32181#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -762,11 +758,11 @@
             <element signature="e#21320#21810#0" expanded="false" />
             <element signature="e#21812#22571#0" expanded="false" />
             <element signature="e#22573#22787#0" expanded="false" />
-            <element signature="e#24599#28123#0" expanded="false" />
-            <element signature="e#28125#30494#0" expanded="false" />
-            <element signature="e#30496#31251#0" expanded="false" />
-            <element signature="e#31253#31941#0" expanded="false" />
-            <element signature="e#31943#31957#0" expanded="false" />
+            <element signature="e#24823#28347#0" expanded="false" />
+            <element signature="e#28349#30718#0" expanded="false" />
+            <element signature="e#30720#31475#0" expanded="false" />
+            <element signature="e#31477#32165#0" expanded="false" />
+            <element signature="e#32167#32181#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -863,11 +859,11 @@
             <element signature="e#21320#21810#0" expanded="false" />
             <element signature="e#21812#22571#0" expanded="false" />
             <element signature="e#22573#22787#0" expanded="false" />
-            <element signature="e#24599#28123#0" expanded="false" />
-            <element signature="e#28125#30494#0" expanded="false" />
-            <element signature="e#30496#31251#0" expanded="false" />
-            <element signature="e#31253#31941#0" expanded="false" />
-            <element signature="e#31943#31957#0" expanded="false" />
+            <element signature="e#24823#28347#0" expanded="false" />
+            <element signature="e#28349#30718#0" expanded="false" />
+            <element signature="e#30720#31475#0" expanded="false" />
+            <element signature="e#31477#32165#0" expanded="false" />
+            <element signature="e#32167#32181#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -943,11 +939,11 @@
             <element signature="e#21320#21810#0" expanded="false" />
             <element signature="e#21812#22571#0" expanded="false" />
             <element signature="e#22573#22787#0" expanded="false" />
-            <element signature="e#24599#28123#0" expanded="false" />
-            <element signature="e#28125#30494#0" expanded="false" />
-            <element signature="e#30496#31251#0" expanded="false" />
-            <element signature="e#31253#31941#0" expanded="false" />
-            <element signature="e#31943#31957#0" expanded="false" />
+            <element signature="e#24823#28347#0" expanded="false" />
+            <element signature="e#28349#30718#0" expanded="false" />
+            <element signature="e#30720#31475#0" expanded="false" />
+            <element signature="e#31477#32165#0" expanded="false" />
+            <element signature="e#32167#32181#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1062,18 +1058,18 @@
             <element signature="e#9055#9308#0" expanded="false" />
             <element signature="e#9310#11317#0" expanded="false" />
             <element signature="e#11319#18349#0" expanded="false" />
-            <element signature="e#20676#25065#0" expanded="false" />
-            <element signature="e#25067#28463#0" expanded="false" />
-            <element signature="e#28465#29578#0" expanded="false" />
-            <element signature="e#29580#30341#0" expanded="false" />
-            <element signature="e#30343#31861#0" expanded="false" />
-            <element signature="e#31863#32463#0" expanded="false" />
-            <element signature="e#32465#32972#0" expanded="false" />
-            <element signature="e#32974#33542#0" expanded="false" />
-            <element signature="e#33544#34653#0" expanded="false" />
-            <element signature="e#34655#35620#0" expanded="false" />
-            <element signature="e#35622#35762#0" expanded="false" />
-            <element signature="e#35764#35780#0" expanded="false" />
+            <element signature="e#20793#25182#0" expanded="false" />
+            <element signature="e#25184#28580#0" expanded="false" />
+            <element signature="e#28582#29695#0" expanded="false" />
+            <element signature="e#29697#30458#0" expanded="false" />
+            <element signature="e#30460#31978#0" expanded="false" />
+            <element signature="e#31980#32580#0" expanded="false" />
+            <element signature="e#32582#33089#0" expanded="false" />
+            <element signature="e#33091#33659#0" expanded="false" />
+            <element signature="e#33661#34770#0" expanded="false" />
+            <element signature="e#34772#35737#0" expanded="false" />
+            <element signature="e#35739#35879#0" expanded="false" />
+            <element signature="e#35881#35897#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1099,16 +1095,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker.h">
+    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="157" column="0" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
-          <folding>
-            <element signature="e#380#430#1" expanded="false" />
-            <element signature="e#461#505#1" expanded="false" />
-            <element signature="e#534#589#1" expanded="false" />
-            <element signature="e#1100#1133#1" expanded="false" />
-          </folding>
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1120,18 +1111,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/demo.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="981" column="28" selection-start-line="981" selection-start-column="28" selection-end-line="981" selection-end-column="28" />
+          <caret line="982" column="29" selection-start-line="982" selection-start-column="4" selection-end-line="982" selection-end-column="29" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#168#1" expanded="false" />
@@ -1206,37 +1189,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
+    <entry file="file://$PROJECT_DIR$/src/poker.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="607" column="24" selection-start-line="607" selection-start-column="24" selection-end-line="607" selection-end-column="24" />
+          <caret line="166" column="4" selection-start-line="166" selection-start-column="4" selection-end-line="166" selection-end-column="4" />
           <folding>
-            <element signature="e#0#2#0" expanded="false" />
-            <element signature="e#402#2538#0" expanded="false" />
-            <element signature="e#2540#2791#0" expanded="false" />
-            <element signature="e#2793#4503#0" expanded="false" />
-            <element signature="e#4505#5048#0" expanded="false" />
-            <element signature="e#5050#5964#0" expanded="false" />
-            <element signature="e#5966#6249#0" expanded="false" />
-            <element signature="e#6251#6504#0" expanded="false" />
-            <element signature="e#6506#7239#0" expanded="false" />
-            <element signature="e#7241#8450#0" expanded="false" />
-            <element signature="e#8452#9053#0" expanded="false" />
-            <element signature="e#9055#9308#0" expanded="false" />
-            <element signature="e#9310#11317#0" expanded="false" />
-            <element signature="e#11319#18349#0" expanded="false" />
-            <element signature="e#20676#25065#0" expanded="false" />
-            <element signature="e#25067#28463#0" expanded="false" />
-            <element signature="e#28465#29578#0" expanded="false" />
-            <element signature="e#29580#30341#0" expanded="false" />
-            <element signature="e#30343#31861#0" expanded="false" />
-            <element signature="e#31863#32463#0" expanded="false" />
-            <element signature="e#32465#32972#0" expanded="false" />
-            <element signature="e#32974#33542#0" expanded="false" />
-            <element signature="e#33544#34653#0" expanded="false" />
-            <element signature="e#34655#35620#0" expanded="false" />
-            <element signature="e#35622#35762#0" expanded="false" />
-            <element signature="e#35764#35780#0" expanded="false" />
+            <element signature="e#380#430#1" expanded="false" />
+            <element signature="e#461#505#1" expanded="false" />
+            <element signature="e#534#589#1" expanded="false" />
+            <element signature="e#1100#1133#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1244,7 +1205,7 @@
     <entry file="file://$PROJECT_DIR$/src/poker.c">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="777" column="24" selection-start-line="777" selection-start-column="24" selection-end-line="777" selection-end-column="24" />
+          <caret line="792" column="17" selection-start-line="792" selection-start-column="17" selection-end-line="792" selection-end-column="17" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#138#367#0" expanded="false" />
@@ -1291,20 +1252,47 @@
             <element signature="e#21320#21810#0" expanded="false" />
             <element signature="e#21812#22571#0" expanded="false" />
             <element signature="e#22573#22787#0" expanded="false" />
-            <element signature="e#24599#28123#0" expanded="false" />
-            <element signature="e#28125#30494#0" expanded="false" />
-            <element signature="e#30496#31251#0" expanded="false" />
-            <element signature="e#31253#31941#0" expanded="false" />
-            <element signature="e#31943#31957#0" expanded="false" />
+            <element signature="e#24823#28347#0" expanded="false" />
+            <element signature="e#28349#30718#0" expanded="false" />
+            <element signature="e#30720#31475#0" expanded="false" />
+            <element signature="e#31477#32165#0" expanded="false" />
+            <element signature="e#32167#32181#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test.txt">
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.82217574">
+          <caret line="610" column="35" selection-start-line="610" selection-start-column="35" selection-end-line="610" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#402#2538#0" expanded="false" />
+            <element signature="e#2540#2791#0" expanded="false" />
+            <element signature="e#2793#4503#0" expanded="false" />
+            <element signature="e#4505#5048#0" expanded="false" />
+            <element signature="e#5050#5964#0" expanded="false" />
+            <element signature="e#5966#6249#0" expanded="false" />
+            <element signature="e#6251#6504#0" expanded="false" />
+            <element signature="e#6506#7239#0" expanded="false" />
+            <element signature="e#7241#8450#0" expanded="false" />
+            <element signature="e#8452#9053#0" expanded="false" />
+            <element signature="e#9055#9308#0" expanded="false" />
+            <element signature="e#9310#11317#0" expanded="false" />
+            <element signature="e#11319#18349#0" expanded="false" />
+            <element signature="e#20793#25182#0" expanded="false" />
+            <element signature="e#25184#28580#0" expanded="false" />
+            <element signature="e#28582#29695#0" expanded="false" />
+            <element signature="e#29697#30458#0" expanded="false" />
+            <element signature="e#30460#31978#0" expanded="false" />
+            <element signature="e#31980#32580#0" expanded="false" />
+            <element signature="e#32582#33089#0" expanded="false" />
+            <element signature="e#33091#33659#0" expanded="false" />
+            <element signature="e#33661#34770#0" expanded="false" />
+            <element signature="e#34772#35737#0" expanded="false" />
+            <element signature="e#35739#35879#0" expanded="false" />
+            <element signature="e#35881#35897#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -138,17 +138,17 @@ void dealStartingHand(Player*players, Deck* deck, int num_player) {
     }
 }
 
-void dealSharedCards(Table *table, Deck* deck, int time){
-    //1st time: deal 3 cards: largest idx = 2
-    //2nd time: deal 1 card:  largest idx = 3
-    //3rd time: deal 1 card:  largest idx = 4 --> largest idx = time + 1
-    for (; table->card_idx <= time + 1; table->card_idx++) {
+void dealSharedCards(Table *table, Deck* deck, int roundIdx){
+    //1st round: deal 3 cards: table_last_card_idx = 2
+    //2nd round: deal 1 card:  table_last_card_idx = 3
+    //3rd round: deal 1 card:  table_last_card_idx = 4 --> table_last_card_idx = roundIdx + 1
+    for (; table->card_idx <= roundIdx + 1; table->card_idx++) {
         table->card[table->card_idx] = deck->cards[deck->card_index];
         deck->card_index++;
     }
 };
 
-Hand* createHand(Player *players, Table *table, int num_player) {
+Hand * createHands(Player *players, Table *table, int num_player) {
     Hand * hands = malloc(sizeof(Hand) * num_player);
     for (int i = 0; i < num_player; i++) {
         for (int j = 0; j < 2; j++) {
@@ -164,13 +164,13 @@ Hand* createHand(Player *players, Table *table, int num_player) {
     return hands;
 }
 
-void swapCards(Hand* hand, int player, int fstIdx, int secIdx) {
-    Card temp = hand[player].card[fstIdx];
-    hand[player].card[fstIdx] = hand[player].card[secIdx];
-    hand[player].card[secIdx] = temp;
+void swapCards(Hand* hand, int playerIdx, int fstIdx, int secIdx) {
+    Card temp = hand[playerIdx].card[fstIdx];
+    hand[playerIdx].card[fstIdx] = hand[playerIdx].card[secIdx];
+    hand[playerIdx].card[secIdx] = temp;
 }
 
-void sortHand(Hand * hands, int num_player) {
+void sortHands(Hand *hands, int num_player) {
     for (int i = 0; i < num_player; i++) {
         int idx = 0; //if there is an Ace, the ace card will swap with the card that has this idx
         for (int j = 0; j < 7; j++) {
@@ -476,7 +476,7 @@ int isStraightFlush(Hand hand, Player* player) {
     return 0;
 }
 
-int isRoyalStraightFlush(Hand hand, Player* player) {
+int isRoyalFlush(Hand hand, Player *player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
@@ -586,8 +586,8 @@ int minMoney(Player player, Table table) {
 }
 
 void checkHandRanking(Hand * hand, Player * player) {
-    sortHand(hand, 1);
-    if (isRoyalStraightFlush(*hand, player)) {
+    sortHands(hand, 1);
+    if (isRoyalFlush(*hand, player)) {
     } else if (isStraightFlush(*hand, player)) {
     } else if (is4OfAKind(*hand, player)) {
     } else if (isFullHouse(*hand, player)) {
@@ -773,44 +773,49 @@ int consAI (Player *ai, Table *table, int roundIdx) {
     return input;
 }
 
-void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index) {
+int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index) {
     FILE *save_point;
     save_point = fopen("src/test.txt", "w+");
-    fprintf(save_point, "Round index\n%i\n----------\n", round_index);
-    fprintf(save_point, "Player index\n%i\n----------\n", player_index);
-    fprintf(save_point, "Deck\n");
-    for (int i = 0; i < 52; i++) {
-        fprintf(save_point, "%i %i; ", deck->cards[i].suit, deck->cards[i].rank);
-    }
-    fprintf(save_point, "\n----------\nTable\n");
-    fprintf(save_point, "%i; %i; %i; %i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
-    if (round_index != 0) {
-        fprintf(save_point, "Shared cards\n");
-        if (round_index == 1) {
-            for (int j = 0; j < 3; j++) {
-                fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
-            }
-        } else if (round_index == 2) {
-            for (int j = 0; j < 4; j++) {
-                fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
-            }
-        } else if (round_index == 3) {
-            for (int j = 0; j < 5; j++) {
-                fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
-            }
-        } else {
-            fprintf(save_point, "wtf\n");
+    if (save_point != NULL) {
+        fprintf(save_point, "Round index\n%i\n----------\n", round_index);
+        fprintf(save_point, "Player index\n%i\n----------\n", player_index);
+        fprintf(save_point, "Deck\n");
+        for (int i = 0; i < 52; i++) {
+            fprintf(save_point, "%i %i; ", deck->cards[i].suit, deck->cards[i].rank);
         }
+        fprintf(save_point, "\n----------\nTable\n");
+        fprintf(save_point, "%i; %i; %i; %i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
+        if (round_index != 0) {
+            fprintf(save_point, "Shared cards\n");
+            if (round_index == 1) {
+                for (int j = 0; j < 3; j++) {
+                    fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+                }
+            } else if (round_index == 2) {
+                for (int j = 0; j < 4; j++) {
+                    fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+                }
+            } else if (round_index == 3) {
+                for (int j = 0; j < 5; j++) {
+                    fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+                }
+            } else {
+                fprintf(save_point, "Error saving file.\n");
+            }
+        }
+        fprintf(save_point, "\n----------\nPlayers\n");
+        for (int i = 0; i < num_player; i++) {
+            fprintf(save_point, "Player %i:\n%i; %i; %i\n%i %i; %i %i\n %i - %i\n", i + 1,
+                    player[i].money, player[i].bet, player[i].state,
+                    player[i].hand[0].suit, player[i].hand[0].rank,
+                    player[i].hand[1].suit, player[i].hand[1].rank,
+                    player[i].isSmallBlind, player[i].isBigBlind);
+        }
+        fclose(save_point);
+        return 1;
+    } else {
+        return 0;
     }
-    fprintf(save_point, "\n----------\nPlayers\n");
-    for (int i = 0; i < num_player; i++) {
-        fprintf(save_point, "Player %i:\n%i; %i; %i\n%i %i; %i %i\n %i - %i\n", i + 1,
-                player[i].money, player[i].bet, player[i].state,
-                player[i].hand[0].suit, player[i].hand[0].rank,
-                player[i].hand[1].suit, player[i].hand[1].rank,
-                player[i].isSmallBlind, player[i].isBigBlind);
-    }
-    fclose(save_point);
 }
 
 void checkWinner(Player * players, int num_player) {
@@ -918,12 +923,12 @@ void checkWinner(Player * players, int num_player) {
 }
 
 void testHand(Hand *hands, Player * players, int num_player) {
-    sortHand(hands, num_player);
+    sortHands(hands, num_player);
     for (int i = 0; i < num_player; i++) {
         if (players[i].status == 0) {
             continue;
         }
-        if (isRoyalStraightFlush(hands[i], &players[i])) {
+        if (isRoyalFlush(hands[i], &players[i])) {
         } else if (isStraightFlush(hands[i], &players[i])) {
         } else if (is4OfAKind(hands[i], &players[i])) {
         } else if (isFullHouse(hands[i], &players[i])) {
@@ -1125,7 +1130,7 @@ void reset (Player * players, Table * table, int num_player, Deck * deck) {
 //    printf("\n");
 //
 //    // Test hands
-//    Hand *hands = createHand(players, table, num_player);
+//    Hand *hands = createHands(players, table, num_player);
 //    testHand(hands, players, num_player)
 //*/
 ///*    Player *test_player = malloc(sizeof(Player));

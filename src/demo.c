@@ -183,7 +183,7 @@ void dealSharedCards(Table *table, Deck* deck, int time){
     }
 };
 
-Hand* createHand(Player *players, Table *table, int num_player) {
+Hand * createHands(Player *players, Table *table, int num_player) {
     Hand * hands = malloc(sizeof(Hand) * num_player);
     for (int i = 0; i < num_player; i++) {
         for (int j = 0; j < 2; j++) {
@@ -199,13 +199,13 @@ Hand* createHand(Player *players, Table *table, int num_player) {
     return hands;
 }
 
-void swapCards(Hand* hand, int player, int fstIdx, int secIdx) {
-    Card temp = hand[player].card[fstIdx];
-    hand[player].card[fstIdx] = hand[player].card[secIdx];
-    hand[player].card[secIdx] = temp;
+void swapCards(Hand* hand, int playerIdx, int fstIdx, int secIdx) {
+    Card temp = hand[playerIdx].card[fstIdx];
+    hand[playerIdx].card[fstIdx] = hand[playerIdx].card[secIdx];
+    hand[playerIdx].card[secIdx] = temp;
 }
 
-void sortHand(Hand * hands, int num_player) {
+void sortHands(Hand *hands, int num_player) {
     for (int i = 0; i < num_player; i++) {
         int idx = 0; //if there is an Ace, the ace card will swap with the card that has this idx
         for (int j = 0; j < 7; j++) {
@@ -511,7 +511,7 @@ int isStraightFlush(Hand hand, Player* player) {
     return 0;
 }
 
-int isRoyalStraightFlush(Hand hand, Player* player) {
+int isRoyalFlush(Hand hand, Player *player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
         int count = 0; //count number of cards that have the same suit
@@ -738,8 +738,8 @@ void runOption(Player * player, Table * table, int option, int money) {
 }
 
 void checkHandRanking(Hand * hand, Player * player) {
-    sortHand(hand, 1);
-    if (isRoyalStraightFlush(*hand, player)) {
+    sortHands(hand, 1);
+    if (isRoyalFlush(*hand, player)) {
     } else if (isStraightFlush(*hand, player)) {
     } else if (is4OfAKind(*hand, player)) {
     } else if (isFullHouse(*hand, player)) {
@@ -1248,7 +1248,7 @@ void checkWinner(Player * players, int num_player) {
 }
 
 void testHand(Hand *hands, Player * players, int num_player) {
-    sortHand(hands, num_player);
+    sortHands(hands, num_player);
     for (int i = 0; i < num_player; i++) {
         if (players[i].status == 0) {
             continue;
@@ -1257,7 +1257,7 @@ void testHand(Hand *hands, Player * players, int num_player) {
         for (int j = 0; j < 7; j++) {
             printf("%s %i; ", getSuit(hands[i].card[j].suit), hands[i].card[j].rank);
         }
-        if (isRoyalStraightFlush(hands[i], &players[i])) {
+        if (isRoyalFlush(hands[i], &players[i])) {
             printf("Player %i has royal straight flush.\n", i + 1);
         } else if (isStraightFlush(hands[i], &players[i])) {
             printf("Player %i has straight flush.\n", i + 1);
@@ -1488,7 +1488,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
             }
         }
     } else {
-        Hand *hands = createHand(players, table, num_player);
+        Hand *hands = createHands(players, table, num_player);
         testHand(hands, players, num_player);
         free(hands);
     }
@@ -1594,7 +1594,7 @@ int main() {
     printf("\n");
 
     // Test hands
-    Hand *hands = createHand(players, table, num_player);
+    Hand *hands = createHands(players, table, num_player);
     testHand(hands, players, num_player)
 */
 /*    Player *test_player = malloc(sizeof(Player));

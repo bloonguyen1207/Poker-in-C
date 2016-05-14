@@ -605,8 +605,11 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
                 fold(&players[playerIdx]);
                 money = 0;
             } else if (input == 6) {
-                save(players, table, deck, num_player, roundIdx, playerIdx);
-                mvaddstr(26, 95, "Save complete");
+                if (save(players, table, deck, num_player, roundIdx, playerIdx) == 1) {
+                    mvaddstr(26, 95, "Save complete");
+                } else {
+                    mvaddstr(26, 92, "Error saving game");
+                }
                 move(0, 0);
                 refresh();
                 napms(1000);
@@ -854,7 +857,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
             }
         }
     } else {
-        Hand *hands = createHand(players, table, num_player);
+        Hand *hands = createHands(players, table, num_player);
         testHand(hands, players, num_player);
         free(hands);
     }
