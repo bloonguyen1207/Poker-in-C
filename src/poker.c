@@ -791,7 +791,7 @@ int consAI (Player *ai, Table *table, int roundIdx) {
 
 int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index) {
     FILE *save_point;
-    save_point = fopen("src/test.txt", "w+");
+    save_point = fopen("src/game.txt", "w+");
     // Check if file can be opened
     if (save_point != NULL) {
         fprintf(save_point, "Round index\n%i\n----------\n", round_index);
@@ -822,7 +822,7 @@ int save(Player * player, Table * table, Deck * deck, int num_player, int round_
         }
         fprintf(save_point, "\n----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
-            fprintf(save_point, "Player %i:\n%i; %i; %i\n%i %i; %i %i\n %i - %i\n", i + 1,
+            fprintf(save_point, "Player %i:\n%i; %i; %i\n%i %i; %i %i\n%i - %i\n", i + 1,
                     player[i].money, player[i].bet, player[i].state,
                     player[i].hand[0].suit, player[i].hand[0].rank,
                     player[i].hand[1].suit, player[i].hand[1].rank,
