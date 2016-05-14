@@ -150,12 +150,14 @@ void dealSharedCards(Table *table, Deck* deck, int roundIdx){
 
 Hand * createHands(Player *players, Table *table, int num_player) {
     Hand * hands = malloc(sizeof(Hand) * num_player);
+    //add player's cards to hand[0], [1]
     for (int i = 0; i < num_player; i++) {
         for (int j = 0; j < 2; j++) {
             hands[i].card[j] = players[i].hand[j];
         }
     }
 
+    //add shared cards to hand[2] -> hand[6]
     for (int i = 0; i < num_player; i++) {
         for (int j = 0; j < 5; j++) {
             hands[i].card[j + 2] = table[0].card[j];
@@ -171,8 +173,9 @@ void swapCards(Hand* hand, int playerIdx, int fstIdx, int secIdx) {
 }
 
 void sortHands(Hand *hands, int num_player) {
+    //if there are Ace cards, the ace cards will swap with other cards to be at the beginning of the hand
     for (int i = 0; i < num_player; i++) {
-        int idx = 0; //if there is an Ace, the ace card will swap with the card that has this idx
+        int idx = 0;
         for (int j = 0; j < 7; j++) {
             if (hands[i].card[j].rank == 1) {
                 swapCards(hands, i, idx, j);
@@ -180,6 +183,8 @@ void sortHands(Hand *hands, int num_player) {
             }
         }
     }
+
+    //except for Ace cards (rank == 1), sort the hand from highest card's rank to lowest
     for (int i = 0; i < num_player; i++) {
         Card max_rank_card;
         for (int j = 0; j < 7; j++) {
@@ -216,20 +221,6 @@ Card searchCard(Hand hand, int rank) {
     return temp;
 }
 
-Card isHighestCard(Hand hand) {
-    Card maxCard;
-    maxCard.rank = 1;
-    for (int i = 0; i < 7; i++){
-        if (hand.card[i].rank == 1) {
-            maxCard = hand.card[i];
-            return maxCard;
-        } else if (hand.card[i].rank > maxCard.rank) {
-            maxCard = hand.card[i];
-        }
-    }
-    return maxCard;
-};
-
 //the hand must be sorted before checking
 void isHighCard(Hand hand, Player* player) {
     for (int i = 0; i < 5; i++) {
@@ -238,6 +229,7 @@ void isHighCard(Hand hand, Player* player) {
     player->rank = HighCard;
 }
 
+//the hand must be sorted before checking
 int isPair(Hand hand, Player* player){
     int exist= 0;
     int idx = 2;
@@ -264,6 +256,7 @@ int isPair(Hand hand, Player* player){
     return 0;
 }
 
+//the hand must be sorted before checking
 int is2Pair(Hand hand, Player*player) {
     int count = 0;
     int exist[2] = {0, 0};
@@ -297,6 +290,7 @@ int is2Pair(Hand hand, Player*player) {
     return 0;
 }
 
+//the hand must be sorted before checking
 int is3OfAKind(Hand hand, Player*player) {
     int exist = 0;
     int idx = 3;
@@ -328,6 +322,7 @@ int is3OfAKind(Hand hand, Player*player) {
     return 0;
 }
 
+//the hand must be sorted before checking
 int is4OfAKind(Hand hand, Player*player) {
     int exist = 0;
     // Find 4 cards with same rank
@@ -358,6 +353,7 @@ int is4OfAKind(Hand hand, Player*player) {
     return 0;
 }
 
+//the hand must be sorted before checking
 int isFullHouse(Hand hand, Player*player) {
     int exist = 0;
     int count = 0;
@@ -394,12 +390,15 @@ int isFullHouse(Hand hand, Player*player) {
 
 // Card hand must be sorted before checking
 int isStraight(Hand hand, Player*player) {
+    //the algorithms here is starting from the first card, search if there are enough 5 cards in the hand that can create a straight
+    //therefore, only need to check until the third card because the straight requires 5 cards and the hand has 7 cards
     for (int j = 0; j < 3; j++) {
         int check = 0;
         Card temp = hand.card[j];
         player->max_hand[check] = searchCard(hand, temp.rank);
         check++;
         if (temp.rank == 1) {
+            //check if there is a A K Q J 10 straight
             for (int k = 13; k >= 10; k--) {
                 if (searchHandRank(hand, k)) {
                     player->max_hand[check] = searchCard(hand, k);
@@ -412,7 +411,9 @@ int isStraight(Hand hand, Player*player) {
                 player->rank = Straight;
                 return 1;
             }
-            check = 0; //if the straight is 5 4 3 2 1, Ace will be placed at the end of max_hand
+            check = 0;
+            //check if there is 5 4 3 2 1 straight
+            //if the straight is 5 4 3 2 1, Ace will be placed at the end of max_hand
             for (int k = 5; k >= 2; k--) {
                 if (searchHandRank(hand, k)) {
                     player->max_hand[check] = searchCard(hand, k);
@@ -429,6 +430,7 @@ int isStraight(Hand hand, Player*player) {
         }
 
         check = 1;
+        //find a straight and add to max_hand
         for (int k = 1; k < 5; k++) {
             if (temp.rank - k > 0 && searchHandRank(hand, temp.rank - k)) {
                 player->max_hand[check] = searchCard(hand, temp.rank - k);
@@ -473,6 +475,7 @@ int isStraightFlush(Hand hand, Player* player) {
             }
         }
 
+        //check if these same suit cards are a straight
         if (count >= 5 && isStraight(*temp, player)) {
             free(temp);
             player->rank = StraightFlush;
@@ -483,6 +486,7 @@ int isStraightFlush(Hand hand, Player* player) {
     return 0;
 }
 
+//the hand must be sorted before checking
 int isRoyalFlush(Hand hand, Player *player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         Hand* temp = malloc(sizeof(Hand));
@@ -536,7 +540,6 @@ int isCheckBet(Player player, Table table) {
 
 void allin(Player *player, Table * table) {
     if (isAllin(*player, *table)) {
-        player->option = Allin;
         updateMoney(player, table, player->money);
         player->state = Allins;
     }
@@ -546,7 +549,6 @@ void call(Player *player, Table * table) {
     if (isAllin(*player, *table)) {
         allin(player, table);
     } else if (player->money >= table->highest_bet - player->bet) {
-        player->option = Call;
         updateMoney(player, table, table->highest_bet - player->bet);
         player->state = Called;
     }
@@ -557,14 +559,12 @@ void raisePoker(Player *player, Table *table, int money) {
     if (isAllin(*player, *table)) {
         allin(player, table);
     } else if (player->money >= money && money >= call_money + table->last_bet ) {
-        player->option = Raise;
         updateMoney(player, table, money);
         player->state = Raised;
     }
 }
 
 void check(Player * player) {
-    player->option = Check;
     player->state = Checked;
 }
 
@@ -572,7 +572,6 @@ void bet(Player * player, Table * table, int money) {
     if (isAllin(*player, *table)) {
         allin(player, table);
     } else if (money >= table->ante * 2 && player->money >= money) {
-        player->option = Bet;
         updateMoney(player, table, money);
         player->state = Bets;
     }
@@ -609,6 +608,7 @@ void checkHandRanking(Hand * hand, Player * player) {
 }
 
 int aggrAIround0(Player *ai, Table *table) {
+    //Aggressive AI will raise/bet if their 2 cards are > 10 / a pair / has Ace
     if (ai->hand[0].rank == ai->hand[1].rank ||
         (ai->hand[0].rank >= 10 && ai->hand[1].rank >= 10) ||
         ai->hand[0].rank == 1 ||
@@ -629,12 +629,16 @@ int aggrAIround0(Player *ai, Table *table) {
             }
         }
     }
+
+    //Aggressive AI will fold if their 2 cards are not the same suit and clearly can not combine to create a straight
     if (abs(ai->hand[0].rank - ai->hand[1].rank) > 5 && ai->hand[0].suit != ai->hand[1].suit) {
         if (ai->hand[0].rank < 11 && ai->hand[1].rank < 11) {
             fold(ai);
             return 5;
         }
     }
+
+    //Otherwise, Aggressive AI will call/check
     if (isCallRaise(*ai, *table)) {
         if (ai->money >= minMoney(*ai, *table)) {
             call(ai, table);
@@ -656,6 +660,8 @@ int aggrAIrounds(Player *ai, Table *table) {
     for (int i = 0; i < table->card_idx; i++) {
         temp->card[i+2] = table->card[i];
     }
+    //if there are not enough 5 shared cards,
+    //set the suit of empty cards to NONE and the rank to -1, -2 to avoid pair/flush/straight in checking rank
     if (table->card_idx >= 3) {
         if (table->card_idx == 3) {
             temp->card[5].rank = -1;
@@ -833,7 +839,7 @@ void checkWinner(Player * players, int num_player) {
     int winner_idx[num_player]; //create an int array which stores idx of winner
     int idx; //idx of winner_idx array
 
-    for (int j = 0; j < 5; j++) {
+    for (int j = 0; j < 5; j++) {// j is index of player's max_hand
         //initialize value of winner_idx array
         for (int i = 0; i < num_player; i++) {
             winner_idx[i] = -1;
@@ -842,7 +848,7 @@ void checkWinner(Player * players, int num_player) {
 
         //create an array to store the j card of each players
         int temp_array[num_player];
-        //add rank of j card to the array, if the player is a loser, leave 0
+        //add rank of j card to the array, if the player is not a winner, leave 0
         for (int z = 0; z < num_player; z++) {
             if (players[z].isWinner != 1) {
                 temp_array[z] = 0;
@@ -855,7 +861,7 @@ void checkWinner(Player * players, int num_player) {
         for (int z = 0; z < num_player; z++) {
             if (temp_array[z] == 1) {
                 countAce++;
-                winner_idx[idx] = z; //add the player_idx to winner_idx
+                winner_idx[idx] = z; //add the player_idx to winner_idx array
                 idx++;
             }
         }
@@ -885,9 +891,10 @@ void checkWinner(Player * players, int num_player) {
             continue; //move to another j card
         }
 
-        //if countAce = 0
+        //if countAce = 0, check the high
         int max_rank = temp_array[0];
         int countMax = 0;
+        //find the highest j card's rank of players and count how many players have the j cards with that rank
         for (int i = 0; i < num_player; i++) {
             if (temp_array[i] > max_rank) {
                 idx = 0;
@@ -953,10 +960,11 @@ void testHand(Hand *hands, Player * players, int num_player) {
         }
     }
     int countWinners;
+    //start checking from the highest rank
     for (Rank rank = RoyalFlush; rank >= HighCard; rank--) {
         countWinners = 0;
 
-        //If the player's rank == the checking rank, add his idx to winner_idx array
+        //If the player's rank == the checking rank, add his idx to winner_idx array, considered him as a winner
         for (int i = 0; i < num_player; i++) {
             if (players[i].rank == rank && players[i].status == 1) {
                 players[i].isWinner = 1;
@@ -1026,7 +1034,6 @@ void reset (Player * players, Table * table, int num_player, Deck * deck) {
     for (int i = 0; i < num_player; i++) {
         players[i].bet = 0;
         players[i].isWinner = 0;
-        players[i].option = Call;
         players[i].state = None;
         players[i].status = 1;
         for (int j = 0; j < 5; j++) {
@@ -1046,131 +1053,3 @@ void reset (Player * players, Table * table, int num_player, Deck * deck) {
     table->highest_bet = 0;
     table->last_bet = 0;
 }
-
-//int main() {
-//    int opt = 0;
-//    int opt1 = 0;
-//    int opt2 = 0;
-//    int endProgram = 0;
-//    while (!endProgram) {
-//        int nextBlind = 0;
-//        mainMenu();
-//        scanf("%d", &opt);
-//        if (opt == 1) {
-//            // Create table
-//            Table *table = createTable();
-//
-//            // Create deck
-//            Deck *deck;
-//            deck = newDeck();
-//            int size = 52;
-//
-//            // Test new deck
-//            for (int m = 0; m < size; m++) {
-//                printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-//            }
-//            printf("\n");
-//
-//            // Create players
-//            int num_player = 5;
-//            Player *players = createPlayers(num_player);
-//            for (int gameIdx = 0; ; gameIdx++) {
-//                int remain = num_player;
-//                printf("Gameidx: %i\n", gameIdx);
-//                for (int m = 0; m < num_player; m++) {
-//                    if (players[m].money <= 0) {
-//                        remain--;
-//                    }
-//                }
-//                printf("remain: %i\n", remain);
-//                if (remain == 1) {
-//                    printf("No player left.\n");
-//                    break;
-//                }
-//                // Shuffle the deck
-//                shuffleDeck(deck, size);
-//
-//                // Test shuffle
-//                for (int m = 0; m < size; m++) {
-//                    printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-//                }
-//                printf("\n");
-//                nextBlind = game(players, table, deck, num_player, gameIdx, nextBlind);
-//                printf("Continue? (0/1): ");
-//                scanf("%d", &opt1);
-//                if (opt1 == 0) {
-//                    break;
-//                }
-//            }
-//            // Free everything
-//            for (int i = 0; i < num_player; i++) {
-//                free(players[i].max_hand);
-//            }
-//            free(players);
-//            free(deck);
-//            free(table);
-//        } else if (opt == 2) {
-//            printf("Options\n");
-//        } else if (opt == 3) {
-//            endProgram = 1;
-//        }
-///*---------------------------------------------------
-//    // Deal hole cards for players
-//    dealStartingHand(players, deck, num_player);
-//
-//    // Deal shared cards
-//    dealSharedCards(table, deck, 1);
-//    dealSharedCards(table, deck, 2);
-//    dealSharedCards(table, deck, 3);
-//
-//    // Test player starting hand
-//    for (int i = 0; i < num_player; i++) {
-//        printf("%s: ", players[i].name);
-//        for (int j = 0; j < 2; j++) {
-//            printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
-//        }
-//        printf("\n");
-//    }
-//
-//    // Test shared cards
-//    printf("Shared Cards: ");
-//    for (int i = 0; i < 5; i++) {
-//        printf("%s %i; ", getSuit(table->card[i].suit), table->card[i].rank);
-//    }
-//    printf("\n");
-//
-//    // Test hands
-//    Hand *hands = createHands(players, table, num_player);
-//    testHand(hands, players, num_player)
-//*/
-///*    Player *test_player = malloc(sizeof(Player));
-//    test_player->max_hand = malloc(sizeof(Card) * 5);
-//    Hand *test = malloc(sizeof(Hand));
-//    test->card[0].rank = 1;
-//    test->card[0].suit = HEARTS;
-//    test->card[1].rank = 9;
-//    test->card[1].suit = HEARTS;
-//    test->card[2].rank = 5;
-//    test->card[2].suit = CLUBS;
-//    test->card[3].rank = 4;
-//    test->card[3].suit = DIAMONDS;
-//    test->card[4].rank = 4;
-//    test->card[4].suit = HEARTS;
-//    test->card[5].rank = 3;
-//    test->card[5].suit = DIAMONDS;
-//    test->card[6].rank = 2;
-//    test->card[6].suit = HEARTS;
-//    for (int j = 0; j < 7; j++) {
-//        printf("%s %i; ", getSuit(test->card[j].suit), test->card[j].rank);
-//    }
-//    if (isStraight(*test, test_player)) {
-//        printf("True");
-//    } else { printf("False"); }
-//    printf("\n%d\n", test_player->rank);
-//    for (int j = 0; j < 5; j++) {
-//        printf("%s %i; ", getSuit(test_player->max_hand[j].suit), test_player->max_hand[j].rank);
-//    }
-//*/
-//    }
-//    return 0;
-//}

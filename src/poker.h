@@ -24,9 +24,6 @@ typedef enum rank Rank;
 enum state {None, Called, Raised, Checked, Bets, Allins, Folded, SB, BB};
 typedef enum state State;
 
-enum option {Call, Raise, Check, Bet, Allin, Fold};
-typedef enum option Option;
-
 /**
  * card struct.
  */
@@ -59,7 +56,6 @@ struct player {
     State state; //option that player chose in each turn
     int isBigBlind; //1 if the player is big blind, and 0 otherwise
     int isSmallBlind; //1 if the player is small blind, and 0 otherwise
-    Option option;
     int isWinner; //1 if the player is a winner, and 0 otherwise
 };
 typedef struct player Player;
@@ -114,6 +110,7 @@ Deck* newDeck();
 /** shuffle the deck
   * @param deck the deck
   * @param size number of cards in the deck
+  * Algorithms URL: http://www.programming-algorithms.net/article/43676/Fisher-Yates-shuffle
   */
 void shuffleDeck(Deck* deck, int size);
 
@@ -176,8 +173,6 @@ int searchHandRank(Hand hand, int rank);
   * @param rank card's rank
   */
 Card searchCard(Hand hand, int rank);
-
-Card isHighestCard(Hand hand);
 
 /** store 5 cards of the hand that have the highest rank to player's max_hand and change the rank of player to HighCard
   * assume that the hand has been sorted, therefore
@@ -269,50 +264,147 @@ void updateMoney(Player *player, Table * table, int money);
 
 int inputMoney(int min, int max);
 
+/** check if the player's need to All in
+  * @param player player
+  * @param table table
+  */
 int isAllin(Player player, Table table);
 
+/** check if the player's can call and raise
+  * @param player player
+  * @param table table
+  */
 int isCallRaise(Player player, Table table);
 
+/** check if the player's can check and bet
+  * @param player player
+  * @param table table
+  */
 int isCheckBet(Player player, Table table);
 
+/** change player's state to Allins and updateMoney
+  * @param player player
+  * @param table table
+  */
 void allin(Player *player, Table * table);
 
+/** change player's state to Called and updateMoney
+  * @param player player
+  * @param table table
+  */
 void call(Player *player, Table * table);
 
+/** change player's state to Raised and updateMoney
+  * @param player player
+  * @param table table
+  * @param money money spent
+  */
 void raisePoker(Player *player, Table *table, int money);
 
+/** change player's state to Checked
+  * @param player player
+  */
 void check(Player * player);
 
+/** change player's state to Bet and updateMoney
+  * @param player player
+  * @param table table
+  * @param money money spent
+  */
 void bet(Player * player, Table * table, int money);
 
+/** change player's state to Folded and status to 0
+  * @param player player
+  */
 void fold(Player * player);
 
+/** calculate the minimum money needed to spent if the player chose to raise or bet
+  * @param player player
+  * @param table table
+  */
 int minMoney(Player player, Table table);
 
+/** check the combination of AI player's cards and shared cards is at which rank
+  * @param player player
+  * @param hand hand
+  */
 void checkHandRanking(Hand * hand, Player * player);
 
+/** set how the aggressive AI plays in the first round (roundIdx 0)
+  * @param player player
+  * @param table table
+  */
 int aggrAIround0(Player *ai, Table *table);
 
+/** set how the aggressive AI plays in other rounds (except for the first round - roundIdx 0)
+  * @param player player
+  * @param table table
+  */
 int aggrAIrounds(Player *ai, Table *table);
 
+/** set how the aggressive AI plays
+  * @param player player
+  * @param table table
+  * @param roundIdx round index
+  */
 int aggrAI(Player *ai, Table *table, int roundIdx);
 
+/** set how the conservative AI plays in the first round (roundIdx 0)
+  * @param player player
+  * @param table table
+  */
 int consAIround0(Player *ai, Table * table);
 
+/** set how the conservative AI plays in other rounds (except for the first round - roundIdx 0)
+  * @param player player
+  * @param table table
+  */
 int consAIrounds(Player *ai, Table * table);
 
+/** set how the conservative AI plays
+  * @param player player
+  * @param table table
+  * @param roundIdx round index
+  */
 int consAI (Player *ai, Table *table, int roundIdx);
 
+/** save all information of the game into text file
+  * @param player player
+  * @param table table
+  * @param deck deck
+  * @param num_player number of players
+  * @param round_index round index
+  * @param player_index player index
+  */
 int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index);
 
+/** find the winner
+  * @param players all players
+  * @param num_player number of players
+  */
 void checkWinner(Player * players, int num_player);
 
+/** check the rank of each players and find the winner
+  * at first, players are considered as winners and after checking, they might be changed to losers
+  * after checking, players who still be considered as winners are actually become the winners of the game
+  * @param players players that have the same highest rank compared to other players
+  * @param num_player number of players that have the same highest rank compared to other players
+  */
 void testHand(Hand *hands, Player * players, int num_player);
 
+/** split pot of table and award the money to the winners
+  * @param players all players
+  * @param table table
+  * @param num_player number of players
+  */
 void award(Player * players, Table * table, int num_player);
 
+/** reset all the info to start new game
+  * @param players all players
+  * @param table table
+  * @param num_player number of players
+  * @param deck deck
+  */
 void reset (Player * players, Table * table, int num_player, Deck * deck);
-
-void mainMenu();
 
 #endif

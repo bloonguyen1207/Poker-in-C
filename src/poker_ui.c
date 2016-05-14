@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <curses.h>
 #include <signal.h>
-#include <time.h>
-#include <unistd.h>
-#include <string.h>
 #include "poker.h"
 #include "poker_ui.h"
 #define POKER_COLOR_BACKGROUND    6
@@ -180,9 +177,6 @@ void drawWinner(Player * players, int num_player, Table table, int roundIdx) {
 void drawPot(Table table) {
     mvaddstr(12, 90, "----------------------");
     mvprintw(14, 90, "Pot: %d", table.pot_money);
-    //TODO test
-    mvprintw(0, 0, "Last bet: %d", table.last_bet);
-    mvprintw(1, 0, "Highest bet: %d", table.highest_bet);
     move(0, 0);
     refresh();}
 
@@ -758,7 +752,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     return countActivePlayer;
 }
 
-int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextSB) {
+int game (Player * players, Table * table, Deck * deck, int num_player, int nextSB) {
     int prevPlayer = nextSB - 1, nextBB = nextSB + 1;
     int countActivePlayer = num_player;
     // Find next person to be small blind
@@ -911,7 +905,7 @@ void setUpGame(int num_player) {
             break;
         }
         shuffleDeck(deck, size);
-        nextBlind = game(players, table, deck, num_player, gameIdx, nextBlind);
+        nextBlind = game(players, table, deck, num_player, nextBlind);
         if (nextBlind == -1) {
             break;
         }
