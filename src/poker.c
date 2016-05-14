@@ -26,6 +26,8 @@ char* getState(State s) {
         case Allins: return "Allin";
         case Folded: return "Fold";
         case Bets: return "Bets";
+        case BB: return "BigBlind";
+        case SB: return "SmallBlind";
         default: return "None";
     }
 }

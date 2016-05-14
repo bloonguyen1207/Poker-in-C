@@ -551,9 +551,9 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
     //TODO: add AI here
     if (playerIdx != 0) {
         if (playerIdx % 2  == 0) {
-            input = aggrAI(&players[playerIdx], table, roundIdx);
-        } else {
             input = consAI(&players[playerIdx], table, roundIdx);
+        } else {
+            input = aggrAI(&players[playerIdx], table, roundIdx);
         }
         clear();
         updateInfo(players, num_player, *table, roundIdx, playerIdx);
@@ -600,6 +600,7 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
     if (players[playerIdx].bet > table->highest_bet) {
         table->highest_bet = players[playerIdx].bet;
     }
+    updateInfo(players, num_player, *table, roundIdx, playerIdx);
     return input;
 }
 
@@ -619,7 +620,11 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             }
         }
         if (count == 0 && players[playerIdx].state == BB) {
-            is_1st_bet = 0;
+            if (num_player == 2) {
+                is_1st_bet = 1;
+            } else {
+                is_1st_bet = 0;
+            }
         } else {
             lastState = BB;
             is_1st_bet = 1;
