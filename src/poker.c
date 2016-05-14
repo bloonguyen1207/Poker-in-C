@@ -775,7 +775,7 @@ int consAI (Player *ai, Table *table, int roundIdx) {
 
 void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index) {
     FILE *save_point;
-    save_point = fopen("../src/test.txt", "w+");
+    save_point = fopen("src/test.txt", "w+");
     fprintf(save_point, "Round index\n%i\n----------\n", round_index);
     fprintf(save_point, "Player index\n%i\n----------\n", player_index);
     fprintf(save_point, "Deck\n");
