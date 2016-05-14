@@ -60,6 +60,9 @@ struct hand {
 };
 typedef struct hand Hand;
 
+/** get unicode characters that are appropriate with the suit
+  * @param nbits the number of bits to use
+  */
 char* getSuit(Suit s);
 
 char* getState(State s);
