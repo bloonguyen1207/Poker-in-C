@@ -977,6 +977,46 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
     return input;
 }
 
+void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index){
+    FILE *save_point;
+    save_point = fopen("../src/test.txt", "w+");
+    fprintf(save_point, "Round index\n%i\n----------\n", round_index);
+    fprintf(save_point, "Player index\n%i\n----------\n", player_index);
+    fprintf(save_point, "Deck\n");
+    for (int i = 0; i < 52; i++) {
+        fprintf(save_point, "%i %i; ", deck->cards[i].suit, deck->cards[i].rank);
+    }
+    fprintf(save_point, "\n----------\nTable\n");
+    fprintf(save_point, "%i; %i; %i; %i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
+    if (round_index != 0) {
+        fprintf(save_point, "Shared cards\n");
+        if (round_index == 1) {
+            for (int j = 0; j < 3; j++) {
+                fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+            }
+        } else if (round_index == 2) {
+            for (int j = 0; j < 4; j++) {
+                fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+            }
+        } else if (round_index == 3) {
+            for (int j = 0; j < 5; j++) {
+                fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+            }
+        } else {
+            fprintf(save_point, "wtf\n");
+        }
+    }
+    fprintf(save_point, "\n----------\nPlayers\n");
+    for (int i = 0; i < num_player; i++) {
+        fprintf(save_point, "Player %i:\n%i; %i; %i\n%i %i; %i %i\n %i - %i\n", i + 1,
+                player[i].money, player[i].bet, player[i].state,
+                player[i].hand[0].suit, player[i].hand[0].rank,
+                player[i].hand[1].suit, player[i].hand[1].rank,
+                player[i].isSmallBlind, player[i].isBigBlind);
+    }
+    fclose(save_point);
+}
+
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
     int playerIdx  = 0, countCheck = 0, countAllin = 0, countCall = 0, end_round = 0, is_1st_bet = 0, count = 0;
     State lastState = None;
@@ -993,7 +1033,11 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             }
         }
         if (count == 0 && players[playerIdx].state == BB) {
-            is_1st_bet = 0;
+            if (num_player == 2) {
+                is_1st_bet = 1;
+            } else {
+                is_1st_bet = 0;
+            }
         } else {
             lastState = BB;
             is_1st_bet = 1;
@@ -1090,6 +1134,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         printf("PlayerIdx: %i\n", playerIdx);
         playerIdx++;
     }
+    save(players, table, deck, num_player, roundIdx, playerIdx);
     printf("Active Player: %i\n", countActivePlayer);
     return countActivePlayer;
 }

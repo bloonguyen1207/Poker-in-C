@@ -750,7 +750,7 @@ int consAIrounds(Player *ai, Table * table) {
         temp->card[6].suit = NONE;
     }
     checkHandRanking(temp, ai);
-    if (ai->rank > 1) {
+    if (ai->rank > 0) {
         if (isCallRaise(*ai, *table)) {
             call(ai, table);
             return 0;
