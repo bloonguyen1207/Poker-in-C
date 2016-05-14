@@ -241,6 +241,7 @@ void isHighCard(Hand hand, Player* player) {
 int isPair(Hand hand, Player* player){
     int exist= 0;
     int idx = 2;
+    // Find 2 cards that has same rank
     for (int i = 0; i < 6; i++) {
         for (int j = i + 1; j < 7; j++) {
             if(hand.card[i].rank == hand.card[j].rank) {
@@ -269,6 +270,7 @@ int is2Pair(Hand hand, Player*player) {
     int idx = 0;
     int ext_idx = 0;
 
+    // Find 2 card with same rank
     for (int i = 0; i < 6; i++) {
         for (int j = i + 1; j < 7; j++) {
             if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist[0]) {
@@ -280,6 +282,7 @@ int is2Pair(Hand hand, Player*player) {
                 ext_idx++;
                 idx++;
             }
+            // Check 2 different pairs
             if (count == 2) {
                 for (int k = 0; k < 7; k++) {
                     if (hand.card[k].rank != exist[0] && hand.card[k].rank != exist[1]) {
@@ -297,6 +300,7 @@ int is2Pair(Hand hand, Player*player) {
 int is3OfAKind(Hand hand, Player*player) {
     int exist = 0;
     int idx = 3;
+    // Find 3 cards with same rank
     for (int i = 0; i < 5; i++) {
         for (int j = i + 1; j < 6; j++) {
             for (int k = j + 1; k < 7; k++) {
@@ -326,6 +330,7 @@ int is3OfAKind(Hand hand, Player*player) {
 
 int is4OfAKind(Hand hand, Player*player) {
     int exist = 0;
+    // Find 4 cards with same rank
     for (int i = 0; i < 4; i++) {
         for (int j = i + 1; j < 5; j++) {
             for (int k = j + 1; k < 6; k++) {
@@ -356,6 +361,7 @@ int is4OfAKind(Hand hand, Player*player) {
 int isFullHouse(Hand hand, Player*player) {
     int exist = 0;
     int count = 0;
+    // Check 3 of a kind
     if (is3OfAKind(hand, player)){
         for (int i = 0; i < 5; i++) {
             for (int j = i + 1; j < 6; j++) {
@@ -368,6 +374,7 @@ int isFullHouse(Hand hand, Player*player) {
                 }
             }
         }
+        // Find pair
         for (int i = 0; i < 6; i++) {
             for (int j = i + 1; j < 7; j++) {
                 if(hand.card[i].rank == hand.card[j].rank && hand.card[i].rank != exist) {
@@ -385,7 +392,7 @@ int isFullHouse(Hand hand, Player*player) {
     return 0;
 }
 
-//the hand must be sorted before checking
+// Card hand must be sorted before checking
 int isStraight(Hand hand, Player*player) {
     for (int j = 0; j < 3; j++) {
         int check = 0;
@@ -436,7 +443,7 @@ int isStraight(Hand hand, Player*player) {
     return 0;
 }
 
-//the hand must be sorted before checking
+// Card hand must be sorted before checking
 int isFlush(Hand hand, Player* player) {
     for (Suit suit = HEARTS; suit <= SPADES; suit++) {
         int count = 0; //count number of cards that have the same suit
@@ -719,9 +726,10 @@ int aggrAI(Player *ai, Table *table, int roundIdx) {
 }
 
 int consAIround0(Player *ai, Table * table) {
+    // If hand has ace or pair of ace or pair > 5 or cards rank > 6 then check or call
     if (ai->hand[0].rank == 1 || ai->hand[1].rank == 1 ||
-        (ai->hand[0].rank == ai->hand[1].rank && (ai->hand[0].rank == 1 || ai->hand[0].rank > 6)) ||
-        (ai->hand[0].rank > 7 && ai->hand[1].rank > 7)) {
+        (ai->hand[0].rank == ai->hand[1].rank && (ai->hand[0].rank == 1 || ai->hand[0].rank > 5)) ||
+        (ai->hand[0].rank > 6 && ai->hand[1].rank > 6)) {
         if (isCallRaise(*ai, *table)) {
             call(ai, table);
             return 0;
@@ -730,6 +738,7 @@ int consAIround0(Player *ai, Table * table) {
             return 2;
         }
     }
+    // If not fold
     fold(ai);
     return 5;
 }
@@ -750,6 +759,7 @@ int consAIrounds(Player *ai, Table * table) {
         temp->card[6].suit = NONE;
     }
     checkHandRanking(temp, ai);
+    // If after 2nd round hand does not have pair or more then fold
     if (ai->rank > 0) {
         if (isCallRaise(*ai, *table)) {
             call(ai, table);
@@ -776,6 +786,7 @@ int consAI (Player *ai, Table *table, int roundIdx) {
 int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index) {
     FILE *save_point;
     save_point = fopen("src/test.txt", "w+");
+    // Check if file can be opened
     if (save_point != NULL) {
         fprintf(save_point, "Round index\n%i\n----------\n", round_index);
         fprintf(save_point, "Player index\n%i\n----------\n", player_index);
@@ -945,7 +956,7 @@ void testHand(Hand *hands, Player * players, int num_player) {
     for (Rank rank = RoyalFlush; rank >= HighCard; rank--) {
         countWinners = 0;
 
-        //if the player's rank == the checking rank, add his idx to winner_idx array
+        //If the player's rank == the checking rank, add his idx to winner_idx array
         for (int i = 0; i < num_player; i++) {
             if (players[i].rank == rank && players[i].status == 1) {
                 players[i].isWinner = 1;
@@ -953,15 +964,14 @@ void testHand(Hand *hands, Player * players, int num_player) {
             }
         }
 
-        //if there is only 1 winner, stop the checking
+        // If there is only 1 winner, stop the checking
         if (countWinners == 1) {
             break; //stop the checking
-        }
-            //if there is more than 2 winners, check them
-        else if (countWinners >= 2) {
-            //create a temporary pointer
+        } else if (countWinners >= 2) {     // If there is more than 2 winners, check them
+            // Create a temporary pointer
             Player * temp = malloc(sizeof(Player) * countWinners);
-            //copy the value of temporary winners to the addresses where temp pointer points to
+
+            // Copy the value of temporary winners to the addresses where temp pointer points to
             int idx = 0;
             for (int i = 0; i < num_player; i++) {
                 if (players[i].isWinner) {
@@ -970,9 +980,9 @@ void testHand(Hand *hands, Player * players, int num_player) {
                 }
             }
 
-            //check who is the winner
+            // Check who is the winner
             checkWinner(temp, countWinners);
-            //copy back the value of the pointer to the appropriate player
+            // Copy back the value of the pointer to the appropriate player
             for (int i = 0; i < num_player; i++) {
                 for (int x = 0; x < idx; x++) {
                     if (strcmp(players[i].name, temp[x].name) == 0) {

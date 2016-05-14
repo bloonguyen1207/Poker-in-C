@@ -634,11 +634,13 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int playerIdx  = 0, countCheck = 0, countAllin = 0, countCall = 0, end_round = 0, is_1st_bet = 0, count = 0;
     State lastState = None;
 
+    // Deal shared cards
     if (roundIdx > 0) {
         dealSharedCards(table, deck, roundIdx);
         table->last_bet = 0;
     }
 
+    // Check first bet, first round
     if (roundIdx == 0) {
         for (int b = 0; b < num_player; b++) {
             if (players[b].state != BB && players[b].state != SB) {
@@ -655,6 +657,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             lastState = BB;
             is_1st_bet = 1;
         }
+        // If first bet, start with person after Big Blind
         if (is_1st_bet) {
             for (int i = 0; i < num_player; i++) {
                 if (players[i].state == BB || players[playerIdx].state == SB) {
@@ -671,6 +674,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             table->highest_bet = table->ante * 2;
         }
     } else {
+        // If not first round, start with Big blind, small blind, if not available, start with the one who is still active
         for (int e = 0; e < num_player; e++) {
             if (players[e].isBigBlind && players[e].status == 1) {
                 playerIdx = e;
@@ -684,6 +688,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             countAllin++;
         }
     }
+    // If all player allin, show cards and check hands
     if (countAllin == countActivePlayer && is_1st_bet == 0) {
         table->showCard = 1;
         return countActivePlayer;
@@ -696,6 +701,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             table->showCard = 1;
             break;
         }
+        // If player not fold or out of money
         if (players[playerIdx].state != Folded && players[playerIdx].state != Allins
             && players[playerIdx].money > 0 && players[playerIdx].status == 1) {
             if (players[playerIdx].state == BB) {
@@ -705,6 +711,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 return -1;
             }
             if (is_1st_bet) {
+                // if is first bet, round end when return to Big blind
                 if (players[playerIdx].isBigBlind && players[playerIdx].state == Checked) {
                     end_round = 1;
                 }
@@ -717,6 +724,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 countAllin++;
             }
             if (players[playerIdx].state == Called) {
+                // If player money is just or not enough to call
                 if (players[playerIdx].money == 0) {
                     players[playerIdx].state = Allins;
                     countAllin++;
@@ -728,12 +736,14 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
                 countActivePlayer--;
             }
             if (players[playerIdx].state == Raised || players[playerIdx].state == Bets) {
+                // If player raised or bet all of their money
                 if (players[playerIdx].money == 0) {
                     players[playerIdx].state = Allins;
                     countAllin++;
                 }
                 countCall = 0;
             }
+            // Check conditions to break round
             if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer ||
                 (countCall == countActivePlayer - 1 && !is_1st_bet) ||
                 (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded) ||
@@ -751,6 +761,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
 int game (Player * players, Table * table, Deck * deck, int num_player, int gameIdx, int nextSB) {
     int prevPlayer = nextSB - 1, nextBB = nextSB + 1;
     int countActivePlayer = num_player;
+    // Find next person to be small blind
     if (players[nextSB].money == 0) {
         for (int i = 0; i < num_player; i++) {
             nextSB++;
@@ -764,6 +775,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         }
     }
 
+    // Find next person to be big blind
     if (players[nextBB].money == 0) {
         for (int i = 0; i < num_player; i++) {
             nextBB++;
@@ -784,6 +796,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         nextBB = 1;
     }
 
+    // Reset previous big blind and small blind
     for (int i = 0; i < num_player; i++) {
         if (i != nextSB) {
             players[i].isSmallBlind = 0;
@@ -794,6 +807,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         }
     }
 
+    // Set big blind, small blind and reset previous SB, BB
     table->ante = 2;
     reset(players, table, num_player, deck);
     players[nextSB].isSmallBlind = 1;
@@ -820,6 +834,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
         nextSB = 0;
     }
 
+    // Deal cards for players
     dealStartingHand(players, deck, num_player);
     for (int i = 0; i < num_player; i++) {
         if (players[i].money <= 0) {
@@ -831,7 +846,7 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
     int countFold = 0;
     int roundIdx;
 
-    //begin game
+    // Begin game
     for (roundIdx = 0; roundIdx < 4; roundIdx++) {
         countActivePlayer = roundPoker(players, table, deck, num_player, roundIdx, countActivePlayer);
         if (countActivePlayer == -1) {
@@ -843,12 +858,13 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int game
                 countFold++;
             }
         }
+        // If only 1 player not fold, end game
         if (countFold == num_player - 1) {
             break;
         }
     }
 
-    //check winner
+    // Check winner
     if (countFold == num_player - 1 && roundIdx < 4 ) {
         for (int i = 0; i < num_player; i++) {
             if (players[i].status == 1) {
