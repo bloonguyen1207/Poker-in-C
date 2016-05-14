@@ -979,29 +979,29 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
 
 void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index){
     FILE *save_point;
-    save_point = fopen("src/test.txt", "w+");
+    save_point = fopen("src/game.txt", "w+");
     if (save_point != NULL) {
         fprintf(save_point, "Round index\n%i\n----------\n", round_index);
         fprintf(save_point, "Player index\n%i\n----------\n", player_index);
         fprintf(save_point, "Deck\n");
         for (int i = 0; i < 52; i++) {
-            fprintf(save_point, "%i %i; ", deck->cards[i].suit, deck->cards[i].rank);
+            fprintf(save_point, "%i %i\n", deck->cards[i].suit, deck->cards[i].rank);
         }
         fprintf(save_point, "\n----------\nTable\n");
-        fprintf(save_point, "%i; %i; %i; %i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
+        fprintf(save_point, "%i\n%i\n%i\n%i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
         if (round_index != 0) {
             fprintf(save_point, "Shared cards\n");
             if (round_index == 1) {
                 for (int j = 0; j < 3; j++) {
-                    fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+                    fprintf(save_point, "%i %i\n ", table->card[j].suit, table->card[j].rank);
                 }
             } else if (round_index == 2) {
                 for (int j = 0; j < 4; j++) {
-                    fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
                 }
             } else if (round_index == 3) {
                 for (int j = 0; j < 5; j++) {
-                    fprintf(save_point, "%i %i; ", table->card[j].suit, table->card[j].rank);
+                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
                 }
             } else {
                 fprintf(save_point, "wtf\n");
@@ -1009,7 +1009,7 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
         }
         fprintf(save_point, "\n----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
-            fprintf(save_point, "Player %i:\n%i; %i; %i\n%i %i; %i %i\n %i - %i\n", i + 1,
+            fprintf(save_point, "Player %i:\n%i\n%i\n%i\n%i %i\n%i %i\n%i\n%i\n", i + 1,
                     player[i].money, player[i].bet, player[i].state,
                     player[i].hand[0].suit, player[i].hand[0].rank,
                     player[i].hand[1].suit, player[i].hand[1].rank,
@@ -1502,129 +1502,118 @@ void mainMenu(){
 }
 
 int main() {
-    int opt = 0;
-    int opt1 = 0;
-    int opt2 = 0;
-    int endProgram = 0;
-    while (!endProgram) {
-        int nextBlind = 0;
-        mainMenu();
-        scanf("%d", &opt);
-        if (opt == 1) {
-            // Create table
-            Table *table = createTable();
+//    int opt = 0;
+//    int opt1 = 0;
+//    int opt2 = 0;
+//    int endProgram = 0;
+//    while (!endProgram) {
+//        int nextBlind = 0;
+//        mainMenu();
+//        scanf("%d", &opt);
+//        if (opt == 1) {
+//            // Create table
+//            Table *table = createTable();
+//
+//            // Create deck
+//            Deck *deck;
+//            deck = newDeck();
+//            int size = 52;
+//
+//            // Test new deck
+//            for (int m = 0; m < size; m++) {
+//                printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
+//            }
+//            printf("\n");
+//
+//            // Create players
+//            int num_player = 5;
+//            Player *players = createPlayers(num_player);
+//            for (int gameIdx = 0; ; gameIdx++) {
+//                int remain = num_player;
+//                printf("Gameidx: %i\n", gameIdx);
+//                for (int m = 0; m < num_player; m++) {
+//                    if (players[m].money <= 0) {
+//                        remain--;
+//                    }
+//                }
+//                printf("remain: %i\n", remain);
+//                if (remain == 1) {
+//                    printf("No player left.\n");
+//                    break;
+//                }
+//                // Shuffle the deck
+//                shuffleDeck(deck, size);
+//
+//                // Test shuffle
+//                for (int m = 0; m < size; m++) {
+//                    printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
+//                }
+//                printf("\n");
+//                nextBlind = game(players, table, deck, num_player, gameIdx, nextBlind);
+//                printf("Continue? (0/1): ");
+//                scanf("%d", &opt1);
+//                if (opt1 == 0) {
+//                    break;
+//                }
+//            }
+//            // Free everything
+//            for (int i = 0; i < num_player; i++) {
+//                free(players[i].max_hand);
+//            }
+//            free(players);
+//            free(deck);
+//            free(table);
+//        } else if (opt == 2) {
+//            printf("Options\n");
+//        } else if (opt == 3) {
+//            endProgram = 1;
+//        }
+//    }
 
-            // Create deck
-            Deck *deck;
-            deck = newDeck();
-            int size = 52;
-
-            // Test new deck
-            for (int m = 0; m < size; m++) {
-                printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-            }
-            printf("\n");
-
-            // Create players
-            int num_player = 5;
-            Player *players = createPlayers(num_player);
-            for (int gameIdx = 0; ; gameIdx++) {
-                int remain = num_player;
-                printf("Gameidx: %i\n", gameIdx);
-                for (int m = 0; m < num_player; m++) {
-                    if (players[m].money <= 0) {
-                        remain--;
+    FILE * save;
+    char line [300];
+    char * s;
+    Deck *deck;
+    int i = 0, j = 0;
+    save = fopen("../src/game.txt", "r");
+    if (save != NULL) {
+        while (fgets(line, 300, save) != NULL) {
+            i++;
+            if (i >= 8) {
+                s = strtok(line, " ");
+                int k = 0;
+                while (s != NULL) {
+                    k++;
+                    if (j < 52) {
+                        printf("%i %i %s\n", j, k, s);
+//                        if (k == 1) {
+//                            if ((int) s == 0) {
+//                                deck->cards[j].suit = HEARTS;
+//                            } if ((int) s == 1) {
+//                                deck->cards[j].suit = DIAMONDS;
+//                            } if ((int) s == 2) {
+//                                deck->cards[j].suit = CLUBS;
+//                            } else if ((int) s == 3) {
+//                                deck->cards[j].suit = SPADES;
+//                            }
+//                        } else if (k == 2) {
+//                            deck->cards[j].rank = (int) s;
+//                        }
                     }
+                    s = strtok(NULL, " ");
                 }
-                printf("remain: %i\n", remain);
-                if (remain == 1) {
-                    printf("No player left.\n");
+                j++;
+                if (i == 60) {
                     break;
                 }
-                // Shuffle the deck
-                shuffleDeck(deck, size);
-
-                // Test shuffle
-                for (int m = 0; m < size; m++) {
-                    printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-                }
-                printf("\n");
-                nextBlind = game(players, table, deck, num_player, gameIdx, nextBlind);
-                printf("Continue? (0/1): ");
-                scanf("%d", &opt1);
-                if (opt1 == 0) {
-                    break;
-                }
+//                for (int m = 0; m < 52; m++) {
+//                    printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
+//                }
             }
-            // Free everything
-            for (int i = 0; i < num_player; i++) {
-                free(players[i].max_hand);
-            }
-            free(players);
-            free(deck);
-            free(table);
-        } else if (opt == 2) {
-            printf("Options\n");
-        } else if (opt == 3) {
-            endProgram = 1;
-        }
-/*---------------------------------------------------
-    // Deal hole cards for players
-    dealStartingHand(players, deck, num_player);
-
-    // Deal shared cards
-    dealSharedCards(table, deck, 1);
-    dealSharedCards(table, deck, 2);
-    dealSharedCards(table, deck, 3);
-
-    // Test player starting hand
-    for (int i = 0; i < num_player; i++) {
-        printf("%s: ", players[i].name);
-        for (int j = 0; j < 2; j++) {
-            printf("%s %i; ", getSuit(players[i].hand[j].suit), players[i].hand[j].rank);
         }
         printf("\n");
-    }
-
-    // Test shared cards
-    printf("Shared Cards: ");
-    for (int i = 0; i < 5; i++) {
-        printf("%s %i; ", getSuit(table->card[i].suit), table->card[i].rank);
-    }
-    printf("\n");
-
-    // Test hands
-    Hand *hands = createHands(players, table, num_player);
-    testHand(hands, players, num_player)
-*/
-/*    Player *test_player = malloc(sizeof(Player));
-    test_player->max_hand = malloc(sizeof(Card) * 5);
-    Hand *test = malloc(sizeof(Hand));
-    test->card[0].rank = 1;
-    test->card[0].suit = HEARTS;
-    test->card[1].rank = 9;
-    test->card[1].suit = HEARTS;
-    test->card[2].rank = 5;
-    test->card[2].suit = CLUBS;
-    test->card[3].rank = 4;
-    test->card[3].suit = DIAMONDS;
-    test->card[4].rank = 4;
-    test->card[4].suit = HEARTS;
-    test->card[5].rank = 3;
-    test->card[5].suit = DIAMONDS;
-    test->card[6].rank = 2;
-    test->card[6].suit = HEARTS;
-    for (int j = 0; j < 7; j++) {
-        printf("%s %i; ", getSuit(test->card[j].suit), test->card[j].rank);
-    }
-    if (isStraight(*test, test_player)) {
-        printf("True");
-    } else { printf("False"); }
-    printf("\n%d\n", test_player->rank);
-    for (int j = 0; j < 5; j++) {
-        printf("%s %i; ", getSuit(test_player->max_hand[j].suit), test_player->max_hand[j].rank);
-    }
-*/
+    } else {
+        printf("Can't open file\n");
     }
     return 0;
 }
