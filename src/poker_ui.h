@@ -25,7 +25,7 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
 
 int interactGame(int num_player, int roundIdx, Player * players, Table * table, int playerIdx);
 
-int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player);
+int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player, Deck * deck);
 
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer);
 

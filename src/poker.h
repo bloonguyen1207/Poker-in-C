@@ -158,6 +158,8 @@ int consAIrounds(Player *ai, Table * table);
 
 int consAI (Player *ai, Table *table, int roundIdx);
 
+void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index);
+
 void checkWinner(Player * players, int num_player);
 
 void testHand(Hand *hands, Player * players, int num_player);

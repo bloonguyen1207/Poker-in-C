@@ -311,9 +311,9 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
 
     //draw Options menu
     int c;
-    char menu[7][15] = {"Call", "Raise", "Check", "Bet", "Allin", "Fold", "Exit"};
+    char menu[8][15] = {"Call", "Raise", "Check", "Bet", "Allin", "Fold", "Save", "Exit"};
 
-    for (c = 0; c < 7; c++) {
+    for (c = 0; c < 8; c++) {
         if (c == item) {
             attron(A_REVERSE);
         }
@@ -355,7 +355,9 @@ void drawGame(int num_player, int roundIdx, Player * players, Table * table, int
             }
         }
         if (c == 6) {
-            mvaddstr(30, 100, menu[6]);
+            mvaddstr(28, 100, menu[c]);
+        } else if (c == 7) {
+            mvaddstr(30, 100, menu[c]);
         }
         attroff(A_REVERSE);
     }
@@ -397,18 +399,22 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                     switch (key) {
                         case KEY_DOWN:
                             item++;
-                            if (item > 6) {
+                            if (item > 7) {
                                 item = 4;
                             }
                             break;
                         case KEY_UP:
                             item--;
                             if (item < 4) {
-                                item = 6;
+                                item = 7;
                             }
                             break;
                         case KEY_RIGHT:
-                            item = 6;
+                            if (item == 5) {
+                                item = 7;
+                            } else {
+                                item = 6;
+                            }
                             break;
                         case KEY_LEFT:
                             item = 5;
@@ -423,7 +429,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                             } else {
                                 item++;
                             }
-                            if (item > 6) {
+                            if (item > 7) {
                                 item = 0;
                             }
                             break;
@@ -434,11 +440,15 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                                 item--;
                             }
                             if (item < 0) {
-                                item = 6;
+                                item = 7;
                             }
                             break;
                         case KEY_RIGHT:
-                            item = 6;
+                            if (item == 5) {
+                                item = 7;
+                            } else {
+                                item = 6;
+                            }
                             break;
                         case KEY_LEFT:
                             item = 5;
@@ -453,7 +463,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                             } else {
                                 item++;
                             }
-                            if (item > 6) {
+                            if (item > 7) {
                                 item = 0;
                             }
                             break;
@@ -464,11 +474,15 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                                 item--;
                             }
                             if (item < 0) {
-                                item = 6;
+                                item = 7;
                             }
                             break;
                         case KEY_RIGHT:
-                            item = 6;
+                            if (item == 5) {
+                                item = 7;
+                            } else {
+                                item = 6;
+                            }
                             break;
                         case KEY_LEFT:
                             item = 5;
@@ -485,7 +499,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                             } else {
                                 item++;
                             }
-                            if (item > 6) {
+                            if (item > 7) {
                                 item = 2;
                             }
                             break;
@@ -496,11 +510,11 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                                 item--;
                             }
                             if (item < 2) {
-                                item = 6;
+                                item = 7;
                             }
                             break;
                         case KEY_RIGHT:
-                            item = 6;
+                            item = 7;
                             break;
                         case KEY_LEFT:
                             item = 5;
@@ -515,7 +529,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                             } else {
                                 item++;
                             }
-                            if (item > 6) {
+                            if (item > 7) {
                                 item = 2;
                             }
                             break;
@@ -526,11 +540,15 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
                                 item--;
                             }
                             if (item < 2) {
-                                item = 6;
+                                item = 7;
                             }
                             break;
                         case KEY_RIGHT:
-                            item = 6;
+                            if (item == 5) {
+                                item = 7;
+                            } else {
+                                item = 6;
+                            }
                             break;
                         case KEY_LEFT:
                             item = 5;
@@ -544,7 +562,7 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     return item;
 }
 
-int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player) {
+int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player, Deck * deck) {
     int input = 6;
 
     if (playerIdx != 0) {
@@ -587,10 +605,16 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
                 fold(&players[playerIdx]);
                 money = 0;
             } else if (input == 6) {
+                //save(players, table, deck, num_player, roundIdx, playerIdx);
+                mvaddstr(26, 95, "Save complete");
+                move(0, 0);
+                refresh();
+                napms(500);
+            } else if (input == 7) {
                 break;
             }
         }
-        if (input == 6) {
+        if (input == 7) {
             return -1;
         }
     }
@@ -674,7 +698,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             if (players[playerIdx].state == BB) {
                 is_1st_bet = 0;
             }
-            if (turn(players, table, roundIdx, playerIdx, num_player) == -1) {
+            if (turn(players, table, roundIdx, playerIdx, num_player, deck) == -1) {
                 return -1;
             }
             if (is_1st_bet) {
@@ -862,6 +886,7 @@ void setUpGame(int num_player) {
             } else {
                 center(0,"No player left");
             }
+            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
             refresh();
             getch();
             break;
