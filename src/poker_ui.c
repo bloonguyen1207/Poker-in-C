@@ -605,11 +605,11 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
                 fold(&players[playerIdx]);
                 money = 0;
             } else if (input == 6) {
-                //save(players, table, deck, num_player, roundIdx, playerIdx);
+                save(players, table, deck, num_player, roundIdx, playerIdx);
                 mvaddstr(26, 95, "Save complete");
                 move(0, 0);
                 refresh();
-                napms(500);
+                napms(1000);
             } else if (input == 7) {
                 break;
             }
