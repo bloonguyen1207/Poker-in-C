@@ -1,5 +1,5 @@
 # POKER TEXAS HOLD'EM - 15/05/2016
--------------------------------------------
+===================================
 #POKER'S RULES
 * Each player is dealt two private hand cards.
 * At the beginning of the first game, Player 1 is set to be a Small Blind and begins the game by posting a small blind. The next player (Big Blind) then posts a big blind. Blinds are forced bets. In this program, the small blind (also called ante) is $2; the big blind is $4.
