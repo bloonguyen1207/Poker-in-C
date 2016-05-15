@@ -1033,11 +1033,10 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
     }
 }
 
-void loadNumPlayer(int num_player) {
+int loadNumPlayer() {
     FILE * save;
     char line [20];
-    char *s;
-    int i = 0; // i: count line
+    int i = 0, num_player = 0; // i: count line
     save = fopen("../src/game.txt", "r");
     if (save != NULL) {
         while (fgets(line, 20, save) != NULL) {
@@ -1049,10 +1048,12 @@ void loadNumPlayer(int num_player) {
                 break;
             }
         }
+        return num_player;
         fclose(save);
     } else {
         printf("Can't open file\n");
     }
+    return 0;
 }
 
 void loadRoundInfo(int countCheck, int countAllin, int countCall, int is_1st_bet) {
@@ -1234,6 +1235,323 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         l++;
                     }
                 }
+            }
+
+            // Load player 1
+            if (i >= 90 && i <= 96) {
+                if (i == 90) {
+                    players[0].money = atoi(line);
+                }
+                if (i == 91) {
+                    players[0].bet = atoi(line);
+                }
+                if (i == 92) {
+                    switch (atoi(line)) {
+                        case 1: players[0].state = Called;
+                            break;
+                        case 2: players[0].state = Raised;
+                            break;
+                        case 3: players[0].state = Checked;
+                            break;
+                        case 4: players[0].state = Bets;
+                            break;
+                        case 5: players[0].state = Allins;
+                            break;
+                        case 6: players[0].state = Folded;
+                            break;
+                        case 7: players[0].state = SB;
+                            break;
+                        case 8: players[0].state = BB;
+                            break;
+                        default: players[0].state = None;
+                    }
+                }
+                if (i >= 93 && i <= 94) {
+                    s = strtok(line, " ");
+                    int k = 0;
+                    while (s != NULL) {
+                        k++;
+                        if (m < 2) {
+                            if (k == 1) {
+                                if (atoi(s) == 0) {
+                                    players[0].hand[m].suit = HEARTS;
+                                } if (atoi(s) == 1) {
+                                    players[0].hand[m].suit = DIAMONDS;
+                                } if (atoi(s) == 2) {
+                                    players[0].hand[m].suit = CLUBS;
+                                } else if (atoi(s) == 3) {
+                                    players[0].hand[m].suit = SPADES;
+                                }
+                            } else if (k == 2) {
+                                players[0].hand[m].rank = atoi(s);
+                            }
+                        }
+                        s = strtok(NULL, " ");
+                    }
+                    m++;
+                }
+                if (i == 95) {
+                    players[0].isSmallBlind = atoi(line);
+                }
+                if (i == 96) {
+                    players[0].isBigBlind = atoi(line);
+                }
+            }
+
+            // Load player 2
+            if (i >= 98 && i <= 104) {
+                m = 0;
+                if (i == 98) {
+                    players[1].money = atoi(line);
+                }
+                if (i == 99) {
+                    players[1].bet = atoi(line);
+                }
+                if (i == 100) {
+                    switch (atoi(line)) {
+                        case 1: players[1].state = Called;
+                            break;
+                        case 2: players[1].state = Raised;
+                            break;
+                        case 3: players[1].state = Checked;
+                            break;
+                        case 4: players[1].state = Bets;
+                            break;
+                        case 5: players[1].state = Allins;
+                            break;
+                        case 6: players[1].state = Folded;
+                            break;
+                        case 7: players[1].state = SB;
+                            break;
+                        case 8: players[1].state = BB;
+                            break;
+                        default: players[1].state = None;
+                    }
+                }
+                if (i >= 101 && i <= 102) {
+                    s = strtok(line, " ");
+                    int k = 0;
+                    while (s != NULL) {
+                        k++;
+                        if (m < 2) {
+                            if (k == 1) {
+                                if (atoi(s) == 0) {
+                                    players[1].hand[m].suit = HEARTS;
+                                } if (atoi(s) == 1) {
+                                    players[1].hand[m].suit = DIAMONDS;
+                                } if (atoi(s) == 2) {
+                                    players[1].hand[m].suit = CLUBS;
+                                } else if (atoi(s) == 3) {
+                                    players[1].hand[m].suit = SPADES;
+                                }
+                            } else if (k == 2) {
+                                players[1].hand[m].rank = atoi(s);
+                            }
+                        }
+                        s = strtok(NULL, " ");
+                    }
+                    m++;
+                }
+                if (i == 103) {
+                    players[1].isSmallBlind = atoi(line);
+                }
+                if (i == 104) {
+                    players[1].isBigBlind = atoi(line);
+                }
+            }
+
+            // Load player 3
+            if (num_player >= 3) {
+                if (i >= 106 && i <= 112) {
+                    m = 0;
+                    if (i == 106) {
+                        players[2].money = atoi(line);
+                    }
+                    if (i == 107) {
+                        players[2].bet = atoi(line);
+                    }
+                    if (i == 108) {
+                        switch (atoi(line)) {
+                            case 1: players[2].state = Called;
+                                break;
+                            case 2: players[2].state = Raised;
+                                break;
+                            case 3: players[2].state = Checked;
+                                break;
+                            case 4: players[2].state = Bets;
+                                break;
+                            case 5: players[2].state = Allins;
+                                break;
+                            case 6: players[2].state = Folded;
+                                break;
+                            case 7: players[2].state = SB;
+                                break;
+                            case 8: players[2].state = BB;
+                                break;
+                            default: players[2].state = None;
+                        }
+                    }
+                    if (i >= 109 && i <= 110) {
+                        s = strtok(line, " ");
+                        int k = 0;
+                        while (s != NULL) {
+                            k++;
+                            if (m < 2) {
+                                if (k == 1) {
+                                    if (atoi(s) == 0) {
+                                        players[2].hand[m].suit = HEARTS;
+                                    } if (atoi(s) == 1) {
+                                        players[2].hand[m].suit = DIAMONDS;
+                                    } if (atoi(s) == 2) {
+                                        players[2].hand[m].suit = CLUBS;
+                                    } else if (atoi(s) == 3) {
+                                        players[2].hand[m].suit = SPADES;
+                                    }
+                                } else if (k == 2) {
+                                    players[2].hand[m].rank = atoi(s);
+                                }
+                            }
+                            s = strtok(NULL, " ");
+                        }
+                        m++;
+                    }
+                    if (i == 111) {
+                        players[2].isSmallBlind = atoi(line);
+                    }
+                    if (i == 112) {
+                        players[2].isBigBlind = atoi(line);
+                    }
+                }
+            }
+
+            // Load player 4
+            if (num_player >= 4) {
+                if (i >= 114 && i <= 120) {
+                    m = 0;
+                    if (i == 114) {
+                        players[3].money = atoi(line);
+                    }
+                    if (i == 115) {
+                        players[3].bet = atoi(line);
+                    }
+                    if (i == 116) {
+                        switch (atoi(line)) {
+                            case 1: players[3].state = Called;
+                                break;
+                            case 2: players[3].state = Raised;
+                                break;
+                            case 3: players[3].state = Checked;
+                                break;
+                            case 4: players[3].state = Bets;
+                                break;
+                            case 5: players[3].state = Allins;
+                                break;
+                            case 6: players[3].state = Folded;
+                                break;
+                            case 7: players[3].state = SB;
+                                break;
+                            case 8: players[3].state = BB;
+                                break;
+                            default: players[3].state = None;
+                        }
+                    }
+                    if (i >= 117 && i <= 118) {
+                        s = strtok(line, " ");
+                        int k = 0;
+                        while (s != NULL) {
+                            k++;
+                            if (m < 2) {
+                                if (k == 1) {
+                                    if (atoi(s) == 0) {
+                                        players[3].hand[m].suit = HEARTS;
+                                    } if (atoi(s) == 1) {
+                                        players[3].hand[m].suit = DIAMONDS;
+                                    } if (atoi(s) == 2) {
+                                        players[3].hand[m].suit = CLUBS;
+                                    } else if (atoi(s) == 3) {
+                                        players[3].hand[m].suit = SPADES;
+                                    }
+                                } else if (k == 2) {
+                                    players[3].hand[m].rank = atoi(s);
+                                }
+                            }
+                            s = strtok(NULL, " ");
+                        }
+                        m++;
+                    }
+                    if (i == 119) {
+                        players[3].isSmallBlind = atoi(line);
+                    }
+                    if (i == 120) {
+                        players[3].isBigBlind = atoi(line);
+                    }
+                }
+            }
+
+            // Load player 5
+            if (num_player == 5) {
+                if (i >= 122 && i <= 128) {
+                    m = 0;
+                    if (i == 122) {
+                        players[4].money = atoi(line);
+                    }
+                    if (i == 123) {
+                        players[4].bet = atoi(line);
+                    }
+                    if (i == 124) {
+                        switch (atoi(line)) {
+                            case 1: players[4].state = Called;
+                                break;
+                            case 2: players[4].state = Raised;
+                                break;
+                            case 3: players[4].state = Checked;
+                                break;
+                            case 4: players[4].state = Bets;
+                                break;
+                            case 5: players[4].state = Allins;
+                                break;
+                            case 6: players[4].state = Folded;
+                                break;
+                            case 7: players[4].state = SB;
+                                break;
+                            case 8: players[4].state = BB;
+                                break;
+                            default: players[4].state = None;
+                        }
+                    }
+                    if (i >= 125 && i <= 126) {
+                        s = strtok(line, " ");
+                        int k = 0;
+                        while (s != NULL) {
+                            k++;
+                            if (m < 2) {
+                                if (k == 1) {
+                                    if (atoi(s) == 0) {
+                                        players[4].hand[m].suit = HEARTS;
+                                    } if (atoi(s) == 1) {
+                                        players[4].hand[m].suit = DIAMONDS;
+                                    } if (atoi(s) == 2) {
+                                        players[4].hand[m].suit = CLUBS;
+                                    } else if (atoi(s) == 3) {
+                                        players[4].hand[m].suit = SPADES;
+                                    }
+                                } else if (k == 2) {
+                                    players[4].hand[m].rank = atoi(s);
+                                }
+                            }
+                            s = strtok(NULL, " ");
+                        }
+                        m++;
+                    }
+                    if (i == 127) {
+                        players[4].isSmallBlind = atoi(line);
+                    }
+                    if (i == 128) {
+                        players[4].isBigBlind = atoi(line);
+                    }
+                }
+            } else {
+                printf("Shit.");
             }
         }
     } else {
@@ -1799,8 +2117,7 @@ int main() {
     Deck *deck;
     deck = newDeck();
 
-    int num_player = 0;
-    loadNumPlayer(num_player);
+    int num_player = loadNumPlayer();
 
     // Create players
     Player *players = createPlayers(num_player);
@@ -1815,6 +2132,23 @@ int main() {
     }
     printf("\n");
     displayTableInfo(*table);
+
+    for (int n = 0; n < num_player; n++) {
+        displayPlayerInfo(players[n]);
+        printf("\n");
+    }
+
+
+//    printf("Money: %i\n", players[0].money);
+//    printf("Bet: %i\n", players[0].bet);
+//    printf("State: %i\n", players[0].state);
+//    printf("Hand: ");
+//    for (int n = 0; n < 2; n++) {
+//        printf("%s %i; ", getSuit(players[0].hand[n].suit), players[0].hand[n].rank);
+//    }
+//    printf("\n");
+//    printf("Is SB: %i\n", players[0].isSmallBlind);
+//    printf("Is BB: %i\n", players[0].isBigBlind);
 
     return 0;
 }
