@@ -1,4 +1,4 @@
-POKER TEXAS HOLD'EM - 15/05/2016
+#POKER TEXAS HOLD'EM - 15/05/2016
 ------------------------------------------
 #POKER'S RULES
 * Each player is dealt two private hand cards.
