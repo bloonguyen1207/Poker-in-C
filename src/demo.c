@@ -1090,7 +1090,7 @@ void load(Table * table, Deck * deck) {
     FILE * save;
     char line [20];
     char *s;
-    int i = 0, j = 0, l = 0, round_index = 0, num_player = 0; // i: count line, j: deck size, l: share card size
+    int i = 0, j = 0, l = 0, m = 0, round_index = 0, num_player = 0; // i: count line, j: deck size, l: share card size
     save = fopen("../src/game.txt", "r");
     if (save != NULL) {
         while (fgets(line, 20, save) != NULL) {
@@ -1136,12 +1136,17 @@ void load(Table * table, Deck * deck) {
 
             // Load table
             if (i >= 77 && i <= 80) {
-                switch (i) {
-                    case 77: table->pot_money = atoi (line);
-                    case 78: table->ante = atoi (line);
-                    case 79: table->highest_bet = atoi (line);
-                    case 80: table->last_bet = atoi (line);
-                    default: printf("Shit\n");
+                if (i == 77) {
+                    table->pot_money = atoi (line);
+                }
+                if (i == 78) {
+                    table->ante = atoi (line);
+                }
+                if (i == 79) {
+                    table->highest_bet = atoi (line);
+                }
+                if (i == 80) {
+                    table->last_bet = atoi (line);
                 }
             }
 
@@ -1230,11 +1235,11 @@ void load(Table * table, Deck * deck) {
                     }
                 }
             }
-
         }
     } else {
         printf("Can't open file\n");
     }
+    fclose(save);
 }
 
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
@@ -1793,9 +1798,15 @@ int main() {
     // Create deck
     Deck *deck;
     deck = newDeck();
+
     int num_player = 0;
     loadNumPlayer(num_player);
+
+    // Create players
+    Player *players = createPlayers(num_player);
+
     loadRoundInfo(-1, -1, -1, -1);
+
     load (table, deck);
 
     for (int m = 0; m < 52; m++) {
@@ -1804,55 +1815,5 @@ int main() {
     printf("\n");
     displayTableInfo(*table);
 
-//    printf("Number of player: %i\n", num_player);
-//    FILE * save;
-//    char line [20];
-//    char *s;
-//    int i = 0, j = 0;
-//    save = fopen("../src/game.txt", "r");
-//    if (save != NULL) {
-//        while (fgets(line, 300, save) != NULL) {
-//            i++;
-//            if (i >= 8 && i <= 60) {
-//                s = strtok(line, " ");
-//                int k = 0;
-//                while (s != NULL) {
-//                    k++;
-//                    if (j < 52) {
-//                        if (k == 1) {
-//                            if (atoi(s) == 0) {
-//                                deck->cards[j].suit = HEARTS;
-//                            } if (atoi(s) == 1) {
-//                                deck->cards[j].suit = DIAMONDS;
-//                            } if (atoi(s) == 2) {
-//                                deck->cards[j].suit = CLUBS;
-//                            } else if (atoi(s) == 3) {
-//                                deck->cards[j].suit = SPADES;
-//                            }
-//                        } else if (k == 2) {
-//                            deck->cards[j].rank = atoi(s);
-//                        }
-//                    }
-//                    s = strtok(NULL, " ");
-//                }
-//                j++;
-//            } else if (i >= 63 && i <= 66) {
-//                switch (i) {
-//                    case 63: table->pot_money = atoi (line);
-//                    case 64: table->ante = atoi (line);
-//                    case 65: table->highest_bet = atoi (line);
-//                    case 66: table->last_bet = atoi (line);
-//                    default: 0;
-//                }
-//            }
-//        }
-//        for (int m = 0; m < 52; m++) {
-//            printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-//        }
-//        printf("\n");
-//        displayTableInfo(*table);
-//    } else {
-//        printf("Can't open file\n");
-//    }
     return 0;
 }
