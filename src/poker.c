@@ -532,7 +532,7 @@ void updateMoney(Player *player, Table * table, int money) {
 }
 
 int isAllin(Player player, Table table) {
-    return player.money < table.highest_bet - player.bet;
+    return player.money <= table.highest_bet - player.bet;
 }
 
 int isCallRaise(Player player, Table table) {

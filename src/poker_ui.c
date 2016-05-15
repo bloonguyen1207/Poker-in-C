@@ -152,7 +152,9 @@ void drawPlayerCards(Player * players, int num_player, Table table) {
 void drawPlayerInfo(Player * players, int num_player, int playerIdx) {
     int info_y = 0;
     mvaddstr(info_y, 100, "Money   Bet   State"); info_y += 2;
+
     for (int i = 0; i < num_player; i++) {
+        mvaddstr(info_y, 114, "              ");
         mvprintw(info_y, 90, "%s", players[i].name);
         mvprintw(info_y, 100, "%d", players[i].money);
         mvprintw(info_y, 107, "%d", players[i].bet);
@@ -213,6 +215,8 @@ void drawSharedCard(Table table, int roundIdx) {
 void drawRangeMoney(int min, int max, int item, int money) {
     int c;
     char menu[4][10] = {"<", ">", "OK", "Cancel"};
+
+    mvaddstr(28, 70, "             ");
 
     for (c = 0; c < 4; c++) {
         if (c == item) {
