@@ -940,11 +940,11 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
         input = consAI(player, table, roundIdx);
         }
     } else {
-        //let user choose option
+        // Let user choose option
         displayOption(*player, * table);
         input = scanInput(3);
 
-        //let user input money if they choose raisePoker or bet
+        // Let user input money if they choose raisePoker or bet
         int money = 0;
         int isRaiseOrBet = 0;
         if (isCallRaise(*player, *table)) {
@@ -996,6 +996,29 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
         fprintf(save_point, "----------\nCount Allin\n%d\n", countAllin);
         fprintf(save_point, "----------\nCount Call\n%d\n", countCall);
         fprintf(save_point, "----------\nIs First Bet\n%d\n", is_1st_bet);
+        fprintf(save_point, "----------\nTable\n");
+        fprintf(save_point, "%i\n%i\n%i\n%i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
+
+        fprintf(save_point, "Shared cards\n");
+        if (round_index == 0) {
+            fprintf(save_point, "\n\n\n\n\n");
+        } else if (round_index == 1) {
+            for (int j = 0; j < 3; j++) {
+                fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
+            }
+            fprintf(save_point, "\n\n");
+        } else if (round_index == 2) {
+            for (int j = 0; j < 4; j++) {
+                fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
+            }
+            fprintf(save_point, "\n");
+        } else if (round_index == 3) {
+            for (int j = 0; j < 5; j++) {
+                fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
+            }
+        } else {
+            fprintf(save_point, "wtf\n");
+        }
         fprintf(save_point, "----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
             fprintf(save_point, "Player %i:\n%i\n%i\n%i\n%i %i\n%i %i\n%i\n%i\n", i + 1,
@@ -1003,26 +1026,6 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
                     player[i].hand[0].suit, player[i].hand[0].rank,
                     player[i].hand[1].suit, player[i].hand[1].rank,
                     player[i].isSmallBlind, player[i].isBigBlind);
-        }
-        fprintf(save_point, "----------\nTable\n");
-        fprintf(save_point, "%i\n%i\n%i\n%i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
-        if (round_index != 0) {
-            fprintf(save_point, "Shared cards\n");
-            if (round_index == 1) {
-                for (int j = 0; j < 3; j++) {
-                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
-                }
-            } else if (round_index == 2) {
-                for (int j = 0; j < 4; j++) {
-                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
-                }
-            } else if (round_index == 3) {
-                for (int j = 0; j < 5; j++) {
-                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
-                }
-            } else {
-                fprintf(save_point, "wtf\n");
-            }
         }
         fclose(save_point);
     } else {
@@ -1087,7 +1090,7 @@ void load(Table * table, Deck * deck) {
     FILE * save;
     char line [20];
     char *s;
-    int i = 0, j = 0, l = 0, round_index = 0; // i: count line, j: deck size, l: share card size
+    int i = 0, j = 0, l = 0, round_index = 0, num_player = 0; // i: count line, j: deck size, l: share card size
     save = fopen("../src/game.txt", "r");
     if (save != NULL) {
         while (fgets(line, 20, save) != NULL) {
@@ -1097,6 +1100,12 @@ void load(Table * table, Deck * deck) {
             if (i == 2) {
                 round_index = atoi(line);
                 printf("Round index: %i\n", round_index);
+            }
+
+            // Load number of Player
+            if (i == 8) {
+                num_player = atoi(line);
+                printf("Number of player: %i\n", num_player);
             }
 
             // Load deck
@@ -1126,12 +1135,12 @@ void load(Table * table, Deck * deck) {
             }
 
             // Load table
-            if (i >= 107 && i <= 110) {
+            if (i >= 77 && i <= 80) {
                 switch (i) {
-                    case 107: table->pot_money = atoi (line);
-                    case 108: table->ante = atoi (line);
-                    case 109: table->highest_bet = atoi (line);
-                    case 110: table->last_bet = atoi (line);
+                    case 77: table->pot_money = atoi (line);
+                    case 78: table->ante = atoi (line);
+                    case 79: table->highest_bet = atoi (line);
+                    case 80: table->last_bet = atoi (line);
                     default: printf("Shit\n");
                 }
             }
@@ -1141,7 +1150,7 @@ void load(Table * table, Deck * deck) {
                 if (round_index == 1) {
                     table->card_idx = 3;
 
-                    if (i >= 112 && i <= 114){
+                    if (i >= 82 && i <= 84){
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1168,7 +1177,7 @@ void load(Table * table, Deck * deck) {
                 } else if (round_index == 2) {
                     table->card_idx = 4;
 
-                    if (i >= 112 && i <= 115){
+                    if (i >= 82 && i <= 85){
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1195,7 +1204,7 @@ void load(Table * table, Deck * deck) {
                 } else if (round_index == 3) {
                     table->card_idx = 5;
 
-                    if (i >= 112 && i <= 116){
+                    if (i >= 82 && i <= 86){
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1221,7 +1230,6 @@ void load(Table * table, Deck * deck) {
                     }
                 }
             }
-
 
         }
     } else {
@@ -1796,7 +1804,6 @@ int main() {
     printf("\n");
     displayTableInfo(*table);
 
-//
 //    printf("Number of player: %i\n", num_player);
 //    FILE * save;
 //    char line [20];
