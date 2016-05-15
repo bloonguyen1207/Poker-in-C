@@ -848,7 +848,7 @@ int save(Player *players, Table * table, Deck * deck, int num_player, int round_
     }
 }
 
-void loadNumPlayer(int * num_player) {
+int loadNumPlayer(int * num_player) {
     FILE * save;
     char line [20];
     int i = 0; // i: count line
@@ -863,7 +863,9 @@ void loadNumPlayer(int * num_player) {
             }
         }
         fclose(save);
+        return 1;
     } else {
+        return 0;
     }
 }
 
@@ -1061,6 +1063,7 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         case 5: players[0].state = Allins;
                             break;
                         case 6: players[0].state = Folded;
+                            players[1].status = 0;
                             break;
                         case 7: players[0].state = SB;
                             break;
@@ -1123,6 +1126,7 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         case 5: players[1].state = Allins;
                             break;
                         case 6: players[1].state = Folded;
+                            players[1].status = 0;
                             break;
                         case 7: players[1].state = SB;
                             break;
@@ -1132,6 +1136,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                     }
                 }
                 if (i >= 101 && i <= 102) {
+                    if (i == 102) {
+                        m = 1;
+                    }
                     s = strtok(line, " ");
                     int k = 0;
                     while (s != NULL) {
@@ -1186,6 +1193,7 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                             case 5: players[2].state = Allins;
                                 break;
                             case 6: players[2].state = Folded;
+                                players[2].status = 0;
                                 break;
                             case 7: players[2].state = SB;
                                 break;
@@ -1195,6 +1203,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         }
                     }
                     if (i >= 109 && i <= 110) {
+                        if (i == 110) {
+                            m = 1;
+                        }
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1250,6 +1261,7 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                             case 5: players[3].state = Allins;
                                 break;
                             case 6: players[3].state = Folded;
+                                players[3].status = 0;
                                 break;
                             case 7: players[3].state = SB;
                                 break;
@@ -1259,6 +1271,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         }
                     }
                     if (i >= 117 && i <= 118) {
+                        if (i == 118) {
+                            m = 1;
+                        }
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1314,6 +1329,7 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                             case 5: players[4].state = Allins;
                                 break;
                             case 6: players[4].state = Folded;
+                                players[4].status = 0;
                                 break;
                             case 7: players[4].state = SB;
                                 break;
@@ -1323,6 +1339,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         }
                     }
                     if (i >= 125 && i <= 126) {
+                        if (i == 126) {
+                            m = 1;
+                        }
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {

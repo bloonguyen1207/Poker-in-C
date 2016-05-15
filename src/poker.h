@@ -387,7 +387,7 @@ int save(Player *players, Table * table, Deck * deck, int num_player, int round_
 /** load number of players
   * @param num_player number of players
   */
-void loadNumPlayer(int * num_player);
+int loadNumPlayer(int * num_player);
 
 /** load the information of round - the number of players check / allin / call and if this is the first turn
   * @param countCheck count the number of players check in a round

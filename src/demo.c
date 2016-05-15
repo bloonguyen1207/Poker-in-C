@@ -1330,9 +1330,13 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                 }
                 if (i >= 101 && i <= 102) {
                     s = strtok(line, " ");
+                    if (i == 102) {
+                        m = 1;
+                    }
                     int k = 0;
                     while (s != NULL) {
                         k++;
+                        printf("m = %d\n", m);
                         if (m < 2) {
                             if (k == 1) {
                                 if (atoi(s) == 0) {
@@ -1392,6 +1396,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         }
                     }
                     if (i >= 109 && i <= 110) {
+                        if (i == 110) {
+                            m = 1;
+                        }
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1456,6 +1463,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         }
                     }
                     if (i >= 117 && i <= 118) {
+                        if (i == 118) {
+                            m = 1;
+                        }
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -1520,6 +1530,9 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                         }
                     }
                     if (i >= 125 && i <= 126) {
+                        if (i == 126) {
+                            m = 1;
+                        }
                         s = strtok(line, " ");
                         int k = 0;
                         while (s != NULL) {
@@ -2133,6 +2146,11 @@ int main() {
 
     for (int n = 0; n < num_player; n++) {
         displayPlayerInfo(players[n]);
+        printf("\n");
+        for (int i = 0; i < 2; i++) {
+            printf("%s", getSuit(players[n].hand[i].suit));
+            printf("%d ", players[n].hand[i].rank);
+        }
         printf("\n");
     }
 
