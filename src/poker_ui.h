@@ -1,6 +1,14 @@
 #ifndef POKER_UI
 #define POKER_UI
 
+/** set up screen (background, color, size, etc)
+  */
+static void init_screen();
+
+/** close terminal
+  */
+static void finish(int sig);
+
 /** draw a card
   * @param card card
   * @param y position based on y axis

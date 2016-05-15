@@ -254,16 +254,12 @@ int isStraightFlush(Hand hand, Player* player);
   */
 int isRoyalFlush(Hand hand, Player *player);
 
-int scanInput(int num_option);
-
 /** after the player chose their option, this function will increase the bet of player and pot on table, decrease player's money
   * @param player player
   * @param table table
   * @param money the money spent for that option
   */
 void updateMoney(Player *player, Table * table, int money);
-
-int inputMoney(int min, int max);
 
 /** check if the player's need to All in
   * @param player player

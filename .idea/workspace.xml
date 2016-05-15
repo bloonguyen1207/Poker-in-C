@@ -16,11 +16,271 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/game.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="$PROJECT_DIR$/src/demo.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker.c" afterPath="$PROJECT_DIR$/src/poker.c" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/doxygen_sqlite3.db" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/annotated.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/bc_s.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/bdwn.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/classes.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/closed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/demo_8c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/doxygen.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/doxygen.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/dynsections.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/files.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2blank.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2doc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2folderclosed.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2folderopen.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2lastnode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2link.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2mlastnode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2mnode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2node.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2plastnode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2pnode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2splitbar.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2vertline.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/functions.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/functions_vars.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_b.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_d.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_defs.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_enum.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_eval.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_f.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_b.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_d.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_f.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_g.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_i.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_l.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_m.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_n.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_r.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_s.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_t.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_u.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_g.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_h.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_i.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_l.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_m.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_n.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_o.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_p.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_r.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_s.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_t.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_type.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_u.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/jquery.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/nav_f.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/nav_g.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/nav_h.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/open.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker_8c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker_8h.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker_8h_source.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker__ui_8c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker__ui_8h.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker__ui_8h_source.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_10.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_10.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_6.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_7.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_8.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_8.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_9.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_9.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_a.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_a.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_b.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_b.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_c.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_d.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_d.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_e.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_e.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_f.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_f.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/close.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/defines_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/defines_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_6.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_7.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_8.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_8.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_9.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_9.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_a.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_a.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_6.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_7.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_8.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_8.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_9.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_9.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_a.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_a.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_b.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_b.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_c.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_c.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_d.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_d.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/mag_sel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/nomatches.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search_l.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search_m.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search_r.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_6.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_7.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_0.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_0.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_1.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_2.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_3.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_4.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_4.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_5.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_5.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_6.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_6.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_7.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_7.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_8.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_8.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_9.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_9.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_a.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_a.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_b.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_b.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structcard-members.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structcard.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structdeck-members.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structdeck.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structhand-members.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structhand.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structplayer-members.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structplayer.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structtable-members.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structtable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/sync_off.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/sync_on.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_a.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_b.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_h.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_s.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tabs.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/Makefile" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/annotated.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/demo_8c.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/doxygen.sty" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/files.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker_8c.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker_8h.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker__ui_8c.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker__ui_8h.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/refman.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structcard.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structdeck.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structhand.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structplayer.tex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structtable.tex" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" afterPath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CMakeLists.txt" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker.h" afterPath="$PROJECT_DIR$/src/poker.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.c" afterPath="$PROJECT_DIR$/src/poker_ui.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.h" afterPath="$PROJECT_DIR$/src/poker_ui.h" />
     </list>
     <ignored path="COSC2451_A2_s3515305_s3558475.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,17 +305,86 @@
         <entry file="file://$PROJECT_DIR$/src/poker.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="389" column="35" selection-start-line="389" selection-start-column="35" selection-end-line="389" selection-end-column="35" />
-              <folding />
+              <caret line="254" column="44" selection-start-line="254" selection-start-column="44" selection-end-line="254" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#2#0" expanded="false" />
+                <element signature="e#70#118#0" expanded="false" />
+                <element signature="e#119#168#1" expanded="false" />
+                <element signature="e#195#288#0" expanded="false" />
+                <element signature="e#289#396#1" expanded="false" />
+                <element signature="e#423#628#0" expanded="false" />
+                <element signature="e#629#701#1" expanded="false" />
+                <element signature="e#730#753#0" expanded="false" />
+                <element signature="e#754#798#1" expanded="false" />
+                <element signature="e#827#850#0" expanded="false" />
+                <element signature="e#851#1003#1" expanded="false" />
+                <element signature="e#1032#1057#0" expanded="false" />
+                <element signature="e#1058#1743#1" expanded="false" />
+                <element signature="e#1776#1800#0" expanded="false" />
+                <element signature="e#1801#2443#1" expanded="false" />
+                <element signature="e#2474#2497#0" expanded="false" />
+                <element signature="e#2498#2594#1" expanded="false" />
+                <element signature="e#2623#2712#0" expanded="false" />
+                <element signature="e#2737#2820#0" expanded="false" />
+                <element signature="e#2847#2946#0" expanded="false" />
+                <element signature="e#2971#3066#0" expanded="false" />
+                <element signature="e#3097#3163#0" expanded="false" />
+                <element signature="e#3182#3369#0" expanded="false" />
+                <element signature="e#3411#3558#0" expanded="false" />
+                <element signature="e#3599#3663#0" expanded="false" />
+                <element signature="e#3688#3820#0" expanded="false" />
+                <element signature="e#3889#4040#0" expanded="false" />
+                <element signature="e#4104#4393#0" expanded="false" />
+                <element signature="e#4462#4681#0" expanded="false" />
+                <element signature="e#4750#4895#0" expanded="false" />
+                <element signature="e#4942#5062#0" expanded="false" />
+                <element signature="e#5105#5223#0" expanded="false" />
+                <element signature="e#5263#5485#0" expanded="false" />
+                <element signature="e#5531#5773#0" expanded="false" />
+                <element signature="e#5814#6058#0" expanded="false" />
+                <element signature="e#6099#6360#0" expanded="false" />
+                <element signature="e#6404#6663#0" expanded="false" />
+                <element signature="e#6707#6943#0" expanded="false" />
+                <element signature="e#6988#7218#0" expanded="false" />
+                <element signature="e#7262#7483#0" expanded="false" />
+                <element signature="e#7525#7789#0" expanded="false" />
+                <element signature="e#7839#8101#0" expanded="false" />
+                <element signature="e#8148#8378#0" expanded="false" />
+                <element signature="e#8440#8533#0" expanded="false" />
+                <element signature="e#8576#8673#0" expanded="false" />
+                <element signature="e#8720#8816#0" expanded="false" />
+                <element signature="e#8862#8966#0" expanded="false" />
+                <element signature="e#9011#9115#0" expanded="false" />
+                <element signature="e#9159#9292#0" expanded="false" />
+                <element signature="e#9352#9418#0" expanded="false" />
+                <element signature="e#9449#9579#0" expanded="false" />
+                <element signature="e#9634#9715#0" expanded="false" />
+                <element signature="e#9745#9881#0" expanded="false" />
+                <element signature="e#9925#10056#0" expanded="false" />
+                <element signature="e#10111#10231#0" expanded="false" />
+                <element signature="e#10277#10423#0" expanded="false" />
+                <element signature="e#10469#10589#0" expanded="false" />
+                <element signature="e#10643#10765#0" expanded="false" />
+                <element signature="e#10812#10960#0" expanded="false" />
+                <element signature="e#11007#11129#0" expanded="false" />
+                <element signature="e#11184#11702#0" expanded="false" />
+                <element signature="e#11882#11953#0" expanded="false" />
+                <element signature="e#11992#12380#0" expanded="false" />
+                <element signature="e#12473#12685#0" expanded="false" />
+                <element signature="e#12763#12858#0" expanded="false" />
+                <element signature="e#12912#13361#0" expanded="false" />
+                <element signature="e#13425#13581#0" expanded="false" />
+                <element signature="e#13644#13804#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.714286">
-              <caret line="1152" column="40" selection-start-line="1152" selection-start-column="40" selection-end-line="1152" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.31889763">
+              <caret line="19" column="28" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding>
                 <element signature="e#0#9#0" expanded="false" />
                 <element signature="e#493#2629#0" expanded="false" />
@@ -75,94 +404,14 @@
                 <element signature="e#18797#21408#0" expanded="false" />
                 <element signature="e#21410#26910#0" expanded="false" />
                 <element signature="e#26912#30913#0" expanded="false" />
+                <element signature="e#30915#32524#0" expanded="false" />
                 <element signature="e#32526#33287#0" expanded="false" />
                 <element signature="e#33289#34807#0" expanded="false" />
                 <element signature="e#34809#35374#0" expanded="false" />
                 <element signature="e#35376#35883#0" expanded="false" />
                 <element signature="e#35885#36453#0" expanded="false" />
+                <element signature="e#36455#37470#0" expanded="false" />
                 <element signature="e#37472#38437#0" expanded="false" />
-                <element signature="e#38439#38579#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="demo.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/demo.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-240.89285">
-              <caret line="1532" column="36" selection-start-line="1532" selection-start-column="36" selection-end-line="1532" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#2#0" expanded="false" />
-                <element signature="e#119#168#1" expanded="false" />
-                <element signature="e#195#303#1" expanded="false" />
-                <element signature="e#330#402#1" expanded="false" />
-                <element signature="e#431#481#1" expanded="false" />
-                <element signature="e#512#556#1" expanded="false" />
-                <element signature="e#585#640#1" expanded="false" />
-                <element signature="e#669#898#1" expanded="false" />
-                <element signature="e#931#1102#1" expanded="false" />
-                <element signature="e#1133#1166#1" expanded="false" />
-                <element signature="e#1195#1443#0" expanded="false" />
-                <element signature="e#1445#1841#0" expanded="false" />
-                <element signature="e#1843#2124#0" expanded="false" />
-                <element signature="e#2126#2752#0" expanded="false" />
-                <element signature="e#2754#3196#0" expanded="false" />
-                <element signature="e#3198#3337#0" expanded="false" />
-                <element signature="e#3339#3917#0" expanded="false" />
-                <element signature="e#3919#4262#0" expanded="false" />
-                <element signature="e#4264#4653#0" expanded="false" />
-                <element signature="e#4656#5096#0" expanded="false" />
-                <element signature="e#5098#5319#0" expanded="false" />
-                <element signature="e#5321#6260#0" expanded="false" />
-                <element signature="e#6262#6432#0" expanded="false" />
-                <element signature="e#6434#6641#0" expanded="false" />
-                <element signature="e#6643#6978#0" expanded="false" />
-                <element signature="e#6981#7182#0" expanded="false" />
-                <element signature="e#7184#7947#0" expanded="false" />
-                <element signature="e#7949#8908#0" expanded="false" />
-                <element signature="e#8910#9974#0" expanded="false" />
-                <element signature="e#9976#11118#0" expanded="false" />
-                <element signature="e#11120#12179#0" expanded="false" />
-                <element signature="e#12181#13776#0" expanded="false" />
-                <element signature="e#13778#14368#0" expanded="false" />
-                <element signature="e#14370#15032#0" expanded="false" />
-                <element signature="e#15034#16112#0" expanded="false" />
-                <element signature="e#16114#16654#0" expanded="false" />
-                <element signature="e#16656#16818#0" expanded="false" />
-                <element signature="e#16820#16929#0" expanded="false" />
-                <element signature="e#16931#17468#0" expanded="false" />
-                <element signature="e#17470#17571#0" expanded="false" />
-                <element signature="e#17573#17663#0" expanded="false" />
-                <element signature="e#17665#17755#0" expanded="false" />
-                <element signature="e#17757#17959#0" expanded="false" />
-                <element signature="e#17961#18278#0" expanded="false" />
-                <element signature="e#18280#18657#0" expanded="false" />
-                <element signature="e#18659#18747#0" expanded="false" />
-                <element signature="e#18749#19048#0" expanded="false" />
-                <element signature="e#19050#19132#0" expanded="false" />
-                <element signature="e#19134#19375#0" expanded="false" />
-                <element signature="e#19377#20055#0" expanded="false" />
-                <element signature="e#20057#21231#0" expanded="false" />
-                <element signature="e#21233#21753#0" expanded="false" />
-                <element signature="e#21755#22929#0" expanded="false" />
-                <element signature="e#22931#24592#0" expanded="false" />
-                <element signature="e#24594#24807#0" expanded="false" />
-                <element signature="e#24809#25299#0" expanded="false" />
-                <element signature="e#25301#26060#0" expanded="false" />
-                <element signature="e#26062#26276#0" expanded="false" />
-                <element signature="e#26278#28042#0" expanded="false" />
-                <element signature="e#28044#30585#0" expanded="false" />
-                <element signature="e#30587#31160#0" expanded="false" />
-                <element signature="e#31162#32136#0" expanded="false" />
-                <element signature="e#52122#56741#0" expanded="false" />
-                <element signature="e#56743#60267#0" expanded="false" />
-                <element signature="e#60269#63620#0" expanded="false" />
-                <element signature="e#63622#64437#0" expanded="false" />
-                <element signature="e#64439#65102#0" expanded="false" />
-                <element signature="e#65104#68493#0" expanded="false" />
-                <element signature="e#68495#68605#0" expanded="false" />
-                <element signature="e#68607#72083#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -172,20 +421,54 @@
         <entry file="file://$PROJECT_DIR$/src/poker_ui.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+              <folding>
+                <element signature="e#35#88#0" expanded="false" />
+                <element signature="e#117#140#0" expanded="false" />
+                <element signature="e#171#288#0" expanded="false" />
+                <element signature="e#330#447#0" expanded="false" />
+                <element signature="e#484#507#0" expanded="false" />
+                <element signature="e#524#744#0" expanded="false" />
+                <element signature="e#815#1029#0" expanded="false" />
+                <element signature="e#1101#1325#0" expanded="false" />
+                <element signature="e#1405#1445#0" expanded="false" />
+                <element signature="e#1474#1554#0" expanded="false" />
+                <element signature="e#1604#1878#0" expanded="false" />
+                <element signature="e#1940#2215#0" expanded="false" />
+                <element signature="e#2280#2460#0" expanded="false" />
+                <element signature="e#2496#2735#0" expanded="false" />
+                <element signature="e#2830#3167#0" expanded="false" />
+                <element signature="e#3272#3490#0" expanded="false" />
+                <element signature="e#3588#4084#0" expanded="false" />
+                <element signature="e#4259#4571#0" expanded="false" />
+                <element signature="e#4685#4973#0" expanded="false" />
+                <element signature="e#5074#5296#0" expanded="false" />
+                <element signature="e#5342#5457#0" expanded="false" />
+                <element signature="e#5505#5701#0" expanded="false" />
+                <element signature="e#5752#5818#0" expanded="false" />
+                <element signature="e#5838#5912#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="poker.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="poker.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/poker.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.1476378">
-              <caret line="850" column="0" selection-start-line="850" selection-start-column="0" selection-end-line="850" selection-end-column="35" />
+            <state vertical-scroll-proportion="-5.857143">
+              <caret line="853" column="31" selection-start-line="853" selection-start-column="31" selection-end-line="853" selection-end-column="31" />
               <folding>
                 <element signature="e#0#9#0" expanded="false" />
-                <element signature="e#287#516#0" expanded="false" />
                 <element signature="e#518#890#0" expanded="false" />
                 <element signature="e#892#1353#0" expanded="false" />
                 <element signature="e#1355#1809#0" expanded="false" />
@@ -250,15 +533,15 @@
       <list>
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/poker.sh" />
-        <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/test.txt" />
-        <option value="$PROJECT_DIR$/src/poker_ui.h" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/game.txt" />
         <option value="$PROJECT_DIR$/src/demo.c" />
         <option value="$PROJECT_DIR$/src/poker.c" />
-        <option value="$PROJECT_DIR$/src/poker.h" />
         <option value="$PROJECT_DIR$/src/poker_ui.c" />
+        <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/poker_ui.h" />
+        <option value="$PROJECT_DIR$/src/poker.h" />
       </list>
     </option>
   </component>
@@ -416,8 +699,8 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24382521" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3869969" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2244582" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32817337" sideWeight="0.4969278" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.5092166" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15789473" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -493,7 +776,6 @@
           <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#287#516#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
             <element signature="e#892#1353#0" expanded="false" />
             <element signature="e#1355#1809#0" expanded="false" />
@@ -574,7 +856,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#287#516#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
             <element signature="e#892#1353#0" expanded="false" />
             <element signature="e#1355#1809#0" expanded="false" />
@@ -655,7 +936,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#287#516#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
             <element signature="e#892#1353#0" expanded="false" />
             <element signature="e#1355#1809#0" expanded="false" />
@@ -757,7 +1037,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#287#516#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
             <element signature="e#892#1353#0" expanded="false" />
             <element signature="e#1355#1809#0" expanded="false" />
@@ -838,7 +1117,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#287#516#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
             <element signature="e#892#1353#0" expanded="false" />
             <element signature="e#1355#1809#0" expanded="false" />
@@ -1006,13 +1284,14 @@
             <element signature="e#18797#21408#0" expanded="false" />
             <element signature="e#21410#26910#0" expanded="false" />
             <element signature="e#26912#30913#0" expanded="false" />
+            <element signature="e#30915#32524#0" expanded="false" />
             <element signature="e#32526#33287#0" expanded="false" />
             <element signature="e#33289#34807#0" expanded="false" />
             <element signature="e#34809#35374#0" expanded="false" />
             <element signature="e#35376#35883#0" expanded="false" />
             <element signature="e#35885#36453#0" expanded="false" />
+            <element signature="e#36455#37470#0" expanded="false" />
             <element signature="e#37472#38437#0" expanded="false" />
-            <element signature="e#38439#38579#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1024,24 +1303,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/poker.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08237986">
           <caret line="2" column="70" selection-start-line="2" selection-start-column="70" selection-end-line="2" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1052,123 +1317,95 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker.h">
+    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="389" column="35" selection-start-line="389" selection-start-column="35" selection-end-line="389" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.58536583">
+          <caret line="12" column="51" selection-start-line="12" selection-start-column="51" selection-end-line="12" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.714286">
-          <caret line="1152" column="40" selection-start-line="1152" selection-start-column="40" selection-end-line="1152" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#493#2629#0" expanded="false" />
-            <element signature="e#2631#2882#0" expanded="false" />
-            <element signature="e#2884#3363#0" expanded="false" />
-            <element signature="e#3365#5075#0" expanded="false" />
-            <element signature="e#5077#5620#0" expanded="false" />
-            <element signature="e#5622#6536#0" expanded="false" />
-            <element signature="e#6538#6695#0" expanded="false" />
-            <element signature="e#6697#6950#0" expanded="false" />
-            <element signature="e#6952#7685#0" expanded="false" />
-            <element signature="e#7687#8896#0" expanded="false" />
-            <element signature="e#8898#9499#0" expanded="false" />
-            <element signature="e#9501#9754#0" expanded="false" />
-            <element signature="e#9756#11763#0" expanded="false" />
-            <element signature="e#11765#18795#0" expanded="false" />
-            <element signature="e#18797#21408#0" expanded="false" />
-            <element signature="e#21410#26910#0" expanded="false" />
-            <element signature="e#26912#30913#0" expanded="false" />
-            <element signature="e#32526#33287#0" expanded="false" />
-            <element signature="e#33289#34807#0" expanded="false" />
-            <element signature="e#34809#35374#0" expanded="false" />
-            <element signature="e#35376#35883#0" expanded="false" />
-            <element signature="e#35885#36453#0" expanded="false" />
-            <element signature="e#37472#38437#0" expanded="false" />
-            <element signature="e#38439#38579#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/demo.c">
+    <entry file="file://$PROJECT_DIR$/src/poker.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-240.89285">
-          <caret line="1532" column="36" selection-start-line="1532" selection-start-column="36" selection-end-line="1532" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="254" column="44" selection-start-line="254" selection-start-column="44" selection-end-line="254" selection-end-column="44" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#70#118#0" expanded="false" />
             <element signature="e#119#168#1" expanded="false" />
-            <element signature="e#195#303#1" expanded="false" />
-            <element signature="e#330#402#1" expanded="false" />
-            <element signature="e#431#481#1" expanded="false" />
-            <element signature="e#512#556#1" expanded="false" />
-            <element signature="e#585#640#1" expanded="false" />
-            <element signature="e#669#898#1" expanded="false" />
-            <element signature="e#931#1102#1" expanded="false" />
-            <element signature="e#1133#1166#1" expanded="false" />
-            <element signature="e#1195#1443#0" expanded="false" />
-            <element signature="e#1445#1841#0" expanded="false" />
-            <element signature="e#1843#2124#0" expanded="false" />
-            <element signature="e#2126#2752#0" expanded="false" />
-            <element signature="e#2754#3196#0" expanded="false" />
-            <element signature="e#3198#3337#0" expanded="false" />
-            <element signature="e#3339#3917#0" expanded="false" />
-            <element signature="e#3919#4262#0" expanded="false" />
-            <element signature="e#4264#4653#0" expanded="false" />
-            <element signature="e#4656#5096#0" expanded="false" />
-            <element signature="e#5098#5319#0" expanded="false" />
-            <element signature="e#5321#6260#0" expanded="false" />
-            <element signature="e#6262#6432#0" expanded="false" />
-            <element signature="e#6434#6641#0" expanded="false" />
-            <element signature="e#6643#6978#0" expanded="false" />
-            <element signature="e#6981#7182#0" expanded="false" />
-            <element signature="e#7184#7947#0" expanded="false" />
-            <element signature="e#7949#8908#0" expanded="false" />
-            <element signature="e#8910#9974#0" expanded="false" />
-            <element signature="e#9976#11118#0" expanded="false" />
-            <element signature="e#11120#12179#0" expanded="false" />
-            <element signature="e#12181#13776#0" expanded="false" />
-            <element signature="e#13778#14368#0" expanded="false" />
-            <element signature="e#14370#15032#0" expanded="false" />
-            <element signature="e#15034#16112#0" expanded="false" />
-            <element signature="e#16114#16654#0" expanded="false" />
-            <element signature="e#16656#16818#0" expanded="false" />
-            <element signature="e#16820#16929#0" expanded="false" />
-            <element signature="e#16931#17468#0" expanded="false" />
-            <element signature="e#17470#17571#0" expanded="false" />
-            <element signature="e#17573#17663#0" expanded="false" />
-            <element signature="e#17665#17755#0" expanded="false" />
-            <element signature="e#17757#17959#0" expanded="false" />
-            <element signature="e#17961#18278#0" expanded="false" />
-            <element signature="e#18280#18657#0" expanded="false" />
-            <element signature="e#18659#18747#0" expanded="false" />
-            <element signature="e#18749#19048#0" expanded="false" />
-            <element signature="e#19050#19132#0" expanded="false" />
-            <element signature="e#19134#19375#0" expanded="false" />
-            <element signature="e#19377#20055#0" expanded="false" />
-            <element signature="e#20057#21231#0" expanded="false" />
-            <element signature="e#21233#21753#0" expanded="false" />
-            <element signature="e#21755#22929#0" expanded="false" />
-            <element signature="e#22931#24592#0" expanded="false" />
-            <element signature="e#24594#24807#0" expanded="false" />
-            <element signature="e#24809#25299#0" expanded="false" />
-            <element signature="e#25301#26060#0" expanded="false" />
-            <element signature="e#26062#26276#0" expanded="false" />
-            <element signature="e#26278#28042#0" expanded="false" />
-            <element signature="e#28044#30585#0" expanded="false" />
-            <element signature="e#30587#31160#0" expanded="false" />
-            <element signature="e#31162#32136#0" expanded="false" />
-            <element signature="e#52122#56741#0" expanded="false" />
-            <element signature="e#56743#60267#0" expanded="false" />
-            <element signature="e#60269#63620#0" expanded="false" />
-            <element signature="e#63622#64437#0" expanded="false" />
-            <element signature="e#64439#65102#0" expanded="false" />
-            <element signature="e#65104#68493#0" expanded="false" />
-            <element signature="e#68495#68605#0" expanded="false" />
-            <element signature="e#68607#72083#0" expanded="false" />
+            <element signature="e#195#288#0" expanded="false" />
+            <element signature="e#289#396#1" expanded="false" />
+            <element signature="e#423#628#0" expanded="false" />
+            <element signature="e#629#701#1" expanded="false" />
+            <element signature="e#730#753#0" expanded="false" />
+            <element signature="e#754#798#1" expanded="false" />
+            <element signature="e#827#850#0" expanded="false" />
+            <element signature="e#851#1003#1" expanded="false" />
+            <element signature="e#1032#1057#0" expanded="false" />
+            <element signature="e#1058#1743#1" expanded="false" />
+            <element signature="e#1776#1800#0" expanded="false" />
+            <element signature="e#1801#2443#1" expanded="false" />
+            <element signature="e#2474#2497#0" expanded="false" />
+            <element signature="e#2498#2594#1" expanded="false" />
+            <element signature="e#2623#2712#0" expanded="false" />
+            <element signature="e#2737#2820#0" expanded="false" />
+            <element signature="e#2847#2946#0" expanded="false" />
+            <element signature="e#2971#3066#0" expanded="false" />
+            <element signature="e#3097#3163#0" expanded="false" />
+            <element signature="e#3182#3369#0" expanded="false" />
+            <element signature="e#3411#3558#0" expanded="false" />
+            <element signature="e#3599#3663#0" expanded="false" />
+            <element signature="e#3688#3820#0" expanded="false" />
+            <element signature="e#3889#4040#0" expanded="false" />
+            <element signature="e#4104#4393#0" expanded="false" />
+            <element signature="e#4462#4681#0" expanded="false" />
+            <element signature="e#4750#4895#0" expanded="false" />
+            <element signature="e#4942#5062#0" expanded="false" />
+            <element signature="e#5105#5223#0" expanded="false" />
+            <element signature="e#5263#5485#0" expanded="false" />
+            <element signature="e#5531#5773#0" expanded="false" />
+            <element signature="e#5814#6058#0" expanded="false" />
+            <element signature="e#6099#6360#0" expanded="false" />
+            <element signature="e#6404#6663#0" expanded="false" />
+            <element signature="e#6707#6943#0" expanded="false" />
+            <element signature="e#6988#7218#0" expanded="false" />
+            <element signature="e#7262#7483#0" expanded="false" />
+            <element signature="e#7525#7789#0" expanded="false" />
+            <element signature="e#7839#8101#0" expanded="false" />
+            <element signature="e#8148#8378#0" expanded="false" />
+            <element signature="e#8440#8533#0" expanded="false" />
+            <element signature="e#8576#8673#0" expanded="false" />
+            <element signature="e#8720#8816#0" expanded="false" />
+            <element signature="e#8862#8966#0" expanded="false" />
+            <element signature="e#9011#9115#0" expanded="false" />
+            <element signature="e#9159#9292#0" expanded="false" />
+            <element signature="e#9352#9418#0" expanded="false" />
+            <element signature="e#9449#9579#0" expanded="false" />
+            <element signature="e#9634#9715#0" expanded="false" />
+            <element signature="e#9745#9881#0" expanded="false" />
+            <element signature="e#9925#10056#0" expanded="false" />
+            <element signature="e#10111#10231#0" expanded="false" />
+            <element signature="e#10277#10423#0" expanded="false" />
+            <element signature="e#10469#10589#0" expanded="false" />
+            <element signature="e#10643#10765#0" expanded="false" />
+            <element signature="e#10812#10960#0" expanded="false" />
+            <element signature="e#11007#11129#0" expanded="false" />
+            <element signature="e#11184#11702#0" expanded="false" />
+            <element signature="e#11882#11953#0" expanded="false" />
+            <element signature="e#11992#12380#0" expanded="false" />
+            <element signature="e#12473#12685#0" expanded="false" />
+            <element signature="e#12763#12858#0" expanded="false" />
+            <element signature="e#12912#13361#0" expanded="false" />
+            <element signature="e#13425#13581#0" expanded="false" />
+            <element signature="e#13644#13804#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1176,18 +1413,42 @@
     <entry file="file://$PROJECT_DIR$/src/poker_ui.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-          <folding />
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+          <folding>
+            <element signature="e#35#88#0" expanded="false" />
+            <element signature="e#117#140#0" expanded="false" />
+            <element signature="e#171#288#0" expanded="false" />
+            <element signature="e#330#447#0" expanded="false" />
+            <element signature="e#484#507#0" expanded="false" />
+            <element signature="e#524#744#0" expanded="false" />
+            <element signature="e#815#1029#0" expanded="false" />
+            <element signature="e#1101#1325#0" expanded="false" />
+            <element signature="e#1405#1445#0" expanded="false" />
+            <element signature="e#1474#1554#0" expanded="false" />
+            <element signature="e#1604#1878#0" expanded="false" />
+            <element signature="e#1940#2215#0" expanded="false" />
+            <element signature="e#2280#2460#0" expanded="false" />
+            <element signature="e#2496#2735#0" expanded="false" />
+            <element signature="e#2830#3167#0" expanded="false" />
+            <element signature="e#3272#3490#0" expanded="false" />
+            <element signature="e#3588#4084#0" expanded="false" />
+            <element signature="e#4259#4571#0" expanded="false" />
+            <element signature="e#4685#4973#0" expanded="false" />
+            <element signature="e#5074#5296#0" expanded="false" />
+            <element signature="e#5342#5457#0" expanded="false" />
+            <element signature="e#5505#5701#0" expanded="false" />
+            <element signature="e#5752#5818#0" expanded="false" />
+            <element signature="e#5838#5912#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/poker.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.1476378">
-          <caret line="850" column="0" selection-start-line="850" selection-start-column="0" selection-end-line="850" selection-end-column="35" />
+        <state vertical-scroll-proportion="-5.857143">
+          <caret line="853" column="31" selection-start-line="853" selection-start-column="31" selection-end-line="853" selection-end-column="31" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#287#516#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
             <element signature="e#892#1353#0" expanded="false" />
             <element signature="e#1355#1809#0" expanded="false" />
@@ -1237,6 +1498,41 @@
             <element signature="e#51721#54145#0" expanded="false" />
             <element signature="e#54147#54902#0" expanded="false" />
             <element signature="e#54904#55558#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31889763">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+            <element signature="e#493#2629#0" expanded="false" />
+            <element signature="e#2631#2882#0" expanded="false" />
+            <element signature="e#2884#3363#0" expanded="false" />
+            <element signature="e#3365#5075#0" expanded="false" />
+            <element signature="e#5077#5620#0" expanded="false" />
+            <element signature="e#5622#6536#0" expanded="false" />
+            <element signature="e#6538#6695#0" expanded="false" />
+            <element signature="e#6697#6950#0" expanded="false" />
+            <element signature="e#6952#7685#0" expanded="false" />
+            <element signature="e#7687#8896#0" expanded="false" />
+            <element signature="e#8898#9499#0" expanded="false" />
+            <element signature="e#9501#9754#0" expanded="false" />
+            <element signature="e#9756#11763#0" expanded="false" />
+            <element signature="e#11765#18795#0" expanded="false" />
+            <element signature="e#18797#21408#0" expanded="false" />
+            <element signature="e#21410#26910#0" expanded="false" />
+            <element signature="e#26912#30913#0" expanded="false" />
+            <element signature="e#30915#32524#0" expanded="false" />
+            <element signature="e#32526#33287#0" expanded="false" />
+            <element signature="e#33289#34807#0" expanded="false" />
+            <element signature="e#34809#35374#0" expanded="false" />
+            <element signature="e#35376#35883#0" expanded="false" />
+            <element signature="e#35885#36453#0" expanded="false" />
+            <element signature="e#36455#37470#0" expanded="false" />
+            <element signature="e#37472#38437#0" expanded="false" />
           </folding>
         </state>
       </provider>
