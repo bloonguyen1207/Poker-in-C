@@ -790,8 +790,8 @@ int consAI (Player *ai, Table *table, int roundIdx) {
     return input;
 }
 
-int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index,
-          int countCheck, int countAllin, int countCall, int is_1st_bet) {
+int save(Player *players, Table * table, Deck * deck, int num_player, int round_index, int player_index,
+         int countCheck, int countAllin, int countCall, int is_1st_bet) {
     FILE *save_point;
     save_point = fopen("src/game.txt", "w+");
     if (save_point != NULL) {
@@ -832,10 +832,10 @@ int save(Player * player, Table * table, Deck * deck, int num_player, int round_
         fprintf(save_point, "----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
             fprintf(save_point, "Player %i:\n%i\n%i\n%i\n%i %i\n%i %i\n%i\n%i\n", i + 1,
-                    player[i].money, player[i].bet, player[i].state,
-                    player[i].hand[0].suit, player[i].hand[0].rank,
-                    player[i].hand[1].suit, player[i].hand[1].rank,
-                    player[i].isSmallBlind, player[i].isBigBlind);
+                    players[i].money, players[i].bet, players[i].state,
+                    players[i].hand[0].suit, players[i].hand[0].rank,
+                    players[i].hand[1].suit, players[i].hand[1].rank,
+                    players[i].isSmallBlind, players[i].isBigBlind);
         }
         fclose(save_point);
         return 1;
