@@ -13,6 +13,18 @@
 * At the end of the game, the remaining players reveal their cards. The player with the highest hand is the winner. He receives the entire pot of all the bets made during the game. If there are more than one winner, the pot will be split to winners.
 * In the next game, the next player to the right of current Small Blind are set to be a new Small Blind. Similarly, a new Big Blind is set.
 ---------------------------------
+#WINNING HAND RANKINGS
+* Royal Flush - A K Q J 10 of the same suit (highest hand rankings)
+* Straight Flush - Five cards of the same suit in consecutive order
+* Four of a Kind - Four cards of the same card's rank
+* Full House - A combination of three of a kind and a pair
+* Flush - Any five cards of the same suit
+* Straight - Five cards in consecutive order, suit irrelevant, A K Q J 10 is the highest straight and 5 4 3 2 A is the lowest straight
+* Three of a Kind - Three cards of the same card's rank
+* Two Pair - Two sets of two cards of the same card's rank
+* One Pair - Two cards of the same card's rank
+* High Card - The one card with the highest card's rank (lowest hand rankings)
+---------------------------------
 #HOW TO INTERACT WITH THIS PROGRAM
 * Using ARROW KEYS to move the selection
 * Pressing ENTER to select
