@@ -88,6 +88,21 @@ void center(int row, char *title) {
     refresh();
 }
 
+void credit() {
+    clear();
+    center(1, "CREDIT");
+    center(4, "COSC2451 - Programming Techniques");
+    center(5, "Semester A - 2016");
+    center(7, "Lecturer's name: Denis Rinfret");
+    mvaddstr(10, COLS / 2 - 20, "Nguyen Ha Phuong Mai");
+    mvaddstr(10, COLS / 2 + 10, "s3558475");
+    mvaddstr(12, COLS / 2 - 20, "Nguyen Thi Mai Thao");
+    mvaddstr(12, COLS / 2 + 10, "s3515305");
+    mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+    move(0, 0);
+    refresh();
+}
+
 void drawPlayerCards(Player * players, int num_player, Table table) {
     Card card;
     card.suit = NONE;
@@ -1102,13 +1117,7 @@ int main() {
             refresh();
             getch();
         } else if (choice == 2) {
-            center(1, "CREDIT");
-            mvaddstr(5, COLS / 2 - 20, "Nguyen Ha Phuong Mai");
-            mvaddstr(5, COLS / 2 + 10, "s3558475");
-            mvaddstr(7, COLS / 2 - 20, "Nguyen Thi Mai Thao");
-            mvaddstr(7, COLS / 2 + 10, "s3515305");
-            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
-            refresh();
+            credit();
             getch();
         } else if (choice == 3) {
             center(1, "HIGHSCORE");

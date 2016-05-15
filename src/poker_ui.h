@@ -14,6 +14,10 @@ void drawCard(Card card, int y, int x);
   */
 void center(int row, char *title);
 
+/** display credit
+  */
+void credit();
+
 /** draw players' name, if they are Big Blind or Small Blind and 2 cards of active players
   * @param players all active players
   * @param table table

@@ -16,10 +16,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/game.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="$PROJECT_DIR$/src/demo.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker.c" afterPath="$PROJECT_DIR$/src/poker.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.c" afterPath="$PROJECT_DIR$/src/poker_ui.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.h" afterPath="$PROJECT_DIR$/src/poker_ui.h" />
     </list>
     <ignored path="COSC2451_A2_s3515305_s3558475.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,42 +38,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="demo.c" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/demo.c">
+      <file leaf-file-name="poker_ui.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/poker_ui.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0">
-              <caret line="1596" column="43" selection-start-line="1596" selection-start-column="43" selection-end-line="1596" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#2#0" expanded="false" />
-                <element signature="e#119#168#1" expanded="false" />
-                <element signature="e#195#303#1" expanded="false" />
-                <element signature="e#330#402#1" expanded="false" />
-                <element signature="e#431#481#1" expanded="false" />
-                <element signature="e#512#556#1" expanded="false" />
-                <element signature="e#585#640#1" expanded="false" />
-                <element signature="e#669#898#1" expanded="false" />
-                <element signature="e#931#1102#1" expanded="false" />
-                <element signature="e#1133#1166#1" expanded="false" />
-                <element signature="e#1195#1443#0" expanded="false" />
-                <element signature="e#1445#1841#0" expanded="false" />
-                <element signature="e#1843#2124#0" expanded="false" />
-                <element signature="e#2126#2752#0" expanded="false" />
-                <element signature="e#2754#3196#0" expanded="false" />
-                <element signature="e#3198#3337#0" expanded="false" />
-                <element signature="e#3339#3781#0" expanded="false" />
-                <element signature="e#3783#4126#0" expanded="false" />
-                <element signature="e#4128#4517#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/game.txt">
+      <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-              <folding />
+            <state vertical-scroll-proportion="0.576659">
+              <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#2#0" expanded="false" />
+                <element signature="e#344#2480#0" expanded="false" />
+                <element signature="e#2482#2733#0" expanded="false" />
+                <element signature="e#4928#5471#0" expanded="false" />
+                <element signature="e#5473#6387#0" expanded="false" />
+                <element signature="e#6389#6546#0" expanded="false" />
+                <element signature="e#6548#6801#0" expanded="false" />
+                <element signature="e#6803#7536#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -92,12 +79,12 @@
         <option value="$PROJECT_DIR$/poker.sh" />
         <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/poker.h" />
-        <option value="$PROJECT_DIR$/src/poker_ui.h" />
-        <option value="$PROJECT_DIR$/src/poker_ui.c" />
         <option value="$PROJECT_DIR$/src/test.txt" />
         <option value="$PROJECT_DIR$/src/poker.c" />
         <option value="$PROJECT_DIR$/src/game.txt" />
         <option value="$PROJECT_DIR$/src/demo.c" />
+        <option value="$PROJECT_DIR$/src/poker_ui.c" />
+        <option value="$PROJECT_DIR$/src/poker_ui.h" />
       </list>
     </option>
   </component>
@@ -155,6 +142,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cosc2451_a2_s3515305_s3558475" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -169,7 +170,7 @@
       <recent name="$PROJECT_DIR$/bin" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.demo">
+  <component name="RunManager" selected="Application.poker_ui">
     <configuration default="false" name="poker.sh" type="BashConfigurationType" factoryName="Bash" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
@@ -236,7 +237,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="33" width="1600" height="763" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24445851" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -244,9 +245,9 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.5092166" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42879257" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42879257" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24500768" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21826625" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28173375" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40958267" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -849,32 +850,13 @@
           <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
-            <element signature="e#402#2538#0" expanded="false" />
-            <element signature="e#2540#2791#0" expanded="false" />
-            <element signature="e#2793#4503#0" expanded="false" />
-            <element signature="e#4505#5048#0" expanded="false" />
-            <element signature="e#5050#5964#0" expanded="false" />
-            <element signature="e#5966#6249#0" expanded="false" />
-            <element signature="e#6251#6504#0" expanded="false" />
-            <element signature="e#6506#7239#0" expanded="false" />
-            <element signature="e#7241#8450#0" expanded="false" />
-            <element signature="e#8452#9053#0" expanded="false" />
-            <element signature="e#9055#9308#0" expanded="false" />
-            <element signature="e#9310#11317#0" expanded="false" />
-            <element signature="e#11319#18349#0" expanded="false" />
-            <element signature="e#18351#20674#0" expanded="false" />
-            <element signature="e#20676#25654#0" expanded="false" />
-            <element signature="e#25656#29321#0" expanded="false" />
-            <element signature="e#29323#30436#0" expanded="false" />
-            <element signature="e#30438#31199#0" expanded="false" />
-            <element signature="e#31201#32719#0" expanded="false" />
-            <element signature="e#32721#33321#0" expanded="false" />
-            <element signature="e#33323#33830#0" expanded="false" />
-            <element signature="e#33832#34400#0" expanded="false" />
-            <element signature="e#34402#35511#0" expanded="false" />
-            <element signature="e#35513#36478#0" expanded="false" />
-            <element signature="e#36480#36620#0" expanded="false" />
-            <element signature="e#36622#36638#0" expanded="false" />
+            <element signature="e#344#2480#0" expanded="false" />
+            <element signature="e#2482#2733#0" expanded="false" />
+            <element signature="e#4928#5471#0" expanded="false" />
+            <element signature="e#5473#6387#0" expanded="false" />
+            <element signature="e#6389#6546#0" expanded="false" />
+            <element signature="e#6548#6801#0" expanded="false" />
+            <element signature="e#6803#7536#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -917,50 +899,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="757" column="97" selection-start-line="757" selection-start-column="97" selection-end-line="757" selection-end-column="97" />
-          <folding>
-            <element signature="e#0#2#0" expanded="false" />
-            <element signature="e#402#2538#0" expanded="false" />
-            <element signature="e#2540#2791#0" expanded="false" />
-            <element signature="e#2793#4503#0" expanded="false" />
-            <element signature="e#4505#5048#0" expanded="false" />
-            <element signature="e#5050#5964#0" expanded="false" />
-            <element signature="e#5966#6249#0" expanded="false" />
-            <element signature="e#6251#6504#0" expanded="false" />
-            <element signature="e#6506#7239#0" expanded="false" />
-            <element signature="e#7241#8450#0" expanded="false" />
-            <element signature="e#8452#9053#0" expanded="false" />
-            <element signature="e#9055#9308#0" expanded="false" />
-            <element signature="e#9310#11317#0" expanded="false" />
-            <element signature="e#11319#18349#0" expanded="false" />
-            <element signature="e#18351#20674#0" expanded="false" />
-            <element signature="e#20676#25654#0" expanded="false" />
-            <element signature="e#25656#29321#0" expanded="false" />
-            <element signature="e#29323#30436#0" expanded="false" />
-            <element signature="e#30438#31199#0" expanded="false" />
-            <element signature="e#31201#32719#0" expanded="false" />
-            <element signature="e#32721#33321#0" expanded="false" />
-            <element signature="e#33323#33830#0" expanded="false" />
-            <element signature="e#33832#34400#0" expanded="false" />
-            <element signature="e#34402#35511#0" expanded="false" />
-            <element signature="e#35513#36478#0" expanded="false" />
-            <element signature="e#36480#36620#0" expanded="false" />
-            <element signature="e#36622#36638#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/poker_ui.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="94" selection-start-line="27" selection-start-column="94" selection-end-line="27" selection-end-column="94" />
           <folding />
         </state>
       </provider>
@@ -1035,8 +973,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/demo.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0">
-          <caret line="1596" column="43" selection-start-line="1596" selection-start-column="43" selection-end-line="1596" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1603" column="17" selection-start-line="1603" selection-start-column="17" selection-end-line="1603" selection-end-column="17" />
           <folding>
             <element signature="e#0#2#0" expanded="false" />
             <element signature="e#119#168#1" expanded="false" />
@@ -1057,6 +995,31 @@
             <element signature="e#3339#3781#0" expanded="false" />
             <element signature="e#3783#4126#0" expanded="false" />
             <element signature="e#4128#4517#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.576659">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#2#0" expanded="false" />
+            <element signature="e#344#2480#0" expanded="false" />
+            <element signature="e#2482#2733#0" expanded="false" />
+            <element signature="e#4928#5471#0" expanded="false" />
+            <element signature="e#5473#6387#0" expanded="false" />
+            <element signature="e#6389#6546#0" expanded="false" />
+            <element signature="e#6548#6801#0" expanded="false" />
+            <element signature="e#6803#7536#0" expanded="false" />
           </folding>
         </state>
       </provider>
