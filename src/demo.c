@@ -980,7 +980,8 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
     return input;
 }
 
-void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index){
+void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index,
+          int countCheck, int countAllin, int countCall, int is_1st_bet){
     FILE *save_point;
     save_point = fopen("../src/game.txt", "w+");
     if (save_point != NULL) {
@@ -991,6 +992,10 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
         for (int i = 0; i < 52; i++) {
             fprintf(save_point, "%i %i\n", deck->cards[i].suit, deck->cards[i].rank);
         }
+        fprintf(save_point, "----------\nCount Check\n%d\n", countCheck);
+        fprintf(save_point, "----------\nCount Allin\n%d\n", countAllin);
+        fprintf(save_point, "----------\nCount Call\n%d\n", countCall);
+        fprintf(save_point, "----------\nIs First Bet\n%d\n", is_1st_bet);
         fprintf(save_point, "----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
             fprintf(save_point, "Player %i:\n%i\n%i\n%i\n%i %i\n%i %i\n%i\n%i\n", i + 1,
@@ -1022,6 +1027,59 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
         fclose(save_point);
     } else {
         printf("cannot open file\n");
+    }
+}
+
+void loadNumPlayer(int num_player) {
+    FILE * save;
+    char line [20];
+    char *s;
+    int i = 0; // i: count line
+    save = fopen("../src/game.txt", "r");
+    if (save != NULL) {
+        while (fgets(line, 20, save) != NULL) {
+            i++;
+            // Load number of players
+            if (i == 8) {
+                num_player = atoi(line);
+                printf("Number of players: %i\n", num_player);
+                break;
+            }
+        }
+        fclose(save);
+    } else {
+        printf("Can't open file\n");
+    }
+}
+
+void loadRoundInfo(int countCheck, int countAllin, int countCall, int is_1st_bet) {
+    FILE * save;
+    char line [20];
+    char *s;
+    int i = 0; // i: count line
+    save = fopen("../src/game.txt", "r");
+    if (save != NULL) {
+        while (fgets(line, 20, save) != NULL) {
+            i++;
+            // Load count check
+            if (i == 65) {
+                countCheck = atoi(line);
+                printf("Count Check: %i\n", countCheck);
+            } else if (i == 68) {
+                countAllin = atoi(line);
+                printf("Count Allin: %i\n", countAllin);
+            } else if (i == 71) {
+                countCall = atoi(line);
+                printf("Count Call: %i\n", countCall);
+            } else if (i == 74) {
+                is_1st_bet = atoi(line);
+                printf("Is First Bet: %i\n", is_1st_bet);
+                break;
+            }
+        }
+        fclose(save);
+    } else {
+        printf("Can't open file\n");
     }
 }
 
@@ -1288,7 +1346,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         printf("PlayerIdx: %i\n", playerIdx);
         playerIdx++;
     }
-    save(players, table, deck, num_player, roundIdx, playerIdx);
+    save(players, table, deck, num_player, roundIdx, playerIdx, countCheck, countAllin, countCall, is_1st_bet);
     printf("Active Player: %i\n", countActivePlayer);
     return countActivePlayer;
 }
@@ -1728,6 +1786,8 @@ int main() {
     Deck *deck;
     deck = newDeck();
     int num_player = 0;
+    loadNumPlayer(num_player);
+    loadRoundInfo(-1, -1, -1, -1);
     load (table, deck);
 
     for (int m = 0; m < 52; m++) {
@@ -1735,6 +1795,7 @@ int main() {
     }
     printf("\n");
     displayTableInfo(*table);
+
 //
 //    printf("Number of player: %i\n", num_player);
 //    FILE * save;
