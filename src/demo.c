@@ -146,6 +146,9 @@ Table * createTable() {
 
 void displayTableInfo(Table table) {
     printf("Pot: %i\n", table.pot_money);
+    printf("Ante: %i\n", table.ante);
+    printf("Highest bet: %i\n", table.highest_bet);
+    printf("Last bet: %i\n", table.last_bet);
     if (table.card[0].rank != 0) {
         printf("Shared cards: ");
     }
@@ -937,11 +940,11 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
         input = consAI(player, table, roundIdx);
         }
     } else {
-        //let user choose option
+        // Let user choose option
         displayOption(*player, * table);
         input = scanInput(3);
 
-        //let user input money if they choose raisePoker or bet
+        // Let user input money if they choose raisePoker or bet
         int money = 0;
         int isRaiseOrBet = 0;
         if (isCallRaise(*player, *table)) {
@@ -977,37 +980,46 @@ int turn(Player *player, Table * table, int roundIdx, int playerIdx) {
     return input;
 }
 
-void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index){
+void save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index,
+          int countCheck, int countAllin, int countCall, int is_1st_bet){
     FILE *save_point;
-    save_point = fopen("src/game.txt", "w+");
+    save_point = fopen("../src/game.txt", "w+");
     if (save_point != NULL) {
         fprintf(save_point, "Round index\n%i\n----------\n", round_index);
         fprintf(save_point, "Player index\n%i\n----------\n", player_index);
+        fprintf(save_point, "Number of player\n%i\n----------\n", num_player);
         fprintf(save_point, "Deck\n");
         for (int i = 0; i < 52; i++) {
             fprintf(save_point, "%i %i\n", deck->cards[i].suit, deck->cards[i].rank);
         }
-        fprintf(save_point, "\n----------\nTable\n");
+        fprintf(save_point, "----------\nCount Check\n%d\n", countCheck);
+        fprintf(save_point, "----------\nCount Allin\n%d\n", countAllin);
+        fprintf(save_point, "----------\nCount Call\n%d\n", countCall);
+        fprintf(save_point, "----------\nIs First Bet\n%d\n", is_1st_bet);
+        fprintf(save_point, "----------\nTable\n");
         fprintf(save_point, "%i\n%i\n%i\n%i\n", table->pot_money, table->ante, table->highest_bet, table->last_bet);
-        if (round_index != 0) {
-            fprintf(save_point, "Shared cards\n");
-            if (round_index == 1) {
-                for (int j = 0; j < 3; j++) {
-                    fprintf(save_point, "%i %i\n ", table->card[j].suit, table->card[j].rank);
-                }
-            } else if (round_index == 2) {
-                for (int j = 0; j < 4; j++) {
-                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
-                }
-            } else if (round_index == 3) {
-                for (int j = 0; j < 5; j++) {
-                    fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
-                }
-            } else {
-                fprintf(save_point, "wtf\n");
+
+        fprintf(save_point, "Shared cards\n");
+        if (round_index == 0) {
+            fprintf(save_point, "\n\n\n\n\n");
+        } else if (round_index == 1) {
+            for (int j = 0; j < 3; j++) {
+                fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
             }
+            fprintf(save_point, "\n\n");
+        } else if (round_index == 2) {
+            for (int j = 0; j < 4; j++) {
+                fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
+            }
+            fprintf(save_point, "\n");
+        } else if (round_index == 3) {
+            for (int j = 0; j < 5; j++) {
+                fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
+            }
+        } else {
+            fprintf(save_point, "wtf\n");
         }
-        fprintf(save_point, "\n----------\nPlayers\n");
+        fprintf(save_point, "----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
             fprintf(save_point, "Player %i:\n%i\n%i\n%i\n%i %i\n%i %i\n%i\n%i\n", i + 1,
                     player[i].money, player[i].bet, player[i].state,
@@ -1019,6 +1031,215 @@ void save(Player * player, Table * table, Deck * deck, int num_player, int round
     } else {
         printf("cannot open file\n");
     }
+}
+
+void loadNumPlayer(int num_player) {
+    FILE * save;
+    char line [20];
+    char *s;
+    int i = 0; // i: count line
+    save = fopen("../src/game.txt", "r");
+    if (save != NULL) {
+        while (fgets(line, 20, save) != NULL) {
+            i++;
+            // Load number of players
+            if (i == 8) {
+                num_player = atoi(line);
+                printf("Number of players: %i\n", num_player);
+                break;
+            }
+        }
+        fclose(save);
+    } else {
+        printf("Can't open file\n");
+    }
+}
+
+void loadRoundInfo(int countCheck, int countAllin, int countCall, int is_1st_bet) {
+    FILE * save;
+    char line [20];
+    char *s;
+    int i = 0; // i: count line
+    save = fopen("../src/game.txt", "r");
+    if (save != NULL) {
+        while (fgets(line, 20, save) != NULL) {
+            i++;
+            // Load count check
+            if (i == 65) {
+                countCheck = atoi(line);
+                printf("Count Check: %i\n", countCheck);
+            } else if (i == 68) {
+                countAllin = atoi(line);
+                printf("Count Allin: %i\n", countAllin);
+            } else if (i == 71) {
+                countCall = atoi(line);
+                printf("Count Call: %i\n", countCall);
+            } else if (i == 74) {
+                is_1st_bet = atoi(line);
+                printf("Is First Bet: %i\n", is_1st_bet);
+                break;
+            }
+        }
+        fclose(save);
+    } else {
+        printf("Can't open file\n");
+    }
+}
+
+void load(Table * table, Deck * deck) {
+    FILE * save;
+    char line [20];
+    char *s;
+    int i = 0, j = 0, l = 0, m = 0, round_index = 0, num_player = 0; // i: count line, j: deck size, l: share card size
+    save = fopen("../src/game.txt", "r");
+    if (save != NULL) {
+        while (fgets(line, 20, save) != NULL) {
+            i++;
+
+            // Load round index
+            if (i == 2) {
+                round_index = atoi(line);
+                printf("Round index: %i\n", round_index);
+            }
+
+            // Load number of Player
+            if (i == 8) {
+                num_player = atoi(line);
+                printf("Number of player: %i\n", num_player);
+            }
+
+            // Load deck
+            if (i >= 11 && i <= 62) {
+                s = strtok(line, " ");
+                int k = 0;
+                while (s != NULL) {
+                    k++;
+                    if (j < 52) {
+                        if (k == 1) {
+                            if (atoi(s) == 0) {
+                                deck->cards[j].suit = HEARTS;
+                            } if (atoi(s) == 1) {
+                                deck->cards[j].suit = DIAMONDS;
+                            } if (atoi(s) == 2) {
+                                deck->cards[j].suit = CLUBS;
+                            } else if (atoi(s) == 3) {
+                                deck->cards[j].suit = SPADES;
+                            }
+                        } else if (k == 2) {
+                            deck->cards[j].rank = atoi(s);
+                        }
+                    }
+                    s = strtok(NULL, " ");
+                }
+                j++;
+            }
+
+            // Load table
+            if (i >= 77 && i <= 80) {
+                if (i == 77) {
+                    table->pot_money = atoi (line);
+                }
+                if (i == 78) {
+                    table->ante = atoi (line);
+                }
+                if (i == 79) {
+                    table->highest_bet = atoi (line);
+                }
+                if (i == 80) {
+                    table->last_bet = atoi (line);
+                }
+            }
+
+            // Load shared cards
+            if (round_index != 0) {
+                if (round_index == 1) {
+                    table->card_idx = 3;
+
+                    if (i >= 82 && i <= 84){
+                        s = strtok(line, " ");
+                        int k = 0;
+                        while (s != NULL) {
+                            k++;
+                            if (l < 3) {
+                                if (k == 1) {
+                                    if (atoi(s) == 0) {
+                                        table->card[l].suit = HEARTS;
+                                    } if (atoi(s) == 1) {
+                                        table->card[l].suit = DIAMONDS;
+                                    } if (atoi(s) == 2) {
+                                        table->card[l].suit = CLUBS;
+                                    } else if (atoi(s) == 3) {
+                                        table->card[l].suit = SPADES;
+                                    }
+                                } else if (k == 2) {
+                                    table->card[l].rank = atoi(s);
+                                }
+                            }
+                            s = strtok(NULL, " ");
+                        }
+                        l++;
+                    }
+                } else if (round_index == 2) {
+                    table->card_idx = 4;
+
+                    if (i >= 82 && i <= 85){
+                        s = strtok(line, " ");
+                        int k = 0;
+                        while (s != NULL) {
+                            k++;
+                            if (l < 4) {
+                                if (k == 1) {
+                                    if (atoi(s) == 0) {
+                                        table->card[l].suit = HEARTS;
+                                    } if (atoi(s) == 1) {
+                                        table->card[l].suit = DIAMONDS;
+                                    } if (atoi(s) == 2) {
+                                        table->card[l].suit = CLUBS;
+                                    } else if (atoi(s) == 3) {
+                                        table->card[l].suit = SPADES;
+                                    }
+                                } else if (k == 2) {
+                                    table->card[l].rank = atoi(s);
+                                }
+                            }
+                            s = strtok(NULL, " ");
+                        }
+                        l++;
+                    }
+                } else if (round_index == 3) {
+                    table->card_idx = 5;
+
+                    if (i >= 82 && i <= 86){
+                        s = strtok(line, " ");
+                        int k = 0;
+                        while (s != NULL) {
+                            k++;
+                            if (l < 5) {
+                                if (k == 1) {
+                                    if (atoi(s) == 0) {
+                                        table->card[l].suit = HEARTS;
+                                    } if (atoi(s) == 1) {
+                                        table->card[l].suit = DIAMONDS;
+                                    } if (atoi(s) == 2) {
+                                        table->card[l].suit = CLUBS;
+                                    } else if (atoi(s) == 3) {
+                                        table->card[l].suit = SPADES;
+                                    }
+                                } else if (k == 2) {
+                                    table->card[l].rank = atoi(s);
+                                }
+                            }
+                            s = strtok(NULL, " ");
+                        }
+                        l++;
+                    }
+                }
+            }
+        }
+    } else {
+        printf("Can't open file\n");
+    }
+    fclose(save);
 }
 
 int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int roundIdx, int countActivePlayer) {
@@ -1138,7 +1359,7 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
         printf("PlayerIdx: %i\n", playerIdx);
         playerIdx++;
     }
-    save(players, table, deck, num_player, roundIdx, playerIdx);
+    save(players, table, deck, num_player, roundIdx, playerIdx, countCheck, countAllin, countCall, is_1st_bet);
     printf("Active Player: %i\n", countActivePlayer);
     return countActivePlayer;
 }
@@ -1514,9 +1735,9 @@ int main() {
 //            // Create table
 //            Table *table = createTable();
 //
-            // Create deck
-            Deck *deck;
-            deck = newDeck();
+//            // Create deck
+//            Deck *deck;
+//            deck = newDeck();
 //            int size = 52;
 //
 //            // Test new deck
@@ -1570,50 +1791,29 @@ int main() {
 //        }
 //    }
 
-    FILE * save;
-    char line [300];
-    char * s;
-//    Deck *deck;
-    int i = 0, j = 0;
-    save = fopen("../src/game.txt", "r");
-    if (save != NULL) {
-        while (fgets(line, 300, save) != NULL) {
-            i++;
-            if (i >= 8) {
-                s = strtok(line, " ");
-                int k = 0;
-                while (s != NULL) {
-                    k++;
-                    if (j < 52) {
-                        //printf("%i %i %s\n", j, k, s);
-                        if (k == 1) {
-                            if (atoi(s) == 0) {
-                                deck->cards[j].suit = HEARTS;
-                            } if (atoi(s) == 1) {
-                                deck->cards[j].suit = DIAMONDS;
-                            } if (atoi(s) == 2) {
-                                deck->cards[j].suit = CLUBS;
-                            } else if (atoi(s) == 3) {
-                                deck->cards[j].suit = SPADES;
-                            }
-                        } else if (k == 2) {
-                            deck->cards[j].rank = atoi(s);
-                        }
-                    }
-                    s = strtok(NULL, " ");
-                }
-                j++;
-                if (i == 60) {
-                    break;
-                }
-                for (int m = 0; m < 52; m++) {
-                    printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
-                }
-            }
-        }
-        printf("\n");
-    } else {
-        printf("Can't open file\n");
+
+    // Create table
+    Table *table = createTable();
+
+    // Create deck
+    Deck *deck;
+    deck = newDeck();
+
+    int num_player = 0;
+    loadNumPlayer(num_player);
+
+    // Create players
+    Player *players = createPlayers(num_player);
+
+    loadRoundInfo(-1, -1, -1, -1);
+
+    load (table, deck);
+
+    for (int m = 0; m < 52; m++) {
+        printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
     }
+    printf("\n");
+    displayTableInfo(*table);
+
     return 0;
 }

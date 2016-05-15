@@ -71,6 +71,7 @@ struct table {
     int card_idx; //start from 0, increases by 1 each time one shared card was dealt
     int last_bet; //in one round, when the player chose to raise of bet, last_bet is the amount of money he spent for that choice
     int showCard; //if all players allin or at the end of the game, showCard is 1, and 2 cards of active players will turn face up
+    int isLoad; //check if the player choose load
 };
 typedef struct table Table;
 
@@ -369,14 +370,41 @@ int consAIrounds(Player *ai, Table * table);
 int consAI (Player *ai, Table *table, int roundIdx);
 
 /** save all information of the game into text file
-  * @param player player
+  * @param players all players
   * @param table table
   * @param deck deck
   * @param num_player number of players
   * @param round_index round index
   * @param player_index player index
+  * @param countCheck count the number of players check in a round
+  * @param countAllin count the number of players allin in a round
+  * @param countCall count the number of players call in a round
+  * @param is_1st_bet check if this is the first turn of players in a round
   */
-int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index);
+int save(Player *players, Table * table, Deck * deck, int num_player, int round_index, int player_index,
+         int countCheck, int countAllin, int countCall, int is_1st_bet);
+
+/** load number of players
+  * @param num_player number of players
+  */
+void loadNumPlayer(int * num_player);
+
+/** load the information of round - the number of players check / allin / call and if this is the first turn
+  * @param countCheck count the number of players check in a round
+  * @param countAllin count the number of players allin in a round
+  * @param countCall count the number of players call in a round
+  * @param is_1st_bet check if this is the first turn of players in a round
+  */
+void loadRoundInfo(int * countCheck, int * countAllin, int * countCall, int * is_1st_bet);
+
+/** load information of table, deck, players and round index
+  * @param players all players
+  * @param table table
+  * @param deck deck
+  * @param round_index round index
+  * @param player_index player index
+  */
+void load(Table * table, Deck * deck, Player * players, int * round_index);
 
 /** find the winner
   * @param players all players

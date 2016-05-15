@@ -575,7 +575,8 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
     return item;
 }
 
-int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player, Deck * deck) {
+int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player, Deck * deck,
+         int countCheck, int countAllin, int countCall, int is_1st_bet) {
     int input = 6;
 
     if (playerIdx != 0) {
@@ -592,6 +593,7 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
     } else {
         //let user choose option
         int money = -1;
+        table->isLoad = 0;
         while (money < 0) {
             input = interactGame(num_player, roundIdx, players, table, playerIdx);
             if (input == 0 || input == 2) {
@@ -618,7 +620,8 @@ int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_p
                 fold(&players[playerIdx]);
                 money = 0;
             } else if (input == 6) {
-                if (save(players, table, deck, num_player, roundIdx, playerIdx) == 1) {
+                if (save(players, table, deck, num_player, roundIdx, playerIdx,
+                         countCheck, countAllin, countCall, is_1st_bet) == 1) {
                     mvaddstr(26, 95, "Save complete");
                 } else {
                     mvaddstr(26, 92, "Error saving game");
@@ -647,80 +650,88 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     int playerIdx  = 0, countCheck = 0, countAllin = 0, countCall = 0, end_round = 0, is_1st_bet = 0, count = 0;
     State lastState = None;
 
-    // Deal shared cards
-    if (roundIdx > 0) {
-        dealSharedCards(table, deck, roundIdx);
-        table->last_bet = 0;
-    }
+    if (table->isLoad == 0) {
+        // Deal shared cards
+        if (roundIdx > 0) {
+            dealSharedCards(table, deck, roundIdx);
+            table->last_bet = 0;
+        }
 
-    // Check first bet, first round
-    if (roundIdx == 0) {
-        for (int b = 0; b < num_player; b++) {
-            if (players[b].state != BB && players[b].state != SB) {
-                count++;
-            }
-        }
-        if (count == 0 && players[playerIdx].state == BB) {
-            if (num_player == 2) {
-                is_1st_bet = 1;
-            } else {
-                is_1st_bet = 0;
-            }
-        } else {
-            lastState = BB;
-            is_1st_bet = 1;
-        }
-        // If first bet, start with person after Big Blind
-        if (is_1st_bet) {
-            for (int i = 0; i < num_player; i++) {
-                if (players[i].state == BB || players[playerIdx].state == SB) {
-                    if (players[i].state == BB) {
-                        playerIdx = i + 1;
-                        if (playerIdx >= num_player) {
-                            playerIdx = 0;
-                        }
-                        table->last_bet = players[i].bet;
-                    }
-                    continue;
+        // Check first bet, first round
+        if (roundIdx == 0) {
+            for (int b = 0; b < num_player; b++) {
+                if (players[b].state != BB && players[b].state != SB) {
+                    count++;
                 }
             }
-            table->highest_bet = table->ante * 2;
+            if (count == 0 && players[playerIdx].state == BB) {
+                if (num_player == 2) {
+                    is_1st_bet = 1;
+                } else {
+                    is_1st_bet = 0;
+                }
+            } else {
+                lastState = BB;
+                is_1st_bet = 1;
+            }
+            // If first bet, start with person after Big Blind
+            if (is_1st_bet) {
+                for (int i = 0; i < num_player; i++) {
+                    if (players[i].state == BB || players[playerIdx].state == SB) {
+                        if (players[i].state == BB) {
+                            playerIdx = i + 1;
+                            if (playerIdx >= num_player) {
+                                playerIdx = 0;
+                            }
+                            table->last_bet = players[i].bet;
+                        }
+                        continue;
+                    }
+                }
+                table->highest_bet = table->ante * 2;
+            }
+        } else {
+            // If not first round, start with Big blind, small blind, if not available, start with the one who is still active
+            for (int e = 0; e < num_player; e++) {
+                if (players[e].isBigBlind && players[e].status == 1) {
+                    playerIdx = e;
+                } else if (players[e].isSmallBlind && players[e].status == 1) {
+                    playerIdx = e;
+                }
+            }
+        }
+        for (int f = 0; f < num_player; f++) {
+            if (players[f].state == Allins) {
+                countAllin++;
+            }
+        }
+        // If all player allin, show cards and check hands
+        if (countAllin == countActivePlayer && is_1st_bet == 0) {
+            table->showCard = 1;
+            return countActivePlayer;
         }
     } else {
-        // If not first round, start with Big blind, small blind, if not available, start with the one who is still active
-        for (int e = 0; e < num_player; e++) {
-            if (players[e].isBigBlind && players[e].status == 1) {
-                playerIdx = e;
-            } else if (players[e].isSmallBlind && players[e].status == 1) {
-                playerIdx = e;
-            }
-        }
+        loadRoundInfo(&countCheck, &countAllin, &countCall, &is_1st_bet);
     }
-    for (int f = 0; f < num_player; f++) {
-        if (players[f].state == Allins) {
-            countAllin++;
-        }
-    }
-    // If all player allin, show cards and check hands
-    if (countAllin == countActivePlayer && is_1st_bet == 0) {
-        table->showCard = 1;
-        return countActivePlayer;
-    }
+
     while (!end_round) {
-        if (playerIdx >= num_player) {
-            playerIdx = 0;
+        if (table->isLoad == 0) {
+            if (playerIdx >= num_player) {
+                playerIdx = 0;
+            }
+            if (countAllin == countActivePlayer - 1 && players[playerIdx].bet == table->highest_bet) {
+                table->showCard = 1;
+                break;
+            }
+            // If player not fold or out of money
         }
-        if (countAllin == countActivePlayer - 1 && players[playerIdx].bet == table->highest_bet) {
-            table->showCard = 1;
-            break;
-        }
-        // If player not fold or out of money
         if (players[playerIdx].state != Folded && players[playerIdx].state != Allins
             && players[playerIdx].money > 0 && players[playerIdx].status == 1) {
-            if (players[playerIdx].state == BB) {
+            if (players[playerIdx].state == BB && table->isLoad == 0) {
                 is_1st_bet = 0;
             }
-            if (turn(players, table, roundIdx, playerIdx, num_player, deck) == -1) {
+            if (turn(players, table, roundIdx, playerIdx, num_player, deck,
+                     countCheck, countAllin, countCall, is_1st_bet) == -1) {
                 return -1;
             }
             if (is_1st_bet) {
@@ -771,96 +782,101 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
     return countActivePlayer;
 }
 
-int game (Player * players, Table * table, Deck * deck, int num_player, int nextSB) {
+int game (Player * players, Table * table, Deck * deck, int num_player, int nextSB, int roundIdx) {
     int prevPlayer = nextSB - 1, nextBB = nextSB + 1;
     int countActivePlayer = num_player;
-    // Find next person to be small blind
-    if (players[nextSB].money == 0) {
+
+    if (table->isLoad == 0) {
+        // Find next person to be small blind
+        if (players[nextSB].money == 0) {
+            for (int i = 0; i < num_player; i++) {
+                nextSB++;
+                if (nextSB == num_player) {
+                    nextSB = 0;
+                }
+                if (players[nextSB].money > 0) {
+                    nextBB = nextSB + 1;
+                    break;
+                }
+            }
+        }
+
+        // Find next person to be big blind
+        if (players[nextBB].money == 0) {
+            for (int i = 0; i < num_player; i++) {
+                nextBB++;
+                if (nextBB == num_player) {
+                    nextBB = 0;
+                }
+                if (players[nextBB].money > 0) {
+                    break;
+                }
+            }
+        }
+
+        if (nextSB == num_player - 1) {
+            nextBB = 0;
+        }
+        if (nextSB == num_player) {
+            nextSB = 0;
+            nextBB = 1;
+        }
+
+        // Reset previous big blind and small blind
         for (int i = 0; i < num_player; i++) {
-            nextSB++;
-            if (nextSB == num_player){
-                nextSB = 0;
+            if (i != nextSB) {
+                players[i].isSmallBlind = 0;
             }
-            if (players[nextSB].money > 0) {
-                nextBB = nextSB + 1;
-                break;
-            }
-        }
-    }
-
-    // Find next person to be big blind
-    if (players[nextBB].money == 0) {
-        for (int i = 0; i < num_player; i++) {
-            nextBB++;
-            if (nextBB == num_player){
-                nextBB = 0;
-            }
-            if (players[nextBB].money > 0) {
-                break;
+            if (players[i].money == 0) {
+                players[i].isBigBlind = 0;
+                players[i].isSmallBlind = 0;
             }
         }
-    }
 
-    if (nextSB == num_player - 1) {
-        nextBB = 0;
-    }
-    if (nextSB == num_player) {
-        nextSB = 0;
-        nextBB = 1;
-    }
-
-    // Reset previous big blind and small blind
-    for (int i = 0; i < num_player; i++) {
-        if (i != nextSB) {
-            players[i].isSmallBlind = 0;
+        // Set big blind, small blind and reset previous SB, BB
+        table->ante = 2;
+        reset(players, table, num_player, deck);
+        players[nextSB].isSmallBlind = 1;
+        players[nextSB].state = SB;
+        if (players[nextSB].money <= table->ante) {
+            players[nextSB].bet = players[nextSB].money;
+        } else {
+            players[nextSB].bet = table->ante;
         }
-        if (players[i].money == 0) {
-            players[i].isBigBlind = 0;
-            players[i].isSmallBlind = 0;
+        players[nextSB].money = players[nextSB].money - players[nextSB].bet;
+        players[nextBB].isBigBlind = 1;
+        players[nextBB].state = BB;
+        if (players[nextBB].money <= table->ante * 2) {
+            players[nextBB].bet = players[nextBB].money;
+        } else {
+            players[nextBB].bet = table->ante * 2;
         }
+        players[nextBB].money = players[nextBB].money - players[nextBB].bet;
+        players[prevPlayer].isSmallBlind = 0;
+        players[nextSB].isBigBlind = 0;
+        table->pot_money = players[nextSB].bet + players[nextBB].bet;
     }
 
-    // Set big blind, small blind and reset previous SB, BB
-    table->ante = 2;
-    reset(players, table, num_player, deck);
-    players[nextSB].isSmallBlind = 1;
-    players[nextSB].state = SB;
-    if (players[nextSB].money <= table->ante) {
-        players[nextSB].bet = players[nextSB].money;
-    } else {
-        players[nextSB].bet = table->ante;
-    }
-    players[nextSB].money = players[nextSB].money - players[nextSB].bet;
-    players[nextBB].isBigBlind = 1;
-    players[nextBB].state = BB;
-    if (players[nextBB].money <= table->ante * 2) {
-        players[nextBB].bet = players[nextBB].money;
-    } else {
-        players[nextBB].bet = table->ante * 2;
-    }
-    players[nextBB].money = players[nextBB].money - players[nextBB].bet;
-    players[prevPlayer].isSmallBlind = 0;
-    players[nextSB].isBigBlind = 0;
-    table->pot_money = players[nextSB].bet + players[nextBB].bet;
     nextSB++;
     if (nextSB == num_player) {
         nextSB = 0;
     }
 
-    // Deal cards for players
-    dealStartingHand(players, deck, num_player);
-    for (int i = 0; i < num_player; i++) {
-        if (players[i].money <= 0) {
-            players[i].status = 0;
-            countActivePlayer--;
+    if (table->isLoad == 0) {
+        // Deal cards for players
+        dealStartingHand(players, deck, num_player);
+        for (int i = 0; i < num_player; i++) {
+            if (players[i].money <= 0) {
+                players[i].status = 0;
+                countActivePlayer--;
+            }
         }
     }
 
     int countFold = 0;
-    int roundIdx;
 
     // Begin game
-    for (roundIdx = 0; roundIdx < 4; roundIdx++) {
+    for (; roundIdx < 4; roundIdx++) {
         countActivePlayer = roundPoker(players, table, deck, num_player, roundIdx, countActivePlayer);
         if (countActivePlayer == -1) {
             return -1;
@@ -897,34 +913,46 @@ int game (Player * players, Table * table, Deck * deck, int num_player, int next
     return nextSB;
 }
 
-void setUpGame(int num_player) {
+void setUpGame(int num_player, int isLoad) {
     int nextBlind = 0;
     Table *table = createTable();
-    Deck *deck;
-    deck = newDeck();
+    Deck *deck = newDeck();
     int size = 52;
     Player *players = createPlayers(num_player);
+    int roundIdx = 0;
+    if (isLoad == 1) {
+        load(table, deck, players, &roundIdx);
+        for (int i = 0; i < num_player; i++) {
+            if (players[i].isSmallBlind == 1) {
+                nextBlind = i;
+            }
+        }
+        table->isLoad = 1;
+    }
     for (int gameIdx = 0; ; gameIdx++) {
-        int remain = num_player;
-        for (int m = 0; m < num_player; m++) {
-            if (players[m].money <= 0) {
-                remain--;
+        if (isLoad == 0) {
+            int remain = num_player;
+            for (int m = 0; m < num_player; m++) {
+                if (players[m].money <= 0) {
+                    remain--;
+                }
             }
-        }
-        if (players[0].money == 0 || remain == 1) {
-            clear();
-            if (players[0].money == 0) {
-                center(0,"Game Over");
-            } else {
-                center(0,"No player left");
+            if (players[0].money == 0 || remain == 1) {
+                clear();
+                if (players[0].money == 0) {
+                    center(0, "Game Over");
+                } else {
+                    center(0, "No player left");
+                }
+                mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
+                refresh();
+                getch();
+                break;
             }
-            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
-            refresh();
-            getch();
-            break;
+            shuffleDeck(deck, size);
         }
-        shuffleDeck(deck, size);
-        nextBlind = game(players, table, deck, num_player, nextBlind);
+        isLoad = 0;
+        nextBlind = game(players, table, deck, num_player, nextBlind, roundIdx);
         if (nextBlind == -1) {
             break;
         }
@@ -1047,8 +1075,7 @@ void startMenu() {
                 num_player++;
             }
         } else if (choice == 2) {
-            //gamePoker1(num_player);
-            setUpGame(num_player);
+            setUpGame(num_player, 0);
 
         } else if (choice == 3) {
             endMenu = 1;
@@ -1116,10 +1143,9 @@ int main() {
         if (choice == 0) {
             startMenu();
         } else if (choice == 1) {
-            center(1, "LOAD GAME");
-            mvaddstr(LINES - 1, COLS - 20, "Back: Any key");
-            refresh();
-            getch();
+            int num_player = 2;
+            loadNumPlayer(&num_player);
+            setUpGame(num_player, 1);
         } else if (choice == 2) {
             credit();
             getch();

@@ -108,8 +108,13 @@ int interactGame(int num_player, int roundIdx, Player * players, Table * table, 
   * @param playerIdx player index
   * @param num_player number of players
   * @param deck deck
+  * @param countCheck count the number of players check in a round
+  * @param countAllin count the number of players allin in a round
+  * @param countCall count the number of players call in a round
+  * @param is_1st_bet check if this is the first turn of players in a round
   */
-int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player, Deck * deck);
+int turn(Player * players, Table * table, int roundIdx, int playerIdx, int num_player, Deck * deck,
+         int countCheck, int countAllin, int countCall, int is_1st_bet);
 
 /** deal shared cards, set some condition to let player choose options and to end round
   * @param players all players
@@ -127,13 +132,15 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
   * @param deck deck
   * @param num_player number of players
   * @param nextSB next Small Blind
+  * @param roundIdx round index
   */
-int game (Player * players, Table * table, Deck * deck, int num_player, int nextSB);
+int game (Player * players, Table * table, Deck * deck, int num_player, int nextSB, int roundIdx);
 
 /** create all the object needed to start a game, check if it is able to restart a game or the player needs to start a new game
   * @param num_player number of players
+  * @param isLoad check if the player choose load
   */
-void setUpGame(int num_player);
+void setUpGame(int num_player, int isLoad);
 
 /** draw start menu
   * @param item where the player currently chooses
