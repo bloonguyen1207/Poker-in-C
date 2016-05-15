@@ -1,6 +1,10 @@
-//
-// Created by bloo on 18/04/2016.
-//
+//CREDITS
+//COSC2174 - Programming Techniques
+//Semester A - 2016
+//Lecturer's Name: Denis Rinfret
+//Student's ID - name:
+//s3558475 - Nguyen Ha Phuong Mai
+//s3515305 - Nguyen Thi Mai Thao
 
 #include <stdlib.h>
 #include <curses.h>
