@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 
 set(SOURCE_FILES poker_ui.c demo.c)
 
-set(HEADER_FILES poker.h)
+set(HEADER_FILES poker.h poker_ui.h)
 
 set(SORTING_SOURCE_FILES poker.c)
 
