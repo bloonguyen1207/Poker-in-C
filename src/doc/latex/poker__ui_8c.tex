@@ -1,0 +1,515 @@
+\hypertarget{poker__ui_8c}{\section{poker\+\_\+ui.\+c File Reference}
+\label{poker__ui_8c}\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+}
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$curses.\+h$>$}\\*
+{\ttfamily \#include $<$signal.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}poker.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}poker\+\_\+ui.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{poker__ui_8c_abde4c46b2145ac8382f99af7a17cbdb1}{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D}~6
+\item 
+\#define \hyperlink{poker__ui_8c_ae4ca3b01012fa01584f9037e1e80e159}{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D}~1
+\item 
+\#define \hyperlink{poker__ui_8c_adc84e1d45c1ceda8e8d4a60b6dca2e9c}{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W}~3
+\item 
+\#define \hyperlink{poker__ui_8c_a54e9dac23fd194e6f67b6fa0ac1079d9}{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E}~7
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{poker__ui_8c_ad441164c567b7b452bf89f140a828465}{draw\+Card} (\hyperlink{poker_8h_aacb186b77382a02f7317dc38797f37c2}{Card} \hyperlink{structcard}{card}, int y, int x)
+\item 
+void \hyperlink{poker__ui_8c_abadc682831107d3ea2a2bfe4b1bf1b10}{center} (int row, char $\ast$title)
+\item 
+void \hyperlink{poker__ui_8c_a870d591fa96b82e39f5da4eca761d254}{credit} ()
+\item 
+void \hyperlink{poker__ui_8c_a5bf7bcaa7cd7b54c03792abe46d0e272}{draw\+Player\+Cards} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int num\+\_\+player, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table})
+\item 
+void \hyperlink{poker__ui_8c_abb7666391feda6c6ac220d9db0f1fe94}{draw\+Player\+Info} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int num\+\_\+player, int player\+Idx)
+\item 
+void \hyperlink{poker__ui_8c_a04419e1cdb54607d274eecdab4a83144}{draw\+Winner} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int num\+\_\+player, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table}, int round\+Idx)
+\item 
+void \hyperlink{poker__ui_8c_a6e05dca0e719f071496103ab592ba5ea}{draw\+Pot} (\hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table})
+\item 
+void \hyperlink{poker__ui_8c_a6d79d5147c8d00d0b2a24dd0d6b899c5}{draw\+Shared\+Card} (\hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table}, int round\+Idx)
+\item 
+void \hyperlink{poker__ui_8c_ae4e948caa61b6a66f3c9bb5ae2872f09}{draw\+Range\+Money} (int min, int max, int item, int money)
+\item 
+int \hyperlink{poker__ui_8c_a678e07122bb3c01f6ec56158155c6e79}{interact\+Range\+Money} (int min, int max, int money, int item)
+\item 
+int \hyperlink{poker__ui_8c_a2bf146623d4995bd915685b3b1292079}{range\+Money} (int min, int max)
+\item 
+void \hyperlink{poker__ui_8c_adb9cdaa5c26da91280bb25ba559e7c90}{update\+Info} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int num\+\_\+player, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table}, int round\+Idx, int player\+Idx)
+\item 
+void \hyperlink{poker__ui_8c_a2e437c5dcaad138154c229243f272110}{draw\+Game} (int num\+\_\+player, int round\+Idx, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int player\+Idx, int item)
+\item 
+int \hyperlink{poker__ui_8c_aea8a8194768660a268c5966d901ee235}{interact\+Game} (int num\+\_\+player, int round\+Idx, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int player\+Idx)
+\item 
+int \hyperlink{poker__ui_8c_a23b39e9e5b4ad2654cf8c038aebf836b}{turn} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int round\+Idx, int player\+Idx, int num\+\_\+player, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int count\+Check, int count\+Allin, int count\+Call, int is\+\_\+1st\+\_\+bet)
+\item 
+int \hyperlink{poker__ui_8c_a8dce4a912bba7ca522cebd932b3a92be}{round\+Poker} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int num\+\_\+player, int round\+Idx, int count\+Active\+Player)
+\item 
+int \hyperlink{poker__ui_8c_a604571122f99349c593766a3005193ba}{game} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int num\+\_\+player, int next\+S\+B, int round\+Idx)
+\item 
+void \hyperlink{poker__ui_8c_abf6682a72f46937d3d90c4b1a38d3230}{set\+Up\+Game} (int num\+\_\+player, int is\+Load)
+\item 
+void \hyperlink{poker__ui_8c_ab6b351a98124371d00358ad024918339}{draw\+Start\+Menu} (int item, int num\+\_\+player)
+\item 
+int \hyperlink{poker__ui_8c_aaae8a36d5dd86ababcaaea140846de63}{interact\+Start\+Menu} (int num\+\_\+player, int item)
+\item 
+void \hyperlink{poker__ui_8c_adb4b7104b34632fd046d9a534eced233}{start\+Menu} ()
+\item 
+void \hyperlink{poker__ui_8c_ae409072a5fb4a58909e3216fd561db27}{draw\+Main\+Menu} (int item)
+\item 
+int \hyperlink{poker__ui_8c_a3f0d53735e2f73ed6d24f9c277748fe7}{interact\+Main\+Menu} ()
+\item 
+int \hyperlink{poker__ui_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{poker__ui_8c_abde4c46b2145ac8382f99af7a17cbdb1}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D}}
+\index{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+A\+C\+K\+G\+R\+O\+U\+N\+D~6}}\label{poker__ui_8c_abde4c46b2145ac8382f99af7a17cbdb1}
+\hypertarget{poker__ui_8c_ae4ca3b01012fa01584f9037e1e80e159}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D}}
+\index{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+R\+E\+D~1}}\label{poker__ui_8c_ae4ca3b01012fa01584f9037e1e80e159}
+\hypertarget{poker__ui_8c_a54e9dac23fd194e6f67b6fa0ac1079d9}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E}}
+\index{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+W\+H\+I\+T\+E~7}}\label{poker__ui_8c_a54e9dac23fd194e6f67b6fa0ac1079d9}
+\hypertarget{poker__ui_8c_adc84e1d45c1ceda8e8d4a60b6dca2e9c}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W}}
+\index{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W@{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+O\+K\+E\+R\+\_\+\+C\+O\+L\+O\+R\+\_\+\+Y\+E\+L\+L\+O\+W~3}}\label{poker__ui_8c_adc84e1d45c1ceda8e8d4a60b6dca2e9c}
+
+
+\subsection{Function Documentation}
+\hypertarget{poker__ui_8c_abadc682831107d3ea2a2bfe4b1bf1b10}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!center@{center}}
+\index{center@{center}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{center}]{\setlength{\rightskip}{0pt plus 5cm}void center (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{char $\ast$}]{title}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_abadc682831107d3ea2a2bfe4b1bf1b10}
+display a string in the center of the line 
+\begin{DoxyParams}{Parameters}
+{\em row} & position based on y axis \\
+\hline
+{\em title} & a string \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a870d591fa96b82e39f5da4eca761d254}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!credit@{credit}}
+\index{credit@{credit}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{credit}]{\setlength{\rightskip}{0pt plus 5cm}void credit (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a870d591fa96b82e39f5da4eca761d254}
+display credit \hypertarget{poker__ui_8c_ad441164c567b7b452bf89f140a828465}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Card@{draw\+Card}}
+\index{draw\+Card@{draw\+Card}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Card}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Card (
+\begin{DoxyParamCaption}
+\item[{{\bf Card}}]{card, }
+\item[{int}]{y, }
+\item[{int}]{x}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_ad441164c567b7b452bf89f140a828465}
+draw a card 
+\begin{DoxyParams}{Parameters}
+{\em card} & card \\
+\hline
+{\em y} & position based on y axis \\
+\hline
+{\em x} & position based on x axis \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a2e437c5dcaad138154c229243f272110}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Game@{draw\+Game}}
+\index{draw\+Game@{draw\+Game}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Game}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Game (
+\begin{DoxyParamCaption}
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{round\+Idx, }
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{player\+Idx, }
+\item[{int}]{item}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a2e437c5dcaad138154c229243f272110}
+draw players' cards and info, table info, shared card, and option menu which displays options that players can choose 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em player\+Idx} & player index \\
+\hline
+{\em item} & where the player currently chooses \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_ae409072a5fb4a58909e3216fd561db27}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Main\+Menu@{draw\+Main\+Menu}}
+\index{draw\+Main\+Menu@{draw\+Main\+Menu}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Main\+Menu}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Main\+Menu (
+\begin{DoxyParamCaption}
+\item[{int}]{item}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_ae409072a5fb4a58909e3216fd561db27}
+draw main menu 
+\begin{DoxyParams}{Parameters}
+{\em item} & where the player currently chooses \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a5bf7bcaa7cd7b54c03792abe46d0e272}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Player\+Cards@{draw\+Player\+Cards}}
+\index{draw\+Player\+Cards@{draw\+Player\+Cards}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Player\+Cards}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Player\+Cards (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int}]{num\+\_\+player, }
+\item[{{\bf Table}}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a5bf7bcaa7cd7b54c03792abe46d0e272}
+draw players' name, if they are Big Blind or Small Blind and 2 cards of active players 
+\begin{DoxyParams}{Parameters}
+{\em players} & all active players \\
+\hline
+{\em table} & table \\
+\hline
+{\em num\+\_\+player} & number of players (include folded player) \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_abb7666391feda6c6ac220d9db0f1fe94}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Player\+Info@{draw\+Player\+Info}}
+\index{draw\+Player\+Info@{draw\+Player\+Info}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Player\+Info}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Player\+Info (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{player\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_abb7666391feda6c6ac220d9db0f1fe94}
+draw players' name, their money, bet and state 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em num\+\_\+player} & number of players (include folded player) \\
+\hline
+{\em player\+Idx} & index of player who currently takes a turn \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a6e05dca0e719f071496103ab592ba5ea}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Pot@{draw\+Pot}}
+\index{draw\+Pot@{draw\+Pot}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Pot}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Pot (
+\begin{DoxyParamCaption}
+\item[{{\bf Table}}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a6e05dca0e719f071496103ab592ba5ea}
+draw pot 
+\begin{DoxyParams}{Parameters}
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_ae4e948caa61b6a66f3c9bb5ae2872f09}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Range\+Money@{draw\+Range\+Money}}
+\index{draw\+Range\+Money@{draw\+Range\+Money}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Range\+Money}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Range\+Money (
+\begin{DoxyParamCaption}
+\item[{int}]{min, }
+\item[{int}]{max, }
+\item[{int}]{item, }
+\item[{int}]{money}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_ae4e948caa61b6a66f3c9bb5ae2872f09}
+draw the money that player wants to raise/bet 
+\begin{DoxyParams}{Parameters}
+{\em min} & minimum money that player needs to raise/bet \\
+\hline
+{\em max} & maximum money that player can raise/bet \\
+\hline
+{\em item} & where the player currently chooses \\
+\hline
+{\em money} & money that player wants to raise/bet \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a6d79d5147c8d00d0b2a24dd0d6b899c5}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Shared\+Card@{draw\+Shared\+Card}}
+\index{draw\+Shared\+Card@{draw\+Shared\+Card}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Shared\+Card}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Shared\+Card (
+\begin{DoxyParamCaption}
+\item[{{\bf Table}}]{table, }
+\item[{int}]{round\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a6d79d5147c8d00d0b2a24dd0d6b899c5}
+draw shared card 
+\begin{DoxyParams}{Parameters}
+{\em table} & table \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_ab6b351a98124371d00358ad024918339}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Start\+Menu@{draw\+Start\+Menu}}
+\index{draw\+Start\+Menu@{draw\+Start\+Menu}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Start\+Menu}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Start\+Menu (
+\begin{DoxyParamCaption}
+\item[{int}]{item, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_ab6b351a98124371d00358ad024918339}
+draw start menu 
+\begin{DoxyParams}{Parameters}
+{\em item} & where the player currently chooses \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a04419e1cdb54607d274eecdab4a83144}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!draw\+Winner@{draw\+Winner}}
+\index{draw\+Winner@{draw\+Winner}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{draw\+Winner}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Winner (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int}]{num\+\_\+player, }
+\item[{{\bf Table}}]{table, }
+\item[{int}]{round\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a04419e1cdb54607d274eecdab4a83144}
+draw rank of active players and the announcement about the winner 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em num\+\_\+player} & number of players (include folded player) \\
+\hline
+{\em table} & table \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a604571122f99349c593766a3005193ba}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!game@{game}}
+\index{game@{game}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{game}]{\setlength{\rightskip}{0pt plus 5cm}int game (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{next\+S\+B, }
+\item[{int}]{round\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a604571122f99349c593766a3005193ba}
+set Big Blind and Small Blind, deal players' cards, set some condition to start game and end game 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em deck} & deck \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em next\+S\+B} & next Small Blind \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_aea8a8194768660a268c5966d901ee235}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!interact\+Game@{interact\+Game}}
+\index{interact\+Game@{interact\+Game}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{interact\+Game}]{\setlength{\rightskip}{0pt plus 5cm}int interact\+Game (
+\begin{DoxyParamCaption}
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{round\+Idx, }
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{player\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_aea8a8194768660a268c5966d901ee235}
+let the player choose options by using arrow keys 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em player\+Idx} & player index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a3f0d53735e2f73ed6d24f9c277748fe7}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!interact\+Main\+Menu@{interact\+Main\+Menu}}
+\index{interact\+Main\+Menu@{interact\+Main\+Menu}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{interact\+Main\+Menu}]{\setlength{\rightskip}{0pt plus 5cm}int interact\+Main\+Menu (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a3f0d53735e2f73ed6d24f9c277748fe7}
+\hypertarget{poker__ui_8c_a678e07122bb3c01f6ec56158155c6e79}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!interact\+Range\+Money@{interact\+Range\+Money}}
+\index{interact\+Range\+Money@{interact\+Range\+Money}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{interact\+Range\+Money}]{\setlength{\rightskip}{0pt plus 5cm}int interact\+Range\+Money (
+\begin{DoxyParamCaption}
+\item[{int}]{min, }
+\item[{int}]{max, }
+\item[{int}]{money, }
+\item[{int}]{item}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a678e07122bb3c01f6ec56158155c6e79}
+let the player choose item by using arrow keys 
+\begin{DoxyParams}{Parameters}
+{\em min} & minimum money that player needs to raise/bet \\
+\hline
+{\em max} & maximum money that player can raise/bet \\
+\hline
+{\em item} & where the player currently chooses \\
+\hline
+{\em money} & money that player wants to raise/bet \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_aaae8a36d5dd86ababcaaea140846de63}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!interact\+Start\+Menu@{interact\+Start\+Menu}}
+\index{interact\+Start\+Menu@{interact\+Start\+Menu}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{interact\+Start\+Menu}]{\setlength{\rightskip}{0pt plus 5cm}int interact\+Start\+Menu (
+\begin{DoxyParamCaption}
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{item}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_aaae8a36d5dd86ababcaaea140846de63}
+let the player choose the number of players, start game or back to main menu by using arrow keys 
+\begin{DoxyParams}{Parameters}
+{\em item} & where the player currently chooses \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!main@{main}}
+\index{main@{main}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+\hypertarget{poker__ui_8c_a2bf146623d4995bd915685b3b1292079}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!range\+Money@{range\+Money}}
+\index{range\+Money@{range\+Money}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{range\+Money}]{\setlength{\rightskip}{0pt plus 5cm}int range\+Money (
+\begin{DoxyParamCaption}
+\item[{int}]{min, }
+\item[{int}]{max}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a2bf146623d4995bd915685b3b1292079}
+increase/decrease the money based on the player's choice 
+\begin{DoxyParams}{Parameters}
+{\em min} & minimum money that player needs to raise/bet \\
+\hline
+{\em max} & maximum money that player can raise/bet \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_a8dce4a912bba7ca522cebd932b3a92be}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!round\+Poker@{round\+Poker}}
+\index{round\+Poker@{round\+Poker}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{round\+Poker}]{\setlength{\rightskip}{0pt plus 5cm}int round\+Poker (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{round\+Idx, }
+\item[{int}]{count\+Active\+Player}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a8dce4a912bba7ca522cebd932b3a92be}
+deal shared cards, set some condition to let player choose options and to end round 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em deck} & deck \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+{\em count\+Active\+Player} & number of active players (who did not fold) \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_abf6682a72f46937d3d90c4b1a38d3230}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!set\+Up\+Game@{set\+Up\+Game}}
+\index{set\+Up\+Game@{set\+Up\+Game}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{set\+Up\+Game}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Up\+Game (
+\begin{DoxyParamCaption}
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{is\+Load}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_abf6682a72f46937d3d90c4b1a38d3230}
+create all the object needed to start a game, check if it is able to restart a game or the player needs to start a new game 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em is\+Load} & check if the player choose load \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_adb4b7104b34632fd046d9a534eced233}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!start\+Menu@{start\+Menu}}
+\index{start\+Menu@{start\+Menu}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{start\+Menu}]{\setlength{\rightskip}{0pt plus 5cm}void start\+Menu (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_adb4b7104b34632fd046d9a534eced233}
+execute player's choice when he interacts with start menu \hypertarget{poker__ui_8c_a23b39e9e5b4ad2654cf8c038aebf836b}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!turn@{turn}}
+\index{turn@{turn}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{turn}]{\setlength{\rightskip}{0pt plus 5cm}int turn (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{round\+Idx, }
+\item[{int}]{player\+Idx, }
+\item[{int}]{num\+\_\+player, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{count\+Check, }
+\item[{int}]{count\+Allin, }
+\item[{int}]{count\+Call, }
+\item[{int}]{is\+\_\+1st\+\_\+bet}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_a23b39e9e5b4ad2654cf8c038aebf836b}
+where the player choose options 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+{\em player\+Idx} & player index \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em deck} & deck \\
+\hline
+{\em count\+Check} & count the number of players check in a round \\
+\hline
+{\em count\+Allin} & count the number of players allin in a round \\
+\hline
+{\em count\+Call} & count the number of players call in a round \\
+\hline
+{\em is\+\_\+1st\+\_\+bet} & check if this is the first turn of players in a round \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker__ui_8c_adb9cdaa5c26da91280bb25ba559e7c90}{\index{poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}!update\+Info@{update\+Info}}
+\index{update\+Info@{update\+Info}!poker\+\_\+ui.\+c@{poker\+\_\+ui.\+c}}
+\subsubsection[{update\+Info}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Info (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int}]{num\+\_\+player, }
+\item[{{\bf Table}}]{table, }
+\item[{int}]{round\+Idx, }
+\item[{int}]{player\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker__ui_8c_adb9cdaa5c26da91280bb25ba559e7c90}
+draw players' cards and info, shared card, pot 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em num\+\_\+player} & number of players (include folded player) \\
+\hline
+{\em table} & table \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+{\em player\+Idx} & player index \\
+\hline
+\end{DoxyParams}

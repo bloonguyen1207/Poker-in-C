@@ -1,0 +1,1089 @@
+\hypertarget{poker_8h}{\section{poker.\+h File Reference}
+\label{poker_8h}\index{poker.\+h@{poker.\+h}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcard}{card}
+\item 
+struct \hyperlink{structdeck}{deck}
+\item 
+struct \hyperlink{structplayer}{player}
+\item 
+struct \hyperlink{structtable}{table}
+\item 
+struct \hyperlink{structhand}{hand}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum \hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8e}{suit} \hyperlink{poker_8h_a2b1ea04090b8ece69f59a1f89b5ef903}{Suit}
+\item 
+typedef enum \hyperlink{poker_8h_aab463cca26e853227a05587642f8e578}{rank} \hyperlink{poker_8h_a0991367a2e93f69582a2258ea315e261}{Rank}
+\item 
+typedef enum \hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90}{state} \hyperlink{poker_8h_ad958b7c6a5231ab463ca88ad172b5f46}{State}
+\item 
+typedef struct \hyperlink{structcard}{card} \hyperlink{poker_8h_aacb186b77382a02f7317dc38797f37c2}{Card}
+\item 
+typedef struct \hyperlink{structdeck}{deck} \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck}
+\item 
+typedef struct \hyperlink{structplayer}{player} \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player}
+\item 
+typedef struct \hyperlink{structtable}{table} \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table}
+\item 
+typedef struct \hyperlink{structhand}{hand} \hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8e}{suit} \{ \\*
+\hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8ea8e9b2e1c30b9ae5b9419a5e2da1023e5}{H\+E\+A\+R\+T\+S}, 
+\hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8ea12de85969a140d2f4a3a46da7c0247c6}{D\+I\+A\+M\+O\+N\+D\+S}, 
+\hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eac805bda578258920428a78fd9a146646}{C\+L\+U\+B\+S}, 
+\hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eaa47c0114f1faaa4685a84fc8f710dbf4}{S\+P\+A\+D\+E\+S}, 
+\\*
+\hyperlink{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eac157bdf0b85a40d2619cbc8bc1ae5fe2}{N\+O\+N\+E}
+ \}
+\item 
+enum \hyperlink{poker_8h_aab463cca26e853227a05587642f8e578}{rank} \{ \\*
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a6117d6e94a71ab9e736a4d25e176e227}{High\+Card}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a23b495652b0d0ae95bd1d13ef8872772}{One\+Pair}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a6927082734d37e0460ba3a589e4485da}{Two\+Pairs}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a14deafe746247fb6f76771246dfb16b5}{Three}, 
+\\*
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a56504d7f6f1ef88c211d788b514d53d1}{Four}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578ada4cdade2120d083fe09b30940e51c12}{Straight}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a2ebde85503cb1618bcd160d9e0e23a56}{Flush}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a62ed5bfaff62cf847d412ac2f82527e9}{Full\+House}, 
+\\*
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a90663bbcbca6416ad39e70b52a053b99}{Straight\+Flush}, 
+\hyperlink{poker_8h_aab463cca26e853227a05587642f8e578a426db37e862969c16e3fc0a719b852cb}{Royal\+Flush}
+ \}
+\item 
+enum \hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90}{state} \{ \\*
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ac9d3e887722f2bc482bcca9d41c512af}{None}, 
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ad62c0e64712dc0d04f506dadbe672e53}{Called}, 
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a1d2d258e92567cbc6fabf9c2722bb6d6}{Raised}, 
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ab07e993a3b7bdb2623a1ade34c337a33}{Checked}, 
+\\*
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a75f57607a4521d7d4b4c5d34a555a09d}{Bets}, 
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a47e1903424dd59f68ee7c4816ff85524}{Allins}, 
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a33a885186066c38bcd34066b143b30fe}{Folded}, 
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ad3000f705564090d2acd1d320ccc5135}{S\+B}, 
+\\*
+\hyperlink{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ae244545a383510f5c37378bd2d0b7083}{B\+B}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{poker_8h_abed2be63e52b2e8265d16d1e8c1fc938}{get\+Suit} (\hyperlink{poker_8h_a2b1ea04090b8ece69f59a1f89b5ef903}{Suit} s)
+\item 
+char $\ast$ \hyperlink{poker_8h_af7b151f7f4094a711310e97d26108fac}{get\+State} (\hyperlink{poker_8h_ad958b7c6a5231ab463ca88ad172b5f46}{State} s)
+\item 
+char $\ast$ \hyperlink{poker_8h_a49efd14d77e09ad8c4bfec26083df185}{get\+Rank} (\hyperlink{poker_8h_a0991367a2e93f69582a2258ea315e261}{Rank} r)
+\item 
+char $\ast$ \hyperlink{poker_8h_a4accc950ff0030434bc43468dd24d084}{get\+Card\+Rank} (int \hyperlink{poker_8h_aab463cca26e853227a05587642f8e578}{rank})
+\item 
+\hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$ \hyperlink{poker_8h_a9df530b755ec657b1c4078a1e35e0c9a}{new\+Deck} ()
+\item 
+void \hyperlink{poker_8h_aebc845f28b92cc48b1acfba569b4b807}{shuffle\+Deck} (\hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int size)
+\item 
+\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ \hyperlink{poker_8h_a53ae0e2aae1ec0a98acef26a19124e37}{create\+Players} (int num\+\_\+player)
+\item 
+\hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$ \hyperlink{poker_8h_abea371d4bac9b6b277a5ae9f670564d7}{create\+Table} ()
+\item 
+void \hyperlink{poker_8h_a3f500d0465a6b107f30feb88443c9cd4}{deal\+Starting\+Hand} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int num\+\_\+player)
+\item 
+void \hyperlink{poker_8h_a28551a6660472895aba968d83fb87289}{deal\+Shared\+Cards} (\hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int round\+Idx)
+\item 
+\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} $\ast$ \hyperlink{poker_8h_a2274df17ccac4a175e909d808dbc503e}{create\+Hands} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int num\+\_\+player)
+\item 
+void \hyperlink{poker_8h_a87648b170e7fd07f498c0921fff44a75}{swap\+Cards} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} $\ast$\hyperlink{structhand}{hand}, int player\+Idx, int fst\+Idx, int sec\+Idx)
+\item 
+void \hyperlink{poker_8h_a75e42bae64f66eac8c0176622e3a589f}{sort\+Hands} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} $\ast$hands, int num\+\_\+player)
+\item 
+int \hyperlink{poker_8h_a68f65616d420cbd2ccebcbe62afc1f3b}{search\+Hand\+Rank} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, int \hyperlink{poker_8h_aab463cca26e853227a05587642f8e578}{rank})
+\item 
+\hyperlink{poker_8h_aacb186b77382a02f7317dc38797f37c2}{Card} \hyperlink{poker_8h_a379c2550a34d0731f6316b66f58fbef3}{search\+Card} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, int \hyperlink{poker_8h_aab463cca26e853227a05587642f8e578}{rank})
+\item 
+void \hyperlink{poker_8h_a315cfb0d4e80bc81c5283a9b90316e5c}{is\+High\+Card} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_ad2ab1f4bf5f57cabd25a9867e177a19c}{is\+Pair} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a099321b1ae1917ee19c626e9092a182d}{is2\+Pair} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a405cbfef7c26c5a981fb059707045059}{is3\+Of\+A\+Kind} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a3a9793fca9dd4a910255143d6b76f601}{is4\+Of\+A\+Kind} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a6f0f0b9ffa5948c69d88e1581f622a1a}{is\+Full\+House} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a2f9f6b761c3a053348e1b72729f74095}{is\+Straight} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a5460c5f01736692d8e198efff2374696}{is\+Flush} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a38961d02671c0ca1e418378515aff9ec}{is\+Straight\+Flush} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a837eafe82723011c616077bfd3a1a04d}{is\+Royal\+Flush} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} \hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+void \hyperlink{poker_8h_a6cdc1ff120975f8816c8f78b1e50eb44}{update\+Money} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int money)
+\item 
+int \hyperlink{poker_8h_a6492e30475c110dc2fc3c4900156debb}{is\+Allin} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} \hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table})
+\item 
+int \hyperlink{poker_8h_a1426f81e34a8ae4610137ce06642fd83}{is\+Call\+Raise} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} \hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table})
+\item 
+int \hyperlink{poker_8h_a98c7856725af9be01e8abe6c4b18d4a9}{is\+Check\+Bet} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} \hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table})
+\item 
+void \hyperlink{poker_8h_a455d510e83959a805dfc272d724a0ab4}{allin} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table})
+\item 
+void \hyperlink{poker_8h_aa6b6a13a4807d171244de280603c4cba}{call} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table})
+\item 
+void \hyperlink{poker_8h_a409b33167926c0f385dbec0993072586}{raise\+Poker} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int money)
+\item 
+void \hyperlink{poker_8h_af680cf84631c41f6d9fb5381fa945414}{check} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+void \hyperlink{poker_8h_a974661daa39e972dc4c5c68c26c9e2e6}{bet} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int money)
+\item 
+void \hyperlink{poker_8h_a8be69e24226aed8d2f83360a8ea105dd}{fold} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_af376a2642223fd357762c00da0b4c1bb}{min\+Money} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} \hyperlink{structplayer}{player}, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} \hyperlink{structtable}{table})
+\item 
+void \hyperlink{poker_8h_a08435308430d88f8052fb940246f762e}{check\+Hand\+Ranking} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} $\ast$\hyperlink{structhand}{hand}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$\hyperlink{structplayer}{player})
+\item 
+int \hyperlink{poker_8h_a556b167c05d8b324a88f1fcd33c4a305}{aggr\+A\+Iround0} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ai, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table})
+\item 
+int \hyperlink{poker_8h_a671cc78b2c84a97ec00b33c21a3f94ff}{aggr\+A\+Irounds} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ai, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table})
+\item 
+int \hyperlink{poker_8h_aed0add5dbc28421fe049cd4f249fb335}{aggr\+A\+I} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ai, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int round\+Idx)
+\item 
+int \hyperlink{poker_8h_a0999404210b95f1905594eaa2c56200a}{cons\+A\+Iround0} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ai, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table})
+\item 
+int \hyperlink{poker_8h_ab2f4d6c5483d3c85f5aae5d47fb157f2}{cons\+A\+Irounds} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ai, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table})
+\item 
+int \hyperlink{poker_8h_ad4f526655f5287d0fbb0657dfd705c1d}{cons\+A\+I} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$ai, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int round\+Idx)
+\item 
+int \hyperlink{poker_8h_ac1327d6b1f3a05dbfe353c2f6dabaff5}{save} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, int num\+\_\+player, int round\+\_\+index, int player\+\_\+index, int count\+Check, int count\+Allin, int count\+Call, int is\+\_\+1st\+\_\+bet)
+\item 
+int \hyperlink{poker_8h_a673841e7baef12830b5ab951a9252f0c}{load\+Num\+Player} (int $\ast$num\+\_\+player)
+\item 
+void \hyperlink{poker_8h_ac1d32348dd926523ed90ab0a398b0318}{load\+Round\+Info} (int $\ast$count\+Check, int $\ast$count\+Allin, int $\ast$count\+Call, int $\ast$is\+\_\+1st\+\_\+bet)
+\item 
+void \hyperlink{poker_8h_a91e158ec6dda98ad80f725bd35a95c04}{load} (\hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck}, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int $\ast$round\+\_\+index)
+\item 
+void \hyperlink{poker_8h_a0b0ad1d57ea7fa5856168995b45326db}{check\+Winner} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int num\+\_\+player)
+\item 
+void \hyperlink{poker_8h_a485c46367e643333e2e92e9328fdc70d}{test\+Hand} (\hyperlink{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{Hand} $\ast$hands, \hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, int num\+\_\+player)
+\item 
+void \hyperlink{poker_8h_aaaae23d0d799d307e95c6390ab1c4460}{award} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int num\+\_\+player)
+\item 
+void \hyperlink{poker_8h_aa5c692ccb42a3f3a6b6a322820ef8cdb}{reset} (\hyperlink{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{Player} $\ast$players, \hyperlink{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{Table} $\ast$\hyperlink{structtable}{table}, int num\+\_\+player, \hyperlink{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{Deck} $\ast$\hyperlink{structdeck}{deck})
+\end{DoxyCompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{poker_8h_aacb186b77382a02f7317dc38797f37c2}{\index{poker.\+h@{poker.\+h}!Card@{Card}}
+\index{Card@{Card}!poker.\+h@{poker.\+h}}
+\subsubsection[{Card}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf card} {\bf Card}}}\label{poker_8h_aacb186b77382a02f7317dc38797f37c2}
+\hypertarget{poker_8h_a23e087eff3f2ae05d5299b703740a92e}{\index{poker.\+h@{poker.\+h}!Deck@{Deck}}
+\index{Deck@{Deck}!poker.\+h@{poker.\+h}}
+\subsubsection[{Deck}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf deck} {\bf Deck}}}\label{poker_8h_a23e087eff3f2ae05d5299b703740a92e}
+\hypertarget{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}{\index{poker.\+h@{poker.\+h}!Hand@{Hand}}
+\index{Hand@{Hand}!poker.\+h@{poker.\+h}}
+\subsubsection[{Hand}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf hand} {\bf Hand}}}\label{poker_8h_a70d59a82a00ba2c3a36f8509da5bfbba}
+\hypertarget{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}{\index{poker.\+h@{poker.\+h}!Player@{Player}}
+\index{Player@{Player}!poker.\+h@{poker.\+h}}
+\subsubsection[{Player}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf player} {\bf Player}}}\label{poker_8h_aacfbfbd6ace468c21c5128fced4e632c}
+\hypertarget{poker_8h_a0991367a2e93f69582a2258ea315e261}{\index{poker.\+h@{poker.\+h}!Rank@{Rank}}
+\index{Rank@{Rank}!poker.\+h@{poker.\+h}}
+\subsubsection[{Rank}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf rank} {\bf Rank}}}\label{poker_8h_a0991367a2e93f69582a2258ea315e261}
+\hypertarget{poker_8h_ad958b7c6a5231ab463ca88ad172b5f46}{\index{poker.\+h@{poker.\+h}!State@{State}}
+\index{State@{State}!poker.\+h@{poker.\+h}}
+\subsubsection[{State}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf state} {\bf State}}}\label{poker_8h_ad958b7c6a5231ab463ca88ad172b5f46}
+\hypertarget{poker_8h_a2b1ea04090b8ece69f59a1f89b5ef903}{\index{poker.\+h@{poker.\+h}!Suit@{Suit}}
+\index{Suit@{Suit}!poker.\+h@{poker.\+h}}
+\subsubsection[{Suit}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf suit} {\bf Suit}}}\label{poker_8h_a2b1ea04090b8ece69f59a1f89b5ef903}
+\hypertarget{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}{\index{poker.\+h@{poker.\+h}!Table@{Table}}
+\index{Table@{Table}!poker.\+h@{poker.\+h}}
+\subsubsection[{Table}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf table} {\bf Table}}}\label{poker_8h_a26ec63fafff54c1ab7e26c84b4b561d5}
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578}{\index{poker.\+h@{poker.\+h}!rank@{rank}}
+\index{rank@{rank}!poker.\+h@{poker.\+h}}
+\subsubsection[{rank}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf rank}}}\label{poker_8h_aab463cca26e853227a05587642f8e578}
+These are 10 different ranks that players achieve if they play until the game ends \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{High\+Card@{High\+Card}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!High\+Card@{High\+Card}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a6117d6e94a71ab9e736a4d25e176e227}{High\+Card}\label{poker_8h_aab463cca26e853227a05587642f8e578a6117d6e94a71ab9e736a4d25e176e227}
+}]\index{One\+Pair@{One\+Pair}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!One\+Pair@{One\+Pair}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a23b495652b0d0ae95bd1d13ef8872772}{One\+Pair}\label{poker_8h_aab463cca26e853227a05587642f8e578a23b495652b0d0ae95bd1d13ef8872772}
+}]\index{Two\+Pairs@{Two\+Pairs}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Two\+Pairs@{Two\+Pairs}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a6927082734d37e0460ba3a589e4485da}{Two\+Pairs}\label{poker_8h_aab463cca26e853227a05587642f8e578a6927082734d37e0460ba3a589e4485da}
+}]\index{Three@{Three}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Three@{Three}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a14deafe746247fb6f76771246dfb16b5}{Three}\label{poker_8h_aab463cca26e853227a05587642f8e578a14deafe746247fb6f76771246dfb16b5}
+}]\index{Four@{Four}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Four@{Four}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a56504d7f6f1ef88c211d788b514d53d1}{Four}\label{poker_8h_aab463cca26e853227a05587642f8e578a56504d7f6f1ef88c211d788b514d53d1}
+}]\index{Straight@{Straight}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Straight@{Straight}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578ada4cdade2120d083fe09b30940e51c12}{Straight}\label{poker_8h_aab463cca26e853227a05587642f8e578ada4cdade2120d083fe09b30940e51c12}
+}]\index{Flush@{Flush}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Flush@{Flush}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a2ebde85503cb1618bcd160d9e0e23a56}{Flush}\label{poker_8h_aab463cca26e853227a05587642f8e578a2ebde85503cb1618bcd160d9e0e23a56}
+}]\index{Full\+House@{Full\+House}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Full\+House@{Full\+House}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a62ed5bfaff62cf847d412ac2f82527e9}{Full\+House}\label{poker_8h_aab463cca26e853227a05587642f8e578a62ed5bfaff62cf847d412ac2f82527e9}
+}]\index{Straight\+Flush@{Straight\+Flush}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Straight\+Flush@{Straight\+Flush}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a90663bbcbca6416ad39e70b52a053b99}{Straight\+Flush}\label{poker_8h_aab463cca26e853227a05587642f8e578a90663bbcbca6416ad39e70b52a053b99}
+}]\index{Royal\+Flush@{Royal\+Flush}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Royal\+Flush@{Royal\+Flush}}\item[{\em 
+\hypertarget{poker_8h_aab463cca26e853227a05587642f8e578a426db37e862969c16e3fc0a719b852cb}{Royal\+Flush}\label{poker_8h_aab463cca26e853227a05587642f8e578a426db37e862969c16e3fc0a719b852cb}
+}]\end{description}
+\end{Desc}
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90}{\index{poker.\+h@{poker.\+h}!state@{state}}
+\index{state@{state}!poker.\+h@{poker.\+h}}
+\subsubsection[{state}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf state}}}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90}
+The first 7 states is the state of players after they chose options in their turn S\+B and B\+B are Small\+Blind and Big\+Blind respectively and are assigned to players at the beginning of each game. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{None@{None}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!None@{None}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ac9d3e887722f2bc482bcca9d41c512af}{None}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ac9d3e887722f2bc482bcca9d41c512af}
+}]\index{Called@{Called}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Called@{Called}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ad62c0e64712dc0d04f506dadbe672e53}{Called}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ad62c0e64712dc0d04f506dadbe672e53}
+}]\index{Raised@{Raised}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Raised@{Raised}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a1d2d258e92567cbc6fabf9c2722bb6d6}{Raised}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a1d2d258e92567cbc6fabf9c2722bb6d6}
+}]\index{Checked@{Checked}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Checked@{Checked}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ab07e993a3b7bdb2623a1ade34c337a33}{Checked}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ab07e993a3b7bdb2623a1ade34c337a33}
+}]\index{Bets@{Bets}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Bets@{Bets}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a75f57607a4521d7d4b4c5d34a555a09d}{Bets}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a75f57607a4521d7d4b4c5d34a555a09d}
+}]\index{Allins@{Allins}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Allins@{Allins}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a47e1903424dd59f68ee7c4816ff85524}{Allins}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a47e1903424dd59f68ee7c4816ff85524}
+}]\index{Folded@{Folded}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!Folded@{Folded}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a33a885186066c38bcd34066b143b30fe}{Folded}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90a33a885186066c38bcd34066b143b30fe}
+}]\index{S\+B@{S\+B}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!S\+B@{S\+B}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ad3000f705564090d2acd1d320ccc5135}{S\+B}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ad3000f705564090d2acd1d320ccc5135}
+}]\index{B\+B@{B\+B}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!B\+B@{B\+B}}\item[{\em 
+\hypertarget{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ae244545a383510f5c37378bd2d0b7083}{B\+B}\label{poker_8h_adc6e5733fc3c22f0a7b2914188c49c90ae244545a383510f5c37378bd2d0b7083}
+}]\end{description}
+\end{Desc}
+\hypertarget{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8e}{\index{poker.\+h@{poker.\+h}!suit@{suit}}
+\index{suit@{suit}!poker.\+h@{poker.\+h}}
+\subsubsection[{suit}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf suit}}}\label{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8e}
+These are 4 different suits in a deck \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{H\+E\+A\+R\+T\+S@{H\+E\+A\+R\+T\+S}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!H\+E\+A\+R\+T\+S@{H\+E\+A\+R\+T\+S}}\item[{\em 
+\hypertarget{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8ea8e9b2e1c30b9ae5b9419a5e2da1023e5}{H\+E\+A\+R\+T\+S}\label{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8ea8e9b2e1c30b9ae5b9419a5e2da1023e5}
+}]\index{D\+I\+A\+M\+O\+N\+D\+S@{D\+I\+A\+M\+O\+N\+D\+S}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!D\+I\+A\+M\+O\+N\+D\+S@{D\+I\+A\+M\+O\+N\+D\+S}}\item[{\em 
+\hypertarget{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8ea12de85969a140d2f4a3a46da7c0247c6}{D\+I\+A\+M\+O\+N\+D\+S}\label{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8ea12de85969a140d2f4a3a46da7c0247c6}
+}]\index{C\+L\+U\+B\+S@{C\+L\+U\+B\+S}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!C\+L\+U\+B\+S@{C\+L\+U\+B\+S}}\item[{\em 
+\hypertarget{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eac805bda578258920428a78fd9a146646}{C\+L\+U\+B\+S}\label{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eac805bda578258920428a78fd9a146646}
+}]\index{S\+P\+A\+D\+E\+S@{S\+P\+A\+D\+E\+S}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!S\+P\+A\+D\+E\+S@{S\+P\+A\+D\+E\+S}}\item[{\em 
+\hypertarget{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eaa47c0114f1faaa4685a84fc8f710dbf4}{S\+P\+A\+D\+E\+S}\label{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eaa47c0114f1faaa4685a84fc8f710dbf4}
+}]\index{N\+O\+N\+E@{N\+O\+N\+E}!poker.\+h@{poker.\+h}}\index{poker.\+h@{poker.\+h}!N\+O\+N\+E@{N\+O\+N\+E}}\item[{\em 
+\hypertarget{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eac157bdf0b85a40d2619cbc8bc1ae5fe2}{N\+O\+N\+E}\label{poker_8h_a85deb5e1da7e8f7a146555e9c99fba8eac157bdf0b85a40d2619cbc8bc1ae5fe2}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{poker_8h_aed0add5dbc28421fe049cd4f249fb335}{\index{poker.\+h@{poker.\+h}!aggr\+A\+I@{aggr\+A\+I}}
+\index{aggr\+A\+I@{aggr\+A\+I}!poker.\+h@{poker.\+h}}
+\subsubsection[{aggr\+A\+I}]{\setlength{\rightskip}{0pt plus 5cm}int aggr\+A\+I (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{ai, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{round\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_aed0add5dbc28421fe049cd4f249fb335}
+set how the aggressive A\+I plays 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a556b167c05d8b324a88f1fcd33c4a305}{\index{poker.\+h@{poker.\+h}!aggr\+A\+Iround0@{aggr\+A\+Iround0}}
+\index{aggr\+A\+Iround0@{aggr\+A\+Iround0}!poker.\+h@{poker.\+h}}
+\subsubsection[{aggr\+A\+Iround0}]{\setlength{\rightskip}{0pt plus 5cm}int aggr\+A\+Iround0 (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{ai, }
+\item[{{\bf Table} $\ast$}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a556b167c05d8b324a88f1fcd33c4a305}
+set how the aggressive A\+I plays in the first round (round\+Idx 0) 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a671cc78b2c84a97ec00b33c21a3f94ff}{\index{poker.\+h@{poker.\+h}!aggr\+A\+Irounds@{aggr\+A\+Irounds}}
+\index{aggr\+A\+Irounds@{aggr\+A\+Irounds}!poker.\+h@{poker.\+h}}
+\subsubsection[{aggr\+A\+Irounds}]{\setlength{\rightskip}{0pt plus 5cm}int aggr\+A\+Irounds (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{ai, }
+\item[{{\bf Table} $\ast$}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a671cc78b2c84a97ec00b33c21a3f94ff}
+set how the aggressive A\+I plays in other rounds (except for the first round -\/ round\+Idx 0) 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a455d510e83959a805dfc272d724a0ab4}{\index{poker.\+h@{poker.\+h}!allin@{allin}}
+\index{allin@{allin}!poker.\+h@{poker.\+h}}
+\subsubsection[{allin}]{\setlength{\rightskip}{0pt plus 5cm}void allin (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player, }
+\item[{{\bf Table} $\ast$}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a455d510e83959a805dfc272d724a0ab4}
+change player's state to Allins and update\+Money 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_aaaae23d0d799d307e95c6390ab1c4460}{\index{poker.\+h@{poker.\+h}!award@{award}}
+\index{award@{award}!poker.\+h@{poker.\+h}}
+\subsubsection[{award}]{\setlength{\rightskip}{0pt plus 5cm}void award (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_aaaae23d0d799d307e95c6390ab1c4460}
+split pot of table and award the money to the winners 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a974661daa39e972dc4c5c68c26c9e2e6}{\index{poker.\+h@{poker.\+h}!bet@{bet}}
+\index{bet@{bet}!poker.\+h@{poker.\+h}}
+\subsubsection[{bet}]{\setlength{\rightskip}{0pt plus 5cm}void bet (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{money}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a974661daa39e972dc4c5c68c26c9e2e6}
+change player's state to Bet and update\+Money 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+{\em money} & money spent \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_aa6b6a13a4807d171244de280603c4cba}{\index{poker.\+h@{poker.\+h}!call@{call}}
+\index{call@{call}!poker.\+h@{poker.\+h}}
+\subsubsection[{call}]{\setlength{\rightskip}{0pt plus 5cm}void call (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player, }
+\item[{{\bf Table} $\ast$}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_aa6b6a13a4807d171244de280603c4cba}
+change player's state to Called and update\+Money 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_af680cf84631c41f6d9fb5381fa945414}{\index{poker.\+h@{poker.\+h}!check@{check}}
+\index{check@{check}!poker.\+h@{poker.\+h}}
+\subsubsection[{check}]{\setlength{\rightskip}{0pt plus 5cm}void check (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_af680cf84631c41f6d9fb5381fa945414}
+change player's state to Checked 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a08435308430d88f8052fb940246f762e}{\index{poker.\+h@{poker.\+h}!check\+Hand\+Ranking@{check\+Hand\+Ranking}}
+\index{check\+Hand\+Ranking@{check\+Hand\+Ranking}!poker.\+h@{poker.\+h}}
+\subsubsection[{check\+Hand\+Ranking}]{\setlength{\rightskip}{0pt plus 5cm}void check\+Hand\+Ranking (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand} $\ast$}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a08435308430d88f8052fb940246f762e}
+check the combination of A\+I player's cards and shared cards is at which rank 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em hand} & hand \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a0b0ad1d57ea7fa5856168995b45326db}{\index{poker.\+h@{poker.\+h}!check\+Winner@{check\+Winner}}
+\index{check\+Winner@{check\+Winner}!poker.\+h@{poker.\+h}}
+\subsubsection[{check\+Winner}]{\setlength{\rightskip}{0pt plus 5cm}void check\+Winner (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a0b0ad1d57ea7fa5856168995b45326db}
+find the winner 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_ad4f526655f5287d0fbb0657dfd705c1d}{\index{poker.\+h@{poker.\+h}!cons\+A\+I@{cons\+A\+I}}
+\index{cons\+A\+I@{cons\+A\+I}!poker.\+h@{poker.\+h}}
+\subsubsection[{cons\+A\+I}]{\setlength{\rightskip}{0pt plus 5cm}int cons\+A\+I (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{ai, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{round\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_ad4f526655f5287d0fbb0657dfd705c1d}
+set how the conservative A\+I plays 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+{\em round\+Idx} & round index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a0999404210b95f1905594eaa2c56200a}{\index{poker.\+h@{poker.\+h}!cons\+A\+Iround0@{cons\+A\+Iround0}}
+\index{cons\+A\+Iround0@{cons\+A\+Iround0}!poker.\+h@{poker.\+h}}
+\subsubsection[{cons\+A\+Iround0}]{\setlength{\rightskip}{0pt plus 5cm}int cons\+A\+Iround0 (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{ai, }
+\item[{{\bf Table} $\ast$}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a0999404210b95f1905594eaa2c56200a}
+set how the conservative A\+I plays in the first round (round\+Idx 0) 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_ab2f4d6c5483d3c85f5aae5d47fb157f2}{\index{poker.\+h@{poker.\+h}!cons\+A\+Irounds@{cons\+A\+Irounds}}
+\index{cons\+A\+Irounds@{cons\+A\+Irounds}!poker.\+h@{poker.\+h}}
+\subsubsection[{cons\+A\+Irounds}]{\setlength{\rightskip}{0pt plus 5cm}int cons\+A\+Irounds (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{ai, }
+\item[{{\bf Table} $\ast$}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_ab2f4d6c5483d3c85f5aae5d47fb157f2}
+set how the conservative A\+I plays in other rounds (except for the first round -\/ round\+Idx 0) 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a2274df17ccac4a175e909d808dbc503e}{\index{poker.\+h@{poker.\+h}!create\+Hands@{create\+Hands}}
+\index{create\+Hands@{create\+Hands}!poker.\+h@{poker.\+h}}
+\subsubsection[{create\+Hands}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Hand}$\ast$ create\+Hands (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a2274df17ccac4a175e909d808dbc503e}
+create hands which contains 2 cards of players and 5 cards on the table the number of hands created is based on the number of players Hands will be allocated on the heap. 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & the table \\
+\hline
+{\em num\+\_\+player} & the number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a53ae0e2aae1ec0a98acef26a19124e37}{\index{poker.\+h@{poker.\+h}!create\+Players@{create\+Players}}
+\index{create\+Players@{create\+Players}!poker.\+h@{poker.\+h}}
+\subsubsection[{create\+Players}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Player}$\ast$ create\+Players (
+\begin{DoxyParamCaption}
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a53ae0e2aae1ec0a98acef26a19124e37}
+create players based on the given number of players Players will be allocated on the heap. 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+player} & the number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_abea371d4bac9b6b277a5ae9f670564d7}{\index{poker.\+h@{poker.\+h}!create\+Table@{create\+Table}}
+\index{create\+Table@{create\+Table}!poker.\+h@{poker.\+h}}
+\subsubsection[{create\+Table}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Table}$\ast$ create\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_abea371d4bac9b6b277a5ae9f670564d7}
+create a table table will be allocated on the heap. \hypertarget{poker_8h_a28551a6660472895aba968d83fb87289}{\index{poker.\+h@{poker.\+h}!deal\+Shared\+Cards@{deal\+Shared\+Cards}}
+\index{deal\+Shared\+Cards@{deal\+Shared\+Cards}!poker.\+h@{poker.\+h}}
+\subsubsection[{deal\+Shared\+Cards}]{\setlength{\rightskip}{0pt plus 5cm}void deal\+Shared\+Cards (
+\begin{DoxyParamCaption}
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{round\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a28551a6660472895aba968d83fb87289}
+deal shared cards on the table 
+\begin{DoxyParams}{Parameters}
+{\em table} & the table \\
+\hline
+{\em deck} & the deck \\
+\hline
+{\em round\+Idx} & start from round 0 and end with round 3 \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a3f500d0465a6b107f30feb88443c9cd4}{\index{poker.\+h@{poker.\+h}!deal\+Starting\+Hand@{deal\+Starting\+Hand}}
+\index{deal\+Starting\+Hand@{deal\+Starting\+Hand}!poker.\+h@{poker.\+h}}
+\subsubsection[{deal\+Starting\+Hand}]{\setlength{\rightskip}{0pt plus 5cm}void deal\+Starting\+Hand (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a3f500d0465a6b107f30feb88443c9cd4}
+deal 2 cards to players 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em deck} & the deck \\
+\hline
+{\em num\+\_\+player} & the number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a8be69e24226aed8d2f83360a8ea105dd}{\index{poker.\+h@{poker.\+h}!fold@{fold}}
+\index{fold@{fold}!poker.\+h@{poker.\+h}}
+\subsubsection[{fold}]{\setlength{\rightskip}{0pt plus 5cm}void fold (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a8be69e24226aed8d2f83360a8ea105dd}
+change player's state to Folded and status to 0 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a4accc950ff0030434bc43468dd24d084}{\index{poker.\+h@{poker.\+h}!get\+Card\+Rank@{get\+Card\+Rank}}
+\index{get\+Card\+Rank@{get\+Card\+Rank}!poker.\+h@{poker.\+h}}
+\subsubsection[{get\+Card\+Rank}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\+Card\+Rank (
+\begin{DoxyParamCaption}
+\item[{int}]{rank}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a4accc950ff0030434bc43468dd24d084}
+instead of numbers, get a string corresponding to Card's rank 
+\begin{DoxyParams}{Parameters}
+{\em r} & card's rank \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a49efd14d77e09ad8c4bfec26083df185}{\index{poker.\+h@{poker.\+h}!get\+Rank@{get\+Rank}}
+\index{get\+Rank@{get\+Rank}!poker.\+h@{poker.\+h}}
+\subsubsection[{get\+Rank}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\+Rank (
+\begin{DoxyParamCaption}
+\item[{{\bf Rank}}]{r}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a49efd14d77e09ad8c4bfec26083df185}
+instead of numbers, get a string corresponding to Player's rank 
+\begin{DoxyParams}{Parameters}
+{\em r} & player's rank \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_af7b151f7f4094a711310e97d26108fac}{\index{poker.\+h@{poker.\+h}!get\+State@{get\+State}}
+\index{get\+State@{get\+State}!poker.\+h@{poker.\+h}}
+\subsubsection[{get\+State}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\+State (
+\begin{DoxyParamCaption}
+\item[{{\bf State}}]{s}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_af7b151f7f4094a711310e97d26108fac}
+instead of numbers, get a string corresponding to State 
+\begin{DoxyParams}{Parameters}
+{\em s} & state \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_abed2be63e52b2e8265d16d1e8c1fc938}{\index{poker.\+h@{poker.\+h}!get\+Suit@{get\+Suit}}
+\index{get\+Suit@{get\+Suit}!poker.\+h@{poker.\+h}}
+\subsubsection[{get\+Suit}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ get\+Suit (
+\begin{DoxyParamCaption}
+\item[{{\bf Suit}}]{s}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_abed2be63e52b2e8265d16d1e8c1fc938}
+instead of numbers, get a unicode string corresponding to Suit 
+\begin{DoxyParams}{Parameters}
+{\em s} & suit \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a099321b1ae1917ee19c626e9092a182d}{\index{poker.\+h@{poker.\+h}!is2\+Pair@{is2\+Pair}}
+\index{is2\+Pair@{is2\+Pair}!poker.\+h@{poker.\+h}}
+\subsubsection[{is2\+Pair}]{\setlength{\rightskip}{0pt plus 5cm}int is2\+Pair (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a099321b1ae1917ee19c626e9092a182d}
+if the hand has 2 pairs, store those pairs and another card that has highest rank to player's max\+\_\+hand and change the rank of player to Two\+Pairs assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a405cbfef7c26c5a981fb059707045059}{\index{poker.\+h@{poker.\+h}!is3\+Of\+A\+Kind@{is3\+Of\+A\+Kind}}
+\index{is3\+Of\+A\+Kind@{is3\+Of\+A\+Kind}!poker.\+h@{poker.\+h}}
+\subsubsection[{is3\+Of\+A\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}int is3\+Of\+A\+Kind (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a405cbfef7c26c5a981fb059707045059}
+if the hand has 3 cards with the same rank, store these cards and 2 other cards that has highest rank to player's max\+\_\+hand and change the rank of player to Three assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a3a9793fca9dd4a910255143d6b76f601}{\index{poker.\+h@{poker.\+h}!is4\+Of\+A\+Kind@{is4\+Of\+A\+Kind}}
+\index{is4\+Of\+A\+Kind@{is4\+Of\+A\+Kind}!poker.\+h@{poker.\+h}}
+\subsubsection[{is4\+Of\+A\+Kind}]{\setlength{\rightskip}{0pt plus 5cm}int is4\+Of\+A\+Kind (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a3a9793fca9dd4a910255143d6b76f601}
+if the hand has 4 cards with the same rank, store these cards and another card that has highest rank to player's max\+\_\+hand and change the rank of player to Four assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a6492e30475c110dc2fc3c4900156debb}{\index{poker.\+h@{poker.\+h}!is\+Allin@{is\+Allin}}
+\index{is\+Allin@{is\+Allin}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Allin}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Allin (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{player, }
+\item[{{\bf Table}}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a6492e30475c110dc2fc3c4900156debb}
+check if the player's need to All in 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a1426f81e34a8ae4610137ce06642fd83}{\index{poker.\+h@{poker.\+h}!is\+Call\+Raise@{is\+Call\+Raise}}
+\index{is\+Call\+Raise@{is\+Call\+Raise}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Call\+Raise}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Call\+Raise (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{player, }
+\item[{{\bf Table}}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a1426f81e34a8ae4610137ce06642fd83}
+check if the player's can call and raise 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a98c7856725af9be01e8abe6c4b18d4a9}{\index{poker.\+h@{poker.\+h}!is\+Check\+Bet@{is\+Check\+Bet}}
+\index{is\+Check\+Bet@{is\+Check\+Bet}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Check\+Bet}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Check\+Bet (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{player, }
+\item[{{\bf Table}}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a98c7856725af9be01e8abe6c4b18d4a9}
+check if the player's can check and bet 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a5460c5f01736692d8e198efff2374696}{\index{poker.\+h@{poker.\+h}!is\+Flush@{is\+Flush}}
+\index{is\+Flush@{is\+Flush}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Flush}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Flush (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a5460c5f01736692d8e198efff2374696}
+if the hand has 5 cards with the same suit, store these cards to player's max\+\_\+hand and change the rank of player to Flush assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a6f0f0b9ffa5948c69d88e1581f622a1a}{\index{poker.\+h@{poker.\+h}!is\+Full\+House@{is\+Full\+House}}
+\index{is\+Full\+House@{is\+Full\+House}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Full\+House}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Full\+House (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a6f0f0b9ffa5948c69d88e1581f622a1a}
+if the hand has 3 cards with the same rank and a pair, store these cards to player's max\+\_\+hand and change the rank of player to Full\+House assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a315cfb0d4e80bc81c5283a9b90316e5c}{\index{poker.\+h@{poker.\+h}!is\+High\+Card@{is\+High\+Card}}
+\index{is\+High\+Card@{is\+High\+Card}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+High\+Card}]{\setlength{\rightskip}{0pt plus 5cm}void is\+High\+Card (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a315cfb0d4e80bc81c5283a9b90316e5c}
+store 5 cards of the hand that have the highest rank to player's max\+\_\+hand and change the rank of player to High\+Card assume that the hand has been sorted, therefore 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_ad2ab1f4bf5f57cabd25a9867e177a19c}{\index{poker.\+h@{poker.\+h}!is\+Pair@{is\+Pair}}
+\index{is\+Pair@{is\+Pair}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Pair}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Pair (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_ad2ab1f4bf5f57cabd25a9867e177a19c}
+if the hand has a pair, store that pair and 3 other cards that have highest rank to player's max\+\_\+hand and change the rank of player to One\+Pair assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a837eafe82723011c616077bfd3a1a04d}{\index{poker.\+h@{poker.\+h}!is\+Royal\+Flush@{is\+Royal\+Flush}}
+\index{is\+Royal\+Flush@{is\+Royal\+Flush}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Royal\+Flush}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Royal\+Flush (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a837eafe82723011c616077bfd3a1a04d}
+if the hand has 5 cards with the same suit and the rank of each are A K Q J 10, store these cards to player's max\+\_\+hand and change the rank of player to Royal\+Flush assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a2f9f6b761c3a053348e1b72729f74095}{\index{poker.\+h@{poker.\+h}!is\+Straight@{is\+Straight}}
+\index{is\+Straight@{is\+Straight}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Straight}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Straight (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a2f9f6b761c3a053348e1b72729f74095}
+if the hand has 5 cards whose rank increase by 1, store these cards to player's max\+\_\+hand and change the rank of player to Straight assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a38961d02671c0ca1e418378515aff9ec}{\index{poker.\+h@{poker.\+h}!is\+Straight\+Flush@{is\+Straight\+Flush}}
+\index{is\+Straight\+Flush@{is\+Straight\+Flush}!poker.\+h@{poker.\+h}}
+\subsubsection[{is\+Straight\+Flush}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Straight\+Flush (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{{\bf Player} $\ast$}]{player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a38961d02671c0ca1e418378515aff9ec}
+if the hand has 5 cards with the same suit and the rank of each increase by 1, store these cards to player's max\+\_\+hand and change the rank of player to Straight\+Flush assume that the hand has been sorted 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player} & player \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a91e158ec6dda98ad80f725bd35a95c04}{\index{poker.\+h@{poker.\+h}!load@{load}}
+\index{load@{load}!poker.\+h@{poker.\+h}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}void load (
+\begin{DoxyParamCaption}
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int $\ast$}]{round\+\_\+index}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a91e158ec6dda98ad80f725bd35a95c04}
+load information of table, deck, players and round index 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em deck} & deck \\
+\hline
+{\em round\+\_\+index} & round index \\
+\hline
+{\em player\+\_\+index} & player index \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a673841e7baef12830b5ab951a9252f0c}{\index{poker.\+h@{poker.\+h}!load\+Num\+Player@{load\+Num\+Player}}
+\index{load\+Num\+Player@{load\+Num\+Player}!poker.\+h@{poker.\+h}}
+\subsubsection[{load\+Num\+Player}]{\setlength{\rightskip}{0pt plus 5cm}int load\+Num\+Player (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a673841e7baef12830b5ab951a9252f0c}
+load number of players 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+player} & number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_ac1d32348dd926523ed90ab0a398b0318}{\index{poker.\+h@{poker.\+h}!load\+Round\+Info@{load\+Round\+Info}}
+\index{load\+Round\+Info@{load\+Round\+Info}!poker.\+h@{poker.\+h}}
+\subsubsection[{load\+Round\+Info}]{\setlength{\rightskip}{0pt plus 5cm}void load\+Round\+Info (
+\begin{DoxyParamCaption}
+\item[{int $\ast$}]{count\+Check, }
+\item[{int $\ast$}]{count\+Allin, }
+\item[{int $\ast$}]{count\+Call, }
+\item[{int $\ast$}]{is\+\_\+1st\+\_\+bet}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_ac1d32348dd926523ed90ab0a398b0318}
+load the information of round -\/ the number of players check / allin / call and if this is the first turn 
+\begin{DoxyParams}{Parameters}
+{\em count\+Check} & count the number of players check in a round \\
+\hline
+{\em count\+Allin} & count the number of players allin in a round \\
+\hline
+{\em count\+Call} & count the number of players call in a round \\
+\hline
+{\em is\+\_\+1st\+\_\+bet} & check if this is the first turn of players in a round \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_af376a2642223fd357762c00da0b4c1bb}{\index{poker.\+h@{poker.\+h}!min\+Money@{min\+Money}}
+\index{min\+Money@{min\+Money}!poker.\+h@{poker.\+h}}
+\subsubsection[{min\+Money}]{\setlength{\rightskip}{0pt plus 5cm}int min\+Money (
+\begin{DoxyParamCaption}
+\item[{{\bf Player}}]{player, }
+\item[{{\bf Table}}]{table}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_af376a2642223fd357762c00da0b4c1bb}
+calculate the minimum money needed to spent if the player chose to raise or bet 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a9df530b755ec657b1c4078a1e35e0c9a}{\index{poker.\+h@{poker.\+h}!new\+Deck@{new\+Deck}}
+\index{new\+Deck@{new\+Deck}!poker.\+h@{poker.\+h}}
+\subsubsection[{new\+Deck}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Deck}$\ast$ new\+Deck (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a9df530b755ec657b1c4078a1e35e0c9a}
+create a deck The deck will be allocated on the heap. \hypertarget{poker_8h_a409b33167926c0f385dbec0993072586}{\index{poker.\+h@{poker.\+h}!raise\+Poker@{raise\+Poker}}
+\index{raise\+Poker@{raise\+Poker}!poker.\+h@{poker.\+h}}
+\subsubsection[{raise\+Poker}]{\setlength{\rightskip}{0pt plus 5cm}void raise\+Poker (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{money}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a409b33167926c0f385dbec0993072586}
+change player's state to Raised and update\+Money 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+{\em money} & money spent \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_aa5c692ccb42a3f3a6b6a322820ef8cdb}{\index{poker.\+h@{poker.\+h}!reset@{reset}}
+\index{reset@{reset}!poker.\+h@{poker.\+h}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void reset (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{num\+\_\+player, }
+\item[{{\bf Deck} $\ast$}]{deck}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_aa5c692ccb42a3f3a6b6a322820ef8cdb}
+reset all the info to start new game 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em deck} & deck \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_ac1327d6b1f3a05dbfe353c2f6dabaff5}{\index{poker.\+h@{poker.\+h}!save@{save}}
+\index{save@{save}!poker.\+h@{poker.\+h}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}int save (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{num\+\_\+player, }
+\item[{int}]{round\+\_\+index, }
+\item[{int}]{player\+\_\+index, }
+\item[{int}]{count\+Check, }
+\item[{int}]{count\+Allin, }
+\item[{int}]{count\+Call, }
+\item[{int}]{is\+\_\+1st\+\_\+bet}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_ac1327d6b1f3a05dbfe353c2f6dabaff5}
+save all information of the game into text file 
+\begin{DoxyParams}{Parameters}
+{\em players} & all players \\
+\hline
+{\em table} & table \\
+\hline
+{\em deck} & deck \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+{\em round\+\_\+index} & round index \\
+\hline
+{\em player\+\_\+index} & player index \\
+\hline
+{\em count\+Check} & count the number of players check in a round \\
+\hline
+{\em count\+Allin} & count the number of players allin in a round \\
+\hline
+{\em count\+Call} & count the number of players call in a round \\
+\hline
+{\em is\+\_\+1st\+\_\+bet} & check if this is the first turn of players in a round \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a379c2550a34d0731f6316b66f58fbef3}{\index{poker.\+h@{poker.\+h}!search\+Card@{search\+Card}}
+\index{search\+Card@{search\+Card}!poker.\+h@{poker.\+h}}
+\subsubsection[{search\+Card}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Card} search\+Card (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{int}]{rank}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a379c2550a34d0731f6316b66f58fbef3}
+find and return the card that has the given rank in the hand 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em rank} & card's rank \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a68f65616d420cbd2ccebcbe62afc1f3b}{\index{poker.\+h@{poker.\+h}!search\+Hand\+Rank@{search\+Hand\+Rank}}
+\index{search\+Hand\+Rank@{search\+Hand\+Rank}!poker.\+h@{poker.\+h}}
+\subsubsection[{search\+Hand\+Rank}]{\setlength{\rightskip}{0pt plus 5cm}int search\+Hand\+Rank (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand}}]{hand, }
+\item[{int}]{rank}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a68f65616d420cbd2ccebcbe62afc1f3b}
+check in the hand if there is any card that has the given rank 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em rank} & card's rank \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_aebc845f28b92cc48b1acfba569b4b807}{\index{poker.\+h@{poker.\+h}!shuffle\+Deck@{shuffle\+Deck}}
+\index{shuffle\+Deck@{shuffle\+Deck}!poker.\+h@{poker.\+h}}
+\subsubsection[{shuffle\+Deck}]{\setlength{\rightskip}{0pt plus 5cm}void shuffle\+Deck (
+\begin{DoxyParamCaption}
+\item[{{\bf Deck} $\ast$}]{deck, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_aebc845f28b92cc48b1acfba569b4b807}
+shuffle the deck 
+\begin{DoxyParams}{Parameters}
+{\em deck} & the deck \\
+\hline
+{\em size} & number of cards in the deck Algorithms U\+R\+L\+: \href{http://www.programming-algorithms.net/article/43676/Fisher-Yates-shuffle}{\tt http\+://www.\+programming-\/algorithms.\+net/article/43676/\+Fisher-\/\+Yates-\/shuffle} \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a75e42bae64f66eac8c0176622e3a589f}{\index{poker.\+h@{poker.\+h}!sort\+Hands@{sort\+Hands}}
+\index{sort\+Hands@{sort\+Hands}!poker.\+h@{poker.\+h}}
+\subsubsection[{sort\+Hands}]{\setlength{\rightskip}{0pt plus 5cm}void sort\+Hands (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand} $\ast$}]{hands, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a75e42bae64f66eac8c0176622e3a589f}
+sort cards of hands from the highest card's rank (A or 1) to smallest (2) 
+\begin{DoxyParams}{Parameters}
+{\em hands} & hands \\
+\hline
+{\em num\+\_\+player} & number of players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a87648b170e7fd07f498c0921fff44a75}{\index{poker.\+h@{poker.\+h}!swap\+Cards@{swap\+Cards}}
+\index{swap\+Cards@{swap\+Cards}!poker.\+h@{poker.\+h}}
+\subsubsection[{swap\+Cards}]{\setlength{\rightskip}{0pt plus 5cm}void swap\+Cards (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand} $\ast$}]{hand, }
+\item[{int}]{player\+Idx, }
+\item[{int}]{fst\+Idx, }
+\item[{int}]{sec\+Idx}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a87648b170e7fd07f498c0921fff44a75}
+swap two cards of the hand which corresponds to the given player index 
+\begin{DoxyParams}{Parameters}
+{\em hand} & hand \\
+\hline
+{\em player\+Idx} & player index \\
+\hline
+{\em fst\+Idx} & index of the first card \\
+\hline
+{\em sec\+Idx} & index of the second card \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a485c46367e643333e2e92e9328fdc70d}{\index{poker.\+h@{poker.\+h}!test\+Hand@{test\+Hand}}
+\index{test\+Hand@{test\+Hand}!poker.\+h@{poker.\+h}}
+\subsubsection[{test\+Hand}]{\setlength{\rightskip}{0pt plus 5cm}void test\+Hand (
+\begin{DoxyParamCaption}
+\item[{{\bf Hand} $\ast$}]{hands, }
+\item[{{\bf Player} $\ast$}]{players, }
+\item[{int}]{num\+\_\+player}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a485c46367e643333e2e92e9328fdc70d}
+check the rank of each players and find the winner at first, players are considered as winners and after checking, they might be changed to losers after checking, players who still be considered as winners are actually become the winners of the game 
+\begin{DoxyParams}{Parameters}
+{\em players} & players that have the same highest rank compared to other players \\
+\hline
+{\em num\+\_\+player} & number of players that have the same highest rank compared to other players \\
+\hline
+\end{DoxyParams}
+\hypertarget{poker_8h_a6cdc1ff120975f8816c8f78b1e50eb44}{\index{poker.\+h@{poker.\+h}!update\+Money@{update\+Money}}
+\index{update\+Money@{update\+Money}!poker.\+h@{poker.\+h}}
+\subsubsection[{update\+Money}]{\setlength{\rightskip}{0pt plus 5cm}void update\+Money (
+\begin{DoxyParamCaption}
+\item[{{\bf Player} $\ast$}]{player, }
+\item[{{\bf Table} $\ast$}]{table, }
+\item[{int}]{money}
+\end{DoxyParamCaption}
+)}}\label{poker_8h_a6cdc1ff120975f8816c8f78b1e50eb44}
+after the player chose their option, this function will increase the bet of player and pot on table, decrease player's money 
+\begin{DoxyParams}{Parameters}
+{\em player} & player \\
+\hline
+{\em table} & table \\
+\hline
+{\em money} & the money spent for that option \\
+\hline
+\end{DoxyParams}

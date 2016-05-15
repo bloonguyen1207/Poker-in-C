@@ -15,273 +15,7 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/demo.c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/doxygen_sqlite3.db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/annotated.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/bc_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/bdwn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/classes.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/closed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/demo_8c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/doxygen.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/doxygen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/dynsections.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/files.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2blank.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2doc.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2folderclosed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2folderopen.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2lastnode.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2link.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2mlastnode.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2mnode.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2node.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2plastnode.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2pnode.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2splitbar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/ftv2vertline.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/functions.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/functions_vars.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_b.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_d.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_defs.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_enum.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_eval.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_f.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_b.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_d.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_f.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_g.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_i.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_l.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_m.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_n.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_r.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_t.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_func_u.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_g.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_h.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_i.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_l.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_m.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_n.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_o.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_p.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_r.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_s.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_t.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_type.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/globals_u.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/nav_f.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/nav_g.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/nav_h.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/open.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker_8c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker_8h.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker_8h_source.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker__ui_8c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker__ui_8h.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/poker__ui_8h_source.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_10.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_10.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_5.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_6.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_7.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_7.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_8.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_8.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_9.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_9.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_a.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_a.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_b.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_b.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_c.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_d.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_d.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_e.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_e.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_f.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/all_f.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/classes_4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/close.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/defines_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/defines_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enums_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_5.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_6.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_7.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_7.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_8.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_8.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_9.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_9.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_a.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/enumvalues_a.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/files_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_5.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_6.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_7.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_7.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_8.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_8.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_9.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_9.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_a.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_a.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_b.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_b.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_c.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_c.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_d.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/functions_d.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/mag_sel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/nomatches.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search_l.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search_m.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/search_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_5.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_6.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_7.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/typedefs_7.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_0.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_0.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_3.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_4.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_5.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_5.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_6.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_7.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_7.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_8.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_8.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_9.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_9.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_a.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_a.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_b.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/search/variables_b.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structcard-members.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structcard.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structdeck-members.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structdeck.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structhand-members.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structhand.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structplayer-members.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structplayer.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structtable-members.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/structtable.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/sync_off.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/sync_on.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_a.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_h.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tab_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/html/tabs.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/annotated.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/demo_8c.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/doxygen.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/files.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker_8c.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker_8h.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker__ui_8c.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/poker__ui_8h.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/refman.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structcard.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structdeck.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structhand.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structplayer.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/doc/latex/structtable.tex" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" afterPath="$PROJECT_DIR$/.idea/COSC2451_A2_s3515305_s3558475.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CMakeLists.txt" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker.h" afterPath="$PROJECT_DIR$/src/poker.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/poker_ui.h" afterPath="$PROJECT_DIR$/src/poker_ui.h" />
-    </list>
+    <list default="true" id="af6dc90f-c178-4877-91da-3db102996cb3" name="Default" comment="" />
     <ignored path="COSC2451_A2_s3515305_s3558475.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -383,14 +117,13 @@
       <file leaf-file-name="poker_ui.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31889763">
-              <caret line="19" column="28" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5884615">
+              <caret line="109" column="68" selection-start-line="109" selection-start-column="68" selection-end-line="109" selection-end-column="68" />
               <folding>
                 <element signature="e#0#9#0" expanded="false" />
                 <element signature="e#493#2629#0" expanded="false" />
                 <element signature="e#2631#2882#0" expanded="false" />
                 <element signature="e#2884#3363#0" expanded="false" />
-                <element signature="e#3365#5075#0" expanded="false" />
                 <element signature="e#5077#5620#0" expanded="false" />
                 <element signature="e#5622#6536#0" expanded="false" />
                 <element signature="e#6538#6695#0" expanded="false" />
@@ -465,8 +198,8 @@
       <file leaf-file-name="poker.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/poker.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.857143">
-              <caret line="853" column="31" selection-start-line="853" selection-start-column="31" selection-end-line="853" selection-end-column="31" />
+            <state vertical-scroll-proportion="-6.035714">
+              <caret line="877" column="9" selection-start-line="877" selection-start-column="8" selection-end-line="877" selection-end-column="9" />
               <folding>
                 <element signature="e#0#9#0" expanded="false" />
                 <element signature="e#518#890#0" expanded="false" />
@@ -512,7 +245,6 @@
                 <element signature="e#23213#24040#0" expanded="false" />
                 <element signature="e#24042#24256#0" expanded="false" />
                 <element signature="e#24258#26802#0" expanded="false" />
-                <element signature="e#27272#27978#0" expanded="false" />
                 <element signature="e#27980#48021#0" expanded="false" />
                 <element signature="e#48023#51719#0" expanded="false" />
                 <element signature="e#51721#54145#0" expanded="false" />
@@ -614,6 +346,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cosc2451_a2_s3515305_s3558475" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="doc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="COSC2451_A2_s3515305_s3558475" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cosc2451_a2_s3515305_s3558475" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="doc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="html" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -697,7 +469,7 @@
     <frame x="-5" y="33" width="1610" height="768" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24382521" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24382521" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2244582" sideWeight="0.4969278" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32817337" sideWeight="0.4969278" order="8" side_tool="false" content_ui="tabs" />
@@ -705,7 +477,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921174" sideWeight="0.4969278" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15789473" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24445851" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12848297" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10990712" sideWeight="0.49078342" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40958267" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -819,7 +591,6 @@
             <element signature="e#23213#24040#0" expanded="false" />
             <element signature="e#24042#24256#0" expanded="false" />
             <element signature="e#24258#26802#0" expanded="false" />
-            <element signature="e#27272#27978#0" expanded="false" />
             <element signature="e#27980#48021#0" expanded="false" />
             <element signature="e#48023#51719#0" expanded="false" />
             <element signature="e#51721#54145#0" expanded="false" />
@@ -899,7 +670,6 @@
             <element signature="e#23213#24040#0" expanded="false" />
             <element signature="e#24042#24256#0" expanded="false" />
             <element signature="e#24258#26802#0" expanded="false" />
-            <element signature="e#27272#27978#0" expanded="false" />
             <element signature="e#27980#48021#0" expanded="false" />
             <element signature="e#48023#51719#0" expanded="false" />
             <element signature="e#51721#54145#0" expanded="false" />
@@ -979,7 +749,6 @@
             <element signature="e#23213#24040#0" expanded="false" />
             <element signature="e#24042#24256#0" expanded="false" />
             <element signature="e#24258#26802#0" expanded="false" />
-            <element signature="e#27272#27978#0" expanded="false" />
             <element signature="e#27980#48021#0" expanded="false" />
             <element signature="e#48023#51719#0" expanded="false" />
             <element signature="e#51721#54145#0" expanded="false" />
@@ -1080,7 +849,6 @@
             <element signature="e#23213#24040#0" expanded="false" />
             <element signature="e#24042#24256#0" expanded="false" />
             <element signature="e#24258#26802#0" expanded="false" />
-            <element signature="e#27272#27978#0" expanded="false" />
             <element signature="e#27980#48021#0" expanded="false" />
             <element signature="e#48023#51719#0" expanded="false" />
             <element signature="e#51721#54145#0" expanded="false" />
@@ -1160,7 +928,6 @@
             <element signature="e#23213#24040#0" expanded="false" />
             <element signature="e#24042#24256#0" expanded="false" />
             <element signature="e#24258#26802#0" expanded="false" />
-            <element signature="e#27272#27978#0" expanded="false" />
             <element signature="e#27980#48021#0" expanded="false" />
             <element signature="e#48023#51719#0" expanded="false" />
             <element signature="e#51721#54145#0" expanded="false" />
@@ -1270,7 +1037,6 @@
             <element signature="e#493#2629#0" expanded="false" />
             <element signature="e#2631#2882#0" expanded="false" />
             <element signature="e#2884#3363#0" expanded="false" />
-            <element signature="e#3365#5075#0" expanded="false" />
             <element signature="e#5077#5620#0" expanded="false" />
             <element signature="e#5622#6536#0" expanded="false" />
             <element signature="e#6538#6695#0" expanded="false" />
@@ -1445,8 +1211,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/poker.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.857143">
-          <caret line="853" column="31" selection-start-line="853" selection-start-column="31" selection-end-line="853" selection-end-column="31" />
+        <state vertical-scroll-proportion="-6.035714">
+          <caret line="877" column="9" selection-start-line="877" selection-start-column="8" selection-end-line="877" selection-end-column="9" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
             <element signature="e#518#890#0" expanded="false" />
@@ -1492,7 +1258,6 @@
             <element signature="e#23213#24040#0" expanded="false" />
             <element signature="e#24042#24256#0" expanded="false" />
             <element signature="e#24258#26802#0" expanded="false" />
-            <element signature="e#27272#27978#0" expanded="false" />
             <element signature="e#27980#48021#0" expanded="false" />
             <element signature="e#48023#51719#0" expanded="false" />
             <element signature="e#51721#54145#0" expanded="false" />
@@ -1504,14 +1269,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/poker_ui.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31889763">
-          <caret line="19" column="28" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5884615">
+          <caret line="109" column="68" selection-start-line="109" selection-start-column="68" selection-end-line="109" selection-end-column="68" />
           <folding>
             <element signature="e#0#9#0" expanded="false" />
             <element signature="e#493#2629#0" expanded="false" />
             <element signature="e#2631#2882#0" expanded="false" />
             <element signature="e#2884#3363#0" expanded="false" />
-            <element signature="e#3365#5075#0" expanded="false" />
             <element signature="e#5077#5620#0" expanded="false" />
             <element signature="e#5622#6536#0" expanded="false" />
             <element signature="e#6538#6695#0" expanded="false" />
