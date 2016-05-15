@@ -771,8 +771,9 @@ int roundPoker(Player *players, Table *table, Deck *deck, int num_player, int ro
             if (countActivePlayer == 1 || countAllin == countActivePlayer || countCheck == countActivePlayer ||
                 (countCall == countActivePlayer - 1 && !is_1st_bet) ||
                 (players[playerIdx].isBigBlind && lastState == BB && players[playerIdx].state == Folded) ||
-                (countAllin == countActivePlayer - 1 && (players[playerIdx].state == Called || players[playerIdx].state == Checked)) ||
-                        (countAllin + countCall || countAllin + countCheck) == countActivePlayer  ) {
+                (countAllin + countCall == countActivePlayer - 1 && (players[playerIdx].state == Called ||
+                        players[playerIdx].state == Checked)) ||
+                        (countAllin + countCall || countAllin + countCheck) == countActivePlayer) {
                 lastState = None;
                 end_round = 1;
             }
