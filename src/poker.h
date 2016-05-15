@@ -71,6 +71,7 @@ struct table {
     int card_idx; //start from 0, increases by 1 each time one shared card was dealt
     int last_bet; //in one round, when the player chose to raise of bet, last_bet is the amount of money he spent for that choice
     int showCard; //if all players allin or at the end of the game, showCard is 1, and 2 cards of active players will turn face up
+    int isLoad; //check if the player choose load
 };
 typedef struct table Table;
 
@@ -376,7 +377,14 @@ int consAI (Player *ai, Table *table, int roundIdx);
   * @param round_index round index
   * @param player_index player index
   */
-int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index);
+int save(Player * player, Table * table, Deck * deck, int num_player, int round_index, int player_index,
+         int countCheck, int countAllin, int countCall, int is_1st_bet);
+
+void loadNumPlayer(int * num_player);
+
+void loadRoundInfo(int * countCheck, int * countAllin, int * countCall, int * is_1st_bet);
+
+void load(Table * table, Deck * deck, Player * players, int * round_index);
 
 /** find the winner
   * @param players all players
