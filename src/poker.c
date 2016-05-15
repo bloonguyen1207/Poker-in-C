@@ -831,7 +831,7 @@ int save(Player *players, Table * table, Deck * deck, int num_player, int round_
                 fprintf(save_point, "%i %i\n", table->card[j].suit, table->card[j].rank);
             }
         } else {
-            fprintf(save_point, "wtf\n");
+            fprintf(save_point, "Error\n");
         }
         fprintf(save_point, "----------\nPlayers\n");
         for (int i = 0; i < num_player; i++) {
@@ -953,7 +953,7 @@ void load(Table * table, Deck * deck, Player * players, int * round_index) {
                     case 78: table->ante = atoi (line);
                     case 79: table->highest_bet = atoi (line);
                     case 80: table->last_bet = atoi (line);
-                    default: printf("Shit\n");
+                    default: printf("Error\n");
                 }
             }
 

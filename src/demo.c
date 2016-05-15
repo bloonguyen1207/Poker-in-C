@@ -1086,11 +1086,11 @@ void loadRoundInfo(int countCheck, int countAllin, int countCall, int is_1st_bet
     }
 }
 
-void load(Table * table, Deck * deck) {
+void load(Table * table, Deck * deck, Player * players, int * round_index) {
     FILE * save;
     char line [20];
     char *s;
-    int i = 0, j = 0, l = 0, m = 0, round_index = 0, num_player = 0; // i: count line, j: deck size, l: share card size
+    int i = 0, j = 0, l = 0, m = 0, num_player = 0; // i: count line, j: deck size, l: share card size
     save = fopen("../src/game.txt", "r");
     if (save != NULL) {
         while (fgets(line, 20, save) != NULL) {
@@ -1098,8 +1098,8 @@ void load(Table * table, Deck * deck) {
 
             // Load round index
             if (i == 2) {
-                round_index = atoi(line);
-                printf("Round index: %i\n", round_index);
+                *round_index = atoi(line);
+                printf("Round index: %i\n", *round_index);
             }
 
             // Load number of Player
@@ -1151,8 +1151,8 @@ void load(Table * table, Deck * deck) {
             }
 
             // Load shared cards
-            if (round_index != 0) {
-                if (round_index == 1) {
+            if (*round_index != 0) {
+                if (*round_index == 1) {
                     table->card_idx = 3;
 
                     if (i >= 82 && i <= 84){
@@ -1179,7 +1179,7 @@ void load(Table * table, Deck * deck) {
                         }
                         l++;
                     }
-                } else if (round_index == 2) {
+                } else if (*round_index == 2) {
                     table->card_idx = 4;
 
                     if (i >= 82 && i <= 85){
@@ -1206,7 +1206,7 @@ void load(Table * table, Deck * deck) {
                         }
                         l++;
                     }
-                } else if (round_index == 3) {
+                } else if (*round_index == 3) {
                     table->card_idx = 5;
 
                     if (i >= 82 && i <= 86){
@@ -1805,9 +1805,10 @@ int main() {
     // Create players
     Player *players = createPlayers(num_player);
 
+    int roundIdx;
     loadRoundInfo(-1, -1, -1, -1);
 
-    load (table, deck);
+    load(table, deck, players, &roundIdx);
 
     for (int m = 0; m < 52; m++) {
         printf("%s %i; ", getSuit(deck->cards[m].suit), deck->cards[m].rank);
