@@ -45,5 +45,5 @@
 * Semester A - 2016
 * Lecturer's Name: Denis Rinfret
 * Student's ID - name:
-* * s3558475 - Nguyen Ha Phuong Mai
-* * s3515305 - Nguyen Thi Mai Thao
+* * s3558475 - Mai Nguyen
+* * s3515305 - Bloo Nguyen 
